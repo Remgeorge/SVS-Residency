@@ -50,20 +50,55 @@
     <section class="privacy-section" id="privacy">
         <div class="privacy-content">
             <h2>Privacy Policy</h2>
-            <p><strong>Last Updated: August 06, 2026</strong></p>
-            <p>Welcome to SVS Residency. We value your privacy and are committed to protecting your personal data. This policy explains how we collect and use your information within the app.</p>
+            <p><strong>Last Updated: August 07, 2026</strong></p>
+            <p>Welcome to SVS Residency. We value your privacy and are committed to protecting your personal data. This policy explains how we collect, use, share, and safeguard information when you use our society management services and website.</p>
+
+            <h3>Information We Collect</h3>
+            <p>We may collect information such as your name, contact details, apartment or resident information, maintenance-related records, and communications you send through the platform.</p>
+
+            <h3>How We Use Your Information</h3>
+            <p>Your information helps us provide resident services, process maintenance requests, send notices, manage community communication, and improve the overall experience for the society.</p>
+
+            <h3>Sharing of Information</h3>
+            <p>We do not sell your personal information. We may share it only with authorized society management personnel, service providers assisting us with operations, or as required by law.</p>
+
+            <h3>Data Security</h3>
+            <p>We take reasonable technical and organizational measures to protect your personal information against unauthorized access, loss, or misuse.</p>
+
+            <h3>Your Choices</h3>
+            <p>You may contact us to review, update, or request details about the personal information we hold about you, subject to applicable law and verification requirements.</p>
+
+            <h3>Contact Us</h3>
+            <p>If you have questions about this Privacy Policy or how your information is handled, please contact the SVS Residency management team through the contact details provided on this website.</p>
         </div>
     </section>
 
-    <footer id="contact">
-        <div class="contact-info">
-            <p><strong>SVS Residency Management Committee</strong></p>
-            <p>H.No. 6–57/2, Road No.5B, Bhavanipuram, Ameenapur</p>
-            <p>Sangareddy, Telangana 502 032</p>
+    <section class="contact-section" id="contact">
+        <div class="contact-card">
+            <div class="contact-details">
+                <h2>Contact Us</h2>
+                <p><strong>SVS Residency Management Committee</strong></p>
+                <p>H.No. 6–57/2, Road No.5B, Bhavanipuram, Ameenapur</p>
+                <p>Sangareddy, Telangana 502 032</p>
+                <p>Email: info@svsresidency.com</p>
+            </div>
+            <form class="contact-form" id="contact-form" method="POST" action="https://formsubmit.co/ajax/info@svsresidency.com">
+                <input id="name" name="name" type="text" placeholder="Your Name" required>
+                <input id="email" name="email" type="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
+                <input type="hidden" name="_subject" value="New message from SVS Residency website">
+                <input type="hidden" name="_next" value="https://remgeorge.github.io/SVS-Residency/">
+                <button type="submit">Send Message</button>
+                <p class="form-note">This sends your message through a real email delivery service.</p>
+                <p id="form-message" class="form-message" aria-live="polite"></p>
+            </form>
         </div>
+    </section>
+
+    <footer>
         <p>&copy; 2026 SVS Residency. Developed by Remo George.</p>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
