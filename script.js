@@ -1,6 +1,6 @@
 const contactForm = document.getElementById('contact-form');
 const formMessage = document.getElementById('form-message');
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/info@svsresidency.com';
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/remgeorge@gmail.com';
 
 if (contactForm && formMessage) {
   contactForm.addEventListener('submit', function (event) {
@@ -35,7 +35,7 @@ if (contactForm && formMessage) {
         contactForm.reset();
       })
       .catch(function () {
-        formMessage.textContent = 'Something went wrong. Please try again later or contact us directly at info@svsresidency.com.';
+        formMessage.textContent = 'Something went wrong. Please try again later or contact us directly at remgeorge@gmail.com.';
         formMessage.className = 'form-message error';
       });
   });
