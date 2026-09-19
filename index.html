@@ -162,9 +162,9 @@
         <span id="txtSignUpTitle">Sign Up for SVS Residency</span>
       </div>
       <form class="auth-form" id="formSignUp" onsubmit="event.preventDefault(); submitWebRegistration();">
-        <input type="text" id="regName" class="form-input" placeholder="Full Name (English Letters Only)" required oninput="filterEnglishOnly(this)">
+        <input type="text" id="regName" class="form-input" placeholder="Full Name (English Letters Only)" required oninput="filterEnglishAndTitleCase(this)">
 
-        <select id="regGender" class="form-select" required>
+        <select id="regGender" class="form-select" required onchange="onWebGenderChanged(this.value)">
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -475,13 +475,33 @@
       document.getElementById("txtSessionExpiredMsg").innerText = dict.sessionExpiredMsg;
     };
 
-    // English-Only Filter Helpers
-    window.filterEnglishOnly = function(input) {
-      input.value = input.value.replace(/[^a-zA-Z. ]/g, "");
+    // Live Title Case & English Only Filter
+    window.filterEnglishAndTitleCase = function(input) {
+      let val = input.value.replace(/[^a-zA-Z. ]/g, "");
+      let words = val.split(" ");
+      let formatted = words.map(w => {
+        if (w.length > 0) return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+        return "";
+      }).join(" ");
+      input.value = formatted;
     };
 
     window.filterEmailOnly = function(input) {
       input.value = input.value.replace(/[^a-zA-Z0-9@._\-+]/g, "");
+    };
+
+    // Auto Prefix Mr. / Ms. on Gender Change
+    window.onWebGenderChanged = function(gender) {
+      const nameInput = document.getElementById("regName");
+      let val = nameInput.value.trim().replace(/^(Mr\.|Ms\.)\s*/i, "");
+
+      if (gender === "Male" && val.length > 0) {
+        nameInput.value = "Mr. " + val;
+      } else if (gender === "Female" && val.length > 0) {
+        nameInput.value = "Ms. " + val;
+      } else if (val.length > 0) {
+        nameInput.value = val;
+      }
     };
 
     // Navigation Between Login and Sign-Up
@@ -602,13 +622,22 @@
 
     // Submit Web Registration
     window.submitWebRegistration = async function() {
-      const name = document.getElementById("regName").value.trim();
       const gender = document.getElementById("regGender").value;
       const flat = document.getElementById("regFlat").value;
       const status = document.getElementById("regStatus").value;
       const email = document.getElementById("regEmail").value.trim();
       const pwd = document.getElementById("regPassword").value;
       const confirmPwd = document.getElementById("regConfirmPassword").value;
+
+      let rawName = document.getElementById("regName").value.trim().replace(/^(Mr\.|Ms\.)\s*/i, "");
+      let words = rawName.split(" ").filter(w => w.length > 0);
+      let cleanName = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+
+      let prefix = "";
+      if (gender === "Male") prefix = "Mr. ";
+      else if (gender === "Female") prefix = "Ms. ";
+
+      const formattedFullName = prefix + cleanName;
 
       const errLbl = document.getElementById("lblSignUpError");
       const succLbl = document.getElementById("lblSignUpSuccess");
@@ -635,7 +664,7 @@
         const occupiedValue = (status === "Owner") ? webOccupancyChoice : "false";
 
         const userMap = {
-          name: name, email: email, gender: gender, flat: flat, type: status,
+          name: formattedFullName, email: email, gender: gender, flat: flat, type: status,
           occupied: occupiedValue, role: "resident", verified: "false", uid: uid, profileupdate: "false"
         };
 
