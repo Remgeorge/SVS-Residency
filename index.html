@@ -508,12 +508,14 @@
     window.switchToSignUpView = function() {
       document.getElementById("secLogin").style.display = "none";
       document.getElementById("secSignUp").style.display = "block";
+      document.getElementById("secMainPortal").style.display = "none";
       loadWebMasterFlats();
     };
 
     window.switchToLoginView = function() {
       document.getElementById("secSignUp").style.display = "none";
       document.getElementById("secLogin").style.display = "block";
+      document.getElementById("secMainPortal").style.display = "none";
     };
 
     // Forgot Password Modal
@@ -688,8 +690,15 @@
           await updateDoc(doc(db, "flats", flat), { status: newFlatStatus }).catch(() => {});
         }
 
+        // Sign out newly registered unverified user immediately
+        await signOut(auth);
+
+        succLbl.innerText = "Registration Successful! Pending admin approval.";
         succLbl.style.display = "block";
-        setTimeout(() => { switchToLoginView(); }, 2500);
+        setTimeout(() => {
+          succLbl.style.display = "none";
+          switchToLoginView();
+        }, 3000);
       } catch (e) {
         errLbl.innerText = "Registration Failed: " + e.message;
         errLbl.style.display = "block";
@@ -725,21 +734,47 @@
     };
 
     // Real-Time Auth State Listener
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        document.getElementById("secLogin").style.display = "none";
-        document.getElementById("secSignUp").style.display = "none";
-        document.getElementById("secMainPortal").style.display = "flex";
-        document.getElementById("userSection").style.display = "flex";
-        document.getElementById("lblUserName").innerText = user.email.split("@")[0];
-        initSingleDeviceSessionListener(user.uid);
-        loadPendingApprovals();
-        loadFlatMaster();
-        loadNotices();
-        loadDirectory();
-        loadComplaints();
-        loadBookings();
-        loadAssetInfo();
+        try {
+          const userSnap = await getDoc(doc(db, "residents", user.uid));
+          const isSuperAdmin = user.email.toLowerCase() === "remgeorge@gmail.com";
+          let isVerified = false;
+
+          if (userSnap.exists()) {
+            const data = userSnap.data();
+            const raw = data.verified;
+            isVerified = raw === true || raw === "true" || raw === "yes" || data.role === "super_admin";
+          }
+
+          if (isVerified || isSuperAdmin) {
+            document.getElementById("secLogin").style.display = "none";
+            document.getElementById("secSignUp").style.display = "none";
+            document.getElementById("secMainPortal").style.display = "flex";
+            document.getElementById("userSection").style.display = "flex";
+            document.getElementById("lblUserName").innerText = user.email.split("@")[0];
+            initSingleDeviceSessionListener(user.uid);
+            loadPendingApprovals();
+            loadFlatMaster();
+            loadNotices();
+            loadDirectory();
+            loadComplaints();
+            loadBookings();
+            loadAssetInfo();
+          } else {
+            await signOut(auth);
+            document.getElementById("secLogin").style.display = "block";
+            document.getElementById("secSignUp").style.display = "none";
+            document.getElementById("secMainPortal").style.display = "none";
+            document.getElementById("userSection").style.display = "none";
+          }
+        } catch (e) {
+          console.error("Auth check error", e);
+          document.getElementById("secLogin").style.display = "block";
+          document.getElementById("secSignUp").style.display = "none";
+          document.getElementById("secMainPortal").style.display = "none";
+          document.getElementById("userSection").style.display = "none";
+        }
       } else {
         document.getElementById("secLogin").style.display = "block";
         document.getElementById("secSignUp").style.display = "none";
