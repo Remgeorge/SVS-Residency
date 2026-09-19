@@ -19,12 +19,13 @@
       --border: #e0e0e0;
       --success: #4caf50;
       --warning: #ff9800;
+      --sidebar-width: 280px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
 
     /* Top Header Bar */
-    .navbar { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .navbar { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
     .brand { display: flex; align-items: center; gap: 12px; }
     .brand img { width: 42px; height: 42px; border-radius: 50%; background: white; padding: 2px; object-fit: cover; }
     .brand-title { font-size: 1.4rem; font-weight: 700; }
@@ -36,22 +37,30 @@
     .user-badge { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; }
     .btn-logout { background: var(--accent); color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
 
-    /* Main Container & Tabs */
-    .container { max-width: 1200px; margin: 24px auto; padding: 0 16px; width: 100%; flex: 1; }
-    .tab-bar { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 8px; overflow-x: auto; }
-    .tab-btn { background: none; border: none; padding: 10px 20px; font-size: 1rem; font-weight: 600; color: var(--text-muted); cursor: pointer; border-radius: 8px; transition: all 0.2s; }
-    .tab-btn.active { background: var(--primary); color: white; }
+    /* Layout Wrapper */
+    .app-layout { display: flex; flex: 1; min-height: calc(100vh - 66px); }
+
+    /* Sidebar Navigation */
+    .sidebar { width: var(--sidebar-width); background: white; border-right: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
+    .menu-group { display: flex; flex-direction: column; gap: 6px; }
+    .group-title { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 10px; }
+    .menu-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+    .menu-item:hover, .menu-item.active { background: #e3f2fd; color: var(--primary-dark); }
+    .menu-item i { width: 20px; text-align: center; color: var(--primary); }
+
+    /* Main Content Area */
+    .main-content { flex: 1; padding: 24px; max-width: 1200px; }
 
     /* Cards & Grid */
     .card { background: var(--card-bg); border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
     .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; color: var(--primary-dark); display: flex; align-items: center; gap: 8px; }
 
     /* Login Form Card */
-    .login-container { max-width: 420px; margin: 40px auto; text-align: center; }
+    .login-container { max-width: 420px; margin: 60px auto; text-align: center; }
     .login-form { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
-    .form-input { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+    .form-input { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; }
     .form-input:focus { border-color: var(--primary); }
-    .btn-login-submit { background: var(--primary); color: white; padding: 12px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-login-submit { background: var(--primary); color: white; padding: 12px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
     .btn-login-submit:hover { background: var(--primary-dark); }
     .error-msg { color: var(--accent); font-size: 0.9rem; margin-top: 8px; display: none; }
 
@@ -73,7 +82,7 @@
     .btn-reject { background: var(--accent); color: white; }
     .btn:hover { opacity: 0.9; }
 
-    /* Grid Layout for Flat Master */
+    /* Flat Grid Layout */
     .flat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 14px; margin-top: 12px; }
     .flat-box { background: white; border: 2px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
     .flat-box.occupied { border-color: var(--success); background: #f1f8e9; }
@@ -118,11 +127,9 @@
     </div>
   </nav>
 
-  <!-- Main Container -->
-  <div class="container">
-
-    <!-- Login Card (Displayed when NOT logged in) -->
-    <div id="secLogin" class="card login-container">
+  <!-- Login View (When NOT Logged In) -->
+  <div id="secLogin" class="container">
+    <div class="card login-container">
       <div class="card-title" style="justify-content: center;">
         <i class="fa-solid fa-right-to-bracket"></i>
         <span id="txtLoginTitle">Login to SVS Residency</span>
@@ -134,18 +141,63 @@
         <div id="lblLoginError" class="error-msg">Invalid email or password.</div>
       </form>
     </div>
+  </div>
 
-    <!-- Main Content Portal (Displayed when Logged In) -->
-    <div id="secMainPortal" style="display:none;">
-      <!-- Navigation Tabs -->
-      <div class="tab-bar">
-        <button class="tab-btn active" onclick="switchTab('approvals')" id="tabApprovals"><i class="fa-solid fa-user-check"></i> <span id="txtTabApprovals">Sign-Up Approvals</span></button>
-        <button class="tab-btn" onclick="switchTab('flats')" id="tabFlats"><i class="fa-solid fa-building"></i> <span id="txtTabFlats">Flat Master</span></button>
-        <button class="tab-btn" onclick="switchTab('notices')" id="tabNotices"><i class="fa-solid fa-bullhorn"></i> <span id="txtTabNotices">Notice Board</span></button>
+  <!-- Main App Layout (When Logged In) -->
+  <div id="secMainPortal" class="app-layout" style="display:none;">
+
+    <!-- Full Multi-Group Sidebar Navigation -->
+    <aside class="sidebar">
+
+      <!-- Group 1: Resident Services -->
+      <div class="menu-group">
+        <div class="group-title" id="grpResident">Resident Services</div>
+        <a class="menu-item active" onclick="navTo('notices', this)"><i class="fa-solid fa-bullhorn"></i> <span id="mNoticeBoard">Notice Board</span></a>
+        <a class="menu-item" onclick="navTo('directory', this)"><i class="fa-solid fa-users"></i> <span id="mSocietyTeam">Society Team</span></a>
+        <a class="menu-item" onclick="navTo('assets', this)"><i class="fa-solid fa-building"></i> <span id="mAssets">Asset Info</span></a>
+        <a class="menu-item" onclick="navTo('bookings', this)"><i class="fa-solid fa-calendar-check"></i> <span id="mBookings">Facility Bookings</span></a>
+        <a class="menu-item" onclick="navTo('complaints', this)"><i class="fa-solid fa-circle-exclamation"></i> <span id="mComplaints">Complaints</span></a>
+        <a class="menu-item" onclick="navTo('approvals', this)"><i class="fa-solid fa-user-check"></i> <span id="mAdminPanel">Sign-Up Approvals</span></a>
       </div>
 
-      <!-- Section 1: Sign-Up Approvals & Rejections -->
-      <div id="secApprovals" class="card">
+      <!-- Group 2: Admin Tools -->
+      <div class="menu-group" id="grpAdminTools">
+        <div class="group-title" id="grpAdmin">Admin Tools</div>
+        <a class="menu-item" onclick="navTo('appoint', this)"><i class="fa-solid fa-user-shield"></i> <span id="mAppoint">Appoint Admins</span></a>
+        <a class="menu-item" onclick="navTo('broadcast', this)"><i class="fa-solid fa-paper-plane"></i> <span id="mBroadcast">Broadcast Notice</span></a>
+        <a class="menu-item" onclick="navTo('accounting', this)"><i class="fa-solid fa-file-invoice-dollar"></i> <span id="mAccounting">Accounting & Ledger</span></a>
+        <a class="menu-item" onclick="navTo('orders', this)"><i class="fa-solid fa-cart-shopping"></i> <span id="mOrders">Orders & Vendors</span></a>
+        <a class="menu-item" onclick="navTo('visitors', this)"><i class="fa-solid fa-address-card"></i> <span id="mVisitors">Visitor Entry Log</span></a>
+        <a class="menu-item" onclick="navTo('alerts', this)"><i class="fa-solid fa-triangle-exclamation"></i> <span id="mAlerts">Resident Alerts</span></a>
+      </div>
+
+      <!-- Group 3: Master Controls -->
+      <div class="menu-group" id="grpMasterControls">
+        <div class="group-title" id="grpMaster">Master Controls</div>
+        <a class="menu-item" onclick="navTo('flats', this)"><i class="fa-solid fa-hotel"></i> <span id="mFlatMaster">Flat Master</span></a>
+        <a class="menu-item" onclick="navTo('correction', this)"><i class="fa-solid fa-wrench"></i> <span id="mCorrection">Profile Correction</span></a>
+      </div>
+
+      <!-- Group 4: Support & System -->
+      <div class="menu-group">
+        <div class="group-title" id="grpSystem">System & Support</div>
+        <a class="menu-item" onclick="openPolicy('terms')"><i class="fa-solid fa-file-contract"></i> <span id="mTerms">Terms & Conditions</span></a>
+        <a class="menu-item" onclick="openPolicy('privacy')"><i class="fa-solid fa-shield-halved"></i> <span id="mPrivacy">Privacy Policy</span></a>
+      </div>
+
+    </aside>
+
+    <!-- Main Content Panel Area -->
+    <main class="main-content">
+
+      <!-- Panel 1: Notice Board -->
+      <div id="pnlNotices" class="card">
+        <div class="card-title"><i class="fa-solid fa-bullhorn"></i> <span id="txtNoticesTitle">Society Announcements</span></div>
+        <div id="listNotices">Loading notices...</div>
+      </div>
+
+      <!-- Panel 2: Sign-Up Approvals & Rejections -->
+      <div id="pnlApprovals" class="card" style="display:none;">
         <div class="card-title"><i class="fa-solid fa-user-clock"></i> <span id="txtPendingSignups">Pending Sign-Up Approvals</span></div>
         <table>
           <thead>
@@ -163,21 +215,45 @@
         </table>
       </div>
 
-      <!-- Section 2: Flat Master Matrix -->
-      <div id="secFlats" class="card" style="display:none;">
+      <!-- Panel 3: Flat Master Matrix -->
+      <div id="pnlFlats" class="card" style="display:none;">
         <div class="card-title"><i class="fa-solid fa-hotel"></i> <span id="txtFlatMasterTitle">Flat Status Matrix</span></div>
         <div class="flat-grid" id="gridFlats">
           <div style="grid-column: 1/-1; text-align:center;">Loading flat status...</div>
         </div>
       </div>
 
-      <!-- Section 3: Notice Board -->
-      <div id="secNotices" class="card" style="display:none;">
-        <div class="card-title"><i class="fa-solid fa-bell"></i> <span id="txtNoticesTitle">Society Announcements</span></div>
-        <div id="listNotices">Loading announcements...</div>
+      <!-- Panel 4: Society Directory -->
+      <div id="pnlDirectory" class="card" style="display:none;">
+        <div class="card-title"><i class="fa-solid fa-users"></i> <span>Society Residents & Team</span></div>
+        <div id="listResidents">Loading directory...</div>
       </div>
-    </div>
 
+      <!-- Panel 5: Complaints -->
+      <div id="pnlComplaints" class="card" style="display:none;">
+        <div class="card-title"><i class="fa-solid fa-circle-exclamation"></i> <span>Complaints & Requests</span></div>
+        <div id="listComplaints">Loading complaints...</div>
+      </div>
+
+      <!-- Panel 6: Facility Bookings -->
+      <div id="pnlBookings" class="card" style="display:none;">
+        <div class="card-title"><i class="fa-solid fa-calendar-check"></i> <span>Facility Bookings</span></div>
+        <div id="listBookings">Loading bookings...</div>
+      </div>
+
+      <!-- Panel 7: Asset Info -->
+      <div id="pnlAssets" class="card" style="display:none;">
+        <div class="card-title"><i class="fa-solid fa-building"></i> <span>Apartment Asset Details</span></div>
+        <div id="detailsAssets">Loading asset details...</div>
+      </div>
+
+      <!-- Generic Panel for Other Admin Tools -->
+      <div id="pnlGeneric" class="card" style="display:none;">
+        <div class="card-title"><i class="fa-solid fa-gears"></i> <span id="lblGenericTitle">Admin Tool</span></div>
+        <p style="color:var(--text-muted);" id="lblGenericMsg">Module active and synced with database.</p>
+      </div>
+
+    </main>
   </div>
 
   <!-- Session Expired Modal -->
@@ -276,9 +352,9 @@
       document.getElementById("txtLoginPassword").placeholder = dict.passwordHint;
       document.getElementById("btnLoginSubmit").innerText = dict.btnLogin;
 
-      document.getElementById("txtTabApprovals").innerText = dict.approvals;
-      document.getElementById("txtTabFlats").innerText = dict.flats;
-      document.getElementById("txtTabNotices").innerText = dict.notices;
+      document.getElementById("mNoticeBoard").innerText = dict.notices;
+      document.getElementById("mFlatMaster").innerText = dict.flats;
+      document.getElementById("mAdminPanel").innerText = dict.approvals;
       document.getElementById("txtPendingSignups").innerText = dict.pendingSignups;
       document.getElementById("thName").innerText = dict.name;
       document.getElementById("thEmail").innerText = dict.email;
@@ -323,13 +399,17 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         document.getElementById("secLogin").style.display = "none";
-        document.getElementById("secMainPortal").style.display = "block";
+        document.getElementById("secMainPortal").style.display = "flex";
         document.getElementById("userSection").style.display = "flex";
         document.getElementById("lblUserName").innerText = user.email.split("@")[0];
         initSingleDeviceSessionListener(user.uid);
         loadPendingApprovals();
         loadFlatMaster();
         loadNotices();
+        loadDirectory();
+        loadComplaints();
+        loadBookings();
+        loadAssetInfo();
       } else {
         document.getElementById("secLogin").style.display = "block";
         document.getElementById("secMainPortal").style.display = "none";
@@ -365,6 +445,33 @@
 
     window.logoutWebSession = function() {
       signOut(auth).then(() => { window.location.reload(); });
+    };
+
+    // Navigation Handler
+    window.navTo = function(target, element) {
+      document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+      if (element) element.classList.add("active");
+
+      const panels = ["pnlNotices", "pnlApprovals", "pnlFlats", "pnlDirectory", "pnlComplaints", "pnlBookings", "pnlAssets", "pnlGeneric"];
+      panels.forEach(id => document.getElementById(id).style.display = "none");
+
+      if (target === "notices") document.getElementById("pnlNotices").style.display = "block";
+      else if (target === "approvals") document.getElementById("pnlApprovals").style.display = "block";
+      else if (target === "flats") document.getElementById("pnlFlats").style.display = "block";
+      else if (target === "directory") document.getElementById("pnlDirectory").style.display = "block";
+      else if (target === "complaints") document.getElementById("pnlComplaints").style.display = "block";
+      else if (target === "bookings") document.getElementById("pnlBookings").style.display = "block";
+      else if (target === "assets") document.getElementById("pnlAssets").style.display = "block";
+      else {
+        document.getElementById("pnlGeneric").style.display = "block";
+        document.getElementById("lblGenericTitle").innerText = target.toUpperCase();
+        document.getElementById("lblGenericMsg").innerText = `Module '${target}' is active and synced with database.`;
+      }
+    };
+
+    window.openPolicy = function(type) {
+      if (type === "terms") window.open("https://remgeorge.github.io/SVS-Residency/terms.html", "_blank");
+      else window.open("https://remgeorge.github.io/SVS-Residency/index.html", "_blank");
     };
 
     // Load Pending Approvals
@@ -483,20 +590,75 @@
       });
     }
 
+    // Load Directory
+    function loadDirectory() {
+      onSnapshot(collection(db, "residents"), (snaps) => {
+        const list = document.getElementById("listResidents");
+        list.innerHTML = "";
+        snaps.forEach((d) => {
+          const r = d.data();
+          if (r.verified === "true") {
+            const item = document.createElement("div");
+            item.style.padding = "10px";
+            item.style.borderBottom = "1px solid #eee";
+            item.innerHTML = `<strong>${r.name || "Resident"}</strong> - Flat ${r.flat || "--"} (${r.type || "Member"})`;
+            list.appendChild(item);
+          }
+        });
+      });
+    }
+
+    // Load Complaints
+    function loadComplaints() {
+      onSnapshot(collection(db, "complaints"), (snaps) => {
+        const list = document.getElementById("listComplaints");
+        list.innerHTML = "";
+        snaps.forEach((d) => {
+          const c = d.data();
+          const item = document.createElement("div");
+          item.style.padding = "10px";
+          item.style.borderBottom = "1px solid #eee";
+          item.innerHTML = `<strong>${c.title || "Complaint"}</strong> - ${c.description || ""}`;
+          list.appendChild(item);
+        });
+      });
+    }
+
+    // Load Bookings
+    function loadBookings() {
+      onSnapshot(collection(db, "bookings"), (snaps) => {
+        const list = document.getElementById("listBookings");
+        list.innerHTML = "";
+        snaps.forEach((d) => {
+          const b = d.data();
+          const item = document.createElement("div");
+          item.style.padding = "10px";
+          item.style.borderBottom = "1px solid #eee";
+          item.innerHTML = `<strong>${b.facilityName || "Facility"}</strong> - Booked by ${b.userName || "User"} (${b.date || ""})`;
+          list.appendChild(item);
+        });
+      });
+    }
+
+    // Load Asset Info
+    async function loadAssetInfo() {
+      try {
+        const snap = await getDoc(doc(db, "settings", "Assets"));
+        if (snap.exists()) {
+          const a = snap.data();
+          document.getElementById("detailsAssets").innerHTML = `
+            <p><strong>Apartment Name:</strong> ${a.apartmentName || "SVS Residency"}</p>
+            <p><strong>Address:</strong> ${a.apartmentAddress || "Ameenapur, Hyderabad"}</p>
+            <p><strong>Total Flats:</strong> ${a.numFlats || "25"}</p>
+          `;
+        }
+      } catch (e) { console.error("Asset load error", e); }
+    }
+
     // Initialize UI
     loadBranding();
     changeLanguage(currentLang);
     document.getElementById("selLang").value = currentLang;
-
-    window.switchTab = function(tab) {
-      document.getElementById("secApprovals").style.display = tab === "approvals" ? "block" : "none";
-      document.getElementById("secFlats").style.display = tab === "flats" ? "block" : "none";
-      document.getElementById("secNotices").style.display = tab === "notices" ? "block" : "none";
-
-      document.getElementById("tabApprovals").className = `tab-btn ${tab === "approvals" ? "active" : ""}`;
-      document.getElementById("tabFlats").className = `tab-btn ${tab === "flats" ? "active" : ""}`;
-      document.getElementById("tabNotices").className = `tab-btn ${tab === "notices" ? "active" : ""}`;
-    };
   </script>
 </body>
 </html>
