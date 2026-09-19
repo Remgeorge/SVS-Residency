@@ -636,7 +636,7 @@
         pendingSignups: "நிலுவையில் உள்ள ஒப்புதல்கள்", name: "பெயர்", email: "மின்னஞ்சல்",
         flat: "பிளாட்", type: "வகை / நிலை", action: "நடவடிக்கைகள்",
         flatMasterTitle: "பிளாட் நிலை மேட்ரிக்ஸ்", noticesTitle: "சங்க அறிவிப்புகள்",
-        sessionExpiredTitle: "அமர்வு காலாவதியானது", sessionExpiredMsg: "நீங்கள் మరொரு சாதனத்தில் లాగిన్ செய்துள்ளீர்கள்.",
+        sessionExpiredTitle: "அமர்வு காலாவதியானது", sessionExpiredMsg: "நீங்கள் మరொரு சாதனத்தில் లాగిன் செய்துள்ளீர்கள்.",
         gm: "காலை வணக்கம்", ga: "மதிய வணக்கம்", ge: "மாலை வணக்கம்", gn: "இரவு வணக்கம்", wb: "மீண்டும் வருக!",
         totalDues: "மொத்த நிலுவைத் தொகை", viewStatement: "அறிக்கையைப் பார்க்கவும்", home: "முகப்பு",
         societyTeam: "சங்கக் குழு", assetInfo: "சொத்து விவரங்கள்", facilityBookings: "வசதி முன்பதிவு", complaints: "புகார்கள்",
@@ -1139,8 +1139,32 @@
       const errLbl = document.getElementById("lblLoginError");
       errLbl.style.display = "none";
 
+      if (!email || !password) {
+        errLbl.innerText = "Please enter both email and password.";
+        errLbl.style.display = "block";
+        return;
+      }
+
       try {
-        await signInWithEmailAndPassword(auth, email, password);
+        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCred.user;
+
+        // Check user approval status in Firestore
+        const userSnap = await getDoc(doc(db, "residents", user.uid));
+        const isSuperAdmin = user.email.toLowerCase() === "remgeorge@gmail.com";
+        let isVerified = false;
+
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+          const raw = (data.verified || "").toString().toLowerCase();
+          isVerified = raw === "true" || raw === "yes" || raw === "approved" || data.role === "super_admin" || data.role === "admin";
+        }
+
+        if (!isVerified && !isSuperAdmin) {
+          await signOut(auth);
+          errLbl.innerText = "Account Pending Approval: An admin must approve your registration before you can log in.";
+          errLbl.style.display = "block";
+        }
       } catch (error) {
         errLbl.innerText = "Login Failed: " + error.message;
         errLbl.style.display = "block";
@@ -1157,8 +1181,8 @@
 
           if (userSnap.exists()) {
             currentUserData = userSnap.data();
-            const raw = currentUserData.verified;
-            isVerified = raw === true || raw === "true" || raw === "yes" || currentUserData.role === "super_admin";
+            const raw = (currentUserData.verified || "").toString().toLowerCase();
+            isVerified = raw === "true" || raw === "yes" || raw === "approved" || currentUserData.role === "super_admin" || currentUserData.role === "admin";
 
             currentUserFlat = currentUserData.flat || "";
             currentUserName = currentUserData.name || user.email.split("@")[0];
