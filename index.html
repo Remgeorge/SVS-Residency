@@ -158,11 +158,11 @@
 
   <!-- Top Bar Quick Action Navigation (Replacing Bottom Bar for Desktop/Web) -->
   <div id="quickNavBar" class="quick-nav" style="display:none;">
-    <a class="quick-nav-item active" onclick="navTo('home', this)" id="qnHome"><i class="fa-solid fa-house"></i> <span>Home</span></a>
-    <a class="quick-nav-item" onclick="navTo('notices', this)" id="qnNotices"><i class="fa-solid fa-bullhorn"></i> <span>Notices</span></a>
-    <a class="quick-nav-item" onclick="navTo('bookings', this)" id="qnBookings"><i class="fa-solid fa-calendar-check"></i> <span>Bookings</span></a>
-    <a class="quick-nav-item" onclick="navTo('statement', this)" id="qnStatement"><i class="fa-solid fa-file-invoice-dollar"></i> <span>View Statement</span></a>
-    <a class="quick-nav-item" onclick="navTo('complaints', this)" id="qnComplaints"><i class="fa-solid fa-circle-exclamation"></i> <span>Complaints</span></a>
+    <a class="quick-nav-item active" onclick="navTo('home', this)" id="qnHome"><i class="fa-solid fa-house"></i> <span id="txtQnHome">Home</span></a>
+    <a class="quick-nav-item" onclick="navTo('notices', this)" id="qnNotices"><i class="fa-solid fa-bullhorn"></i> <span id="txtQnNotices">Notices</span></a>
+    <a class="quick-nav-item" onclick="navTo('bookings', this)" id="qnBookings"><i class="fa-solid fa-calendar-check"></i> <span id="txtQnBookings">Bookings</span></a>
+    <a class="quick-nav-item" onclick="navTo('statement', this)" id="qnStatement"><i class="fa-solid fa-file-invoice-dollar"></i> <span id="txtQnStatement">View Statement</span></a>
+    <a class="quick-nav-item" onclick="navTo('complaints', this)" id="qnComplaints"><i class="fa-solid fa-circle-exclamation"></i> <span id="txtQnComplaints">Complaints</span></a>
   </div>
 
   <!-- Login View (When NOT Logged In) -->
@@ -292,12 +292,12 @@
         <div class="group-title" id="grpAdmin">Admin Tools</div>
         <a class="menu-item" onclick="navTo('appoint', this)"><i class="fa-solid fa-user-shield" style="color:#3949ab;"></i> <span id="mAppoint">Appoint Admins</span></a>
         <a class="menu-item" onclick="navTo('broadcast', this)"><i class="fa-solid fa-tower-broadcast" style="color:#fb8c00;"></i> <span id="mBroadcast">Broadcast Notice</span></a>
-        <a class="menu-item" onclick="navTo('actions', this)"><i class="fa-solid fa-gavel" style="color:#6d4c41;"></i> <span>Society Actions</span></a>
-        <a class="menu-item" onclick="navTo('accountmaster', this)"><i class="fa-solid fa-landmark" style="color:#2e7d32;"></i> <span>Account Master</span></a>
+        <a class="menu-item" onclick="navTo('actions', this)"><i class="fa-solid fa-gavel" style="color:#6d4c41;"></i> <span id="mSocietyActions">Society Actions</span></a>
+        <a class="menu-item" onclick="navTo('accountmaster', this)"><i class="fa-solid fa-landmark" style="color:#2e7d32;"></i> <span id="mAccountMaster">Account Master</span></a>
         <a class="menu-item" onclick="navTo('accounting', this)"><i class="fa-solid fa-file-invoice-dollar" style="color:#4caf50;"></i> <span id="mAccounting">Accounting & Ledger</span></a>
         <a class="menu-item" onclick="navTo('orders', this)"><i class="fa-solid fa-cart-flatbed" style="color:#00acc1;"></i> <span id="mOrders">Orders & Vendors</span></a>
         <a class="menu-item" onclick="navTo('visitors', this)"><i class="fa-solid fa-id-card" style="color:#d81b60;"></i> <span id="mVisitors">Visitor Entry Log</span></a>
-        <a class="menu-item" onclick="navTo('dutylogs', this)"><i class="fa-solid fa-clipboard-user" style="color:#5e35b1;"></i> <span>Duty Logs</span></a>
+        <a class="menu-item" onclick="navTo('dutylogs', this)"><i class="fa-solid fa-clipboard-user" style="color:#5e35b1;"></i> <span id="mDutyLogs">Duty Logs</span></a>
         <a class="menu-item" onclick="navTo('alerts', this)"><i class="fa-solid fa-triangle-exclamation" style="color:#e53935;"></i> <span id="mAlerts">Resident Alerts</span></a>
       </div>
 
@@ -557,6 +557,7 @@
     let webOccupancyChoice = "false";
     let currentUserFlat = "";
     let currentUserName = "";
+    let currentUserData = null;
 
     // Toggle Password Input Visibility
     window.togglePasswordVisibility = function(inputId, eyeId) {
@@ -585,10 +586,11 @@
         gm: "Good Morning", ga: "Good Afternoon", ge: "Good Evening", gn: "Good Night", wb: "Welcome Back!",
         totalDues: "Total Outstanding Dues", viewStatement: "View Statement", home: "Home / Overview",
         societyTeam: "Society Team", assetInfo: "Asset Info", facilityBookings: "Facility Bookings", complaints: "Complaints",
-        appointAdmins: "Appoint Admins", broadcastNotice: "Broadcast Notice", accounting: "Accounting & Ledger", orders: "Orders & Vendors",
-        visitorLog: "Visitor Entry Log", residentAlerts: "Resident Alerts", correction: "Profile Correction", aboutUs: "About Us",
+        appointAdmins: "Appoint Admins", broadcastNotice: "Broadcast Notice", societyActions: "Society Actions", accountMaster: "Account Master",
+        accounting: "Accounting & Ledger", orders: "Orders & Vendors", visitorLog: "Visitor Entry Log", dutyLogs: "Duty Logs",
+        residentAlerts: "Resident Alerts", correction: "Profile Correction", aboutUs: "About Us",
         deleteAccount: "Delete Account", terms: "Terms & Conditions", privacy: "Privacy Policy", logout: "Logout",
-        owner: "Owner", tenant: "Tenant", familyMember: "Family Member"
+        owner: "Owner", tenant: "Tenant", familyMember: "Family Member", residentRole: "Resident"
       },
       hi: {
         loginTitle: "SVS रेजिडेंसी में लॉगिन करें", emailHint: "ईमेल पता", passwordHint: "पासवर्ड", btnLogin: "लॉगिन",
@@ -602,10 +604,11 @@
         gm: "शुभ प्रभात", ga: "शुभ दोपहर", ge: "शुभ संध्या", gn: "शुभ रात्रि", wb: "वापसी पर स्वागत है!",
         totalDues: "कुल बकाया शुल्क", viewStatement: "विवरण देखें", home: "होम / अवलोकन",
         societyTeam: "सोसायटी टीम", assetInfo: "संपत्ति विवरण", facilityBookings: "सुविधा बुकिंग", complaints: "शिकायतें",
-        appointAdmins: "एडमिन नियुक्त करें", broadcastNotice: "प्रसारण सूचना", accounting: "लेखा और बहीखाता", orders: "आदेश और विक्रेता",
-        visitorLog: "आगंतुक प्रविष्टि लॉग", residentAlerts: "निवासी अलर्ट", correction: "प्रोफ़ाइल सुधार", aboutUs: "हमारे बारे में",
+        appointAdmins: "एडमिन नियुक्त करें", broadcastNotice: "प्रसारण सूचना", societyActions: "सोसायटी कार्रवाई", accountMaster: "खाता मास्टर",
+        accounting: "लेखा और बहीखाता", orders: "आदेश और विक्रेता", visitorLog: "आगंतुक प्रविष्टि लॉग", dutyLogs: "ड्यूटी लॉग",
+        residentAlerts: "निवासी अलर्ट", correction: "प्रोफ़ाइल सुधार", aboutUs: "हमारे बारे में",
         deleteAccount: "खाता हटाएँ", terms: "नियम और शर्तें", privacy: "गोपनीयता नीति", logout: "लॉगआउट",
-        owner: "मालिक", tenant: "किरायादार", familyMember: "परिवार का सदस्य"
+        owner: "मालिक", tenant: "किरायादार", familyMember: "परिवार का सदस्य", residentRole: "निवासी"
       },
       te: {
         loginTitle: "SVS రెసిడెన్సీ లాగిన్", emailHint: "ఈమెయిల్ చిరునామా", passwordHint: "పాస్‌వర్డ్", btnLogin: "లాగిన్",
@@ -619,10 +622,11 @@
         gm: "శుభోదయం", ga: "శుభ మధ్యాహ్నం", ge: "శుభ సాయంత్రం", gn: "శుభరాత్రి", wb: "మళ్లీ స్వాగతం!",
         totalDues: "మొత్తం చెల్లించాల్సిన బకాయిలు", viewStatement: "స్టేట్‌మెంట్ చూడండి", home: "హోమ్ / అంచనా",
         societyTeam: "సంఘం బృందం", assetInfo: "ఆస్తి సమాచారం", facilityBookings: "సౌకర్యాల బుకింగ్", complaints: "ఫిర్యాదులు",
-        appointAdmins: "అడ్మిన్‌లను నియమించండి", broadcastNotice: "బ్రాడ్‌కాస్ట్ నోటీసు", accounting: "అకౌంటింగ్ మరియు లెడ్జర్", orders: "ఆర్డర్లు & విక్రేతలు",
-        visitorLog: "సందర్శకుల ఎంట్రీ లాగ్", residentAlerts: "నివాసి హెచ్చరికలు", correction: "ప్రొఫైల్ దిద్దుబాటు", aboutUs: "మా గురించి",
+        appointAdmins: "అడ్మిన్‌లను నియమించండి", broadcastNotice: "బ్రాడ్‌కాస్ట్ నోటీసు", societyActions: "సంఘం చర్యలు", accountMaster: "ఖాతా మాస్టర్",
+        accounting: "అకౌంటింగ్ మరియు లెడ్జర్", orders: "ఆర్డర్లు & విక్రేతలు", visitorLog: "సందర్శకుల ఎంట్రీ లాగ్", dutyLogs: "విధి లాగ్‌లు",
+        residentAlerts: "నివాసి హెచ్చరికలు", correction: "ప్రొఫైల్ దిద్దుబాటు", aboutUs: "మా గురించి",
         deleteAccount: "ఖాతాను తొలగించండి", terms: "నిబంధనలు మరియు షరతులు", privacy: "గోప్యతా విధానం", logout: "లాగౌట్",
-        owner: "యజమాని", tenant: "అద్దెదారు", familyMember: "కుటుంబ సభ్యుడు"
+        owner: "యజమాని", tenant: "అద్దెదారు", familyMember: "కుటుంబ సభ్యుడు", residentRole: "నివాసి"
       },
       ta: {
         loginTitle: "SVS ரெசிடென்சி உள்நுழைவு", emailHint: "மின்னஞ்சல் முகவரி", passwordHint: "கடவுச்சொல்", btnLogin: "உள்நுழை",
@@ -636,10 +640,11 @@
         gm: "காலை வணக்கம்", ga: "மதிய வணக்கம்", ge: "மாலை வணக்கம்", gn: "இரவு வணக்கம்", wb: "மீண்டும் வருக!",
         totalDues: "மொத்த நிலுவைத் தொகை", viewStatement: "அறிக்கையைப் பார்க்கவும்", home: "முகப்பு",
         societyTeam: "சங்கக் குழு", assetInfo: "சொத்து விவரங்கள்", facilityBookings: "வசதி முன்பதிவு", complaints: "புகார்கள்",
-        appointAdmins: "நிர்வாகிகளை நியமிக்கவும்", broadcastNotice: "அறிவிப்பு ஒளிபரப்பு", accounting: "கணக்கியல்", orders: "ஆர்டர்கள்",
-        visitorLog: "பார்வையாளர் பதிவு", residentAlerts: "எச்சரிக்கைகள்", correction: "சுயவிவர திருத்தம்", aboutUs: "எங்களைப் பற்றி",
+        appointAdmins: "நிர்வாகிகளை நியமிக்கவும்", broadcastNotice: "அறிவிப்பு ஒளிபரப்பு", societyActions: "சங்க நடவடிக்கைகள்", accountMaster: "கணக்கு மாஸ்டர்",
+        accounting: "கணக்கியல்", orders: "ஆர்டர்கள்", visitorLog: "பார்வையாளர் பதிவு", dutyLogs: "பணிப் பதிவுகள்",
+        residentAlerts: "எச்சரிக்கைகள்", correction: "சுயவிவர திருத்தம்", aboutUs: "எங்களைப் பற்றி",
         deleteAccount: "கணக்கை நீக்கு", terms: "விதிகள் மற்றும் நிபந்தனைகள்", privacy: "தனியுரிமைக் கொள்கை", logout: "வெளியேறு",
-        owner: "உரிமையாளர்", tenant: "வாடகைதாரர்", familyMember: "குடும்ப உறுப்பினர்"
+        owner: "உரிமையாளர்", tenant: "வாடகைதாரர்", familyMember: "குடும்ப உறுப்பினர்", residentRole: "வசிப்பவர்"
       },
       kn: {
         loginTitle: "SVS ರೆಸಿಡೆನ್ಸಿ ಲಾಗಿನ್", emailHint: "ಇಮೇಲ್ ವಿಳಾಸ", passwordHint: "ಪಾಸ್‌ವರ್ಡ್", btnLogin: "ಲಾಗಿನ್",
@@ -653,10 +658,11 @@
         gm: "ಶುಭೋದಯ", ga: "ಶುಭ ಮಧ್ಯಾಹ್ನ", ge: "ಶುಭ ಸಂಜೆ", gn: "ಶುಭ ರಾತ್ರಿ", wb: "ಮತ್ತೆ ಸುಸ್ವಾಗತ!",
         totalDues: "ಒಟ್ಟು ಬಾಕಿ ಮೊತ್ತ", viewStatement: "ಸ್ಟೇಟ್‌ಮೆಂಟ್ ನೋಡಿ", home: "ಹೋಮ್",
         societyTeam: "ಸೊಸೈಟಿ ತಂಡ", assetInfo: "ಆಸ್ತಿ ವಿವರಗಳು", facilityBookings: "ಸೌಲಭ್ಯ ಬುಕಿಂಗ್", complaints: "ದೂರುಗಳು",
-        appointAdmins: "ಅಡ್ಮಿನ್ ನೇಮಿಸಿ", broadcastNotice: "ಪ್ರಕಟಣೆ ಪ್ರಸಾರ", accounting: "ಲೆಕ್ಕಪತ್ರ", orders: "ಆರ್ಡರ್‌ಗಳು",
-        visitorLog: "ಸಂದರ್ಶಕರ ಲಾಗ್", residentAlerts: "ಎಚ್ಚರಿಕೆಗಳು", correction: "ಪ್ರೊಫೈಲ್ ತಿದ್ದುಪಡಿ", aboutUs: "ನಮ್ಮ ಬಗ್ಗೆ",
+        appointAdmins: "ಅಡ್ಮಿನ್ ನೇಮಿಸಿ", broadcastNotice: "ಪ್ರಕಟಣೆ ಪ್ರಸಾರ", societyActions: "ಸೊಸೈಟಿ ಕ್ರಿಯೆಗಳು", accountMaster: "ಖಾತೆ ಮಾಸ್ಟರ್",
+        accounting: "ಲೆಕ್ಕಪತ್ರ", orders: "ಆರ್ಡರ್‌ಗಳು", visitorLog: "ಸಂದರ್ಶಕರ ಲಾಗ್", dutyLogs: "ಕರ್ತವ್ಯದ ಲಾಗ್",
+        residentAlerts: "ಎಚ್ಚರಿಕೆಗಳು", correction: "ಪ್ರೊಫೈಲ್ ತಿದ್ದುಪಡಿ", aboutUs: "ನಮ್ಮ ಬಗ್ಗೆ",
         deleteAccount: "ಖಾತೆ ಅಳಿಸಿ", terms: "ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು", privacy: "ಗೌಪ್ಯತಾ ನೀತಿ", logout: "ಲಾಗ್‌ಔಟ್",
-        owner: "ಮಾಲೀಕರು", tenant: "ಬಾಡಿಗೆದಾರ", familyMember: "ಕುಟುಂಬದ ಸದಸ್ಯ"
+        owner: "ಮಾಲೀಕರು", tenant: "ಬಾಡಿಗೆದಾರ", familyMember: "ಕುಟುಂಬದ ಸದಸ್ಯ", residentRole: "ನಿವಾಸಿ"
       },
       ml: {
         loginTitle: "SVS റെസിഡൻസി ലോഗിൻ", emailHint: "ഇമെയിൽ വിലാസം", passwordHint: "പാസ്‌വേഡ്", btnLogin: "ലോഗിൻ",
@@ -670,14 +676,29 @@
         gm: "സുപ്രഭാതം", ga: "ഉച്ചയ്ക്കുശേഷം വന്ദനം", ge: "സന്ധ്യാവന്ദനം", gn: "ശുഭരാത്രി", wb: "വീണ്ടും സ്വാഗതം!",
         totalDues: "ആകെ കുടിശ്ശിക തുക", viewStatement: "സ്റ്റേറ്റ്മെന്റ് കാണുക", home: "ഹോം",
         societyTeam: "സൊസൈറ്റി ടീം", assetInfo: "സ്വത്ത് വിവരങ്ങൾ", facilityBookings: "സൗകര്യ ബുക്കിംഗ്", complaints: "പരാതികൾ",
-        appointAdmins: "അഡ്മിനെ നിയമിക്കുക", broadcastNotice: "അറിയിപ്പ് പ്രക്ഷേപണം", accounting: "അക്കൗണ്ടിംഗ്", orders: "ഓർഡറുകൾ",
-        visitorLog: "സന്ദർശക ലോഗ്", residentAlerts: "അലേർട്ടുകൾ", correction: "പ്രൊഫൈൽ തിരുത്തൽ", aboutUs: "ഞങ്ങളെ കുറിച്ച്",
+        appointAdmins: "അഡ്മിനെ നിയമിക്കുക", broadcastNotice: "അറിയിപ്പ് പ്രക്ഷേപണം", societyActions: "സൊസൈറ്റി നടപടികൾ", accountMaster: "അക്കൗണ്ട് മാസ്റ്റർ",
+        accounting: "അക്കൗണ്ടിംഗ്", orders: "ഓർഡറുകൾ", visitorLog: "സന്ദർശക ലോഗ്", dutyLogs: "ഡ്യൂട്ടി ലോഗുകൾ",
+        residentAlerts: "അലേർട്ടുകൾ", correction: "പ്രൊഫൈൽ തിരുത്തൽ", aboutUs: "ഞങ്ങളെ കുറിച്ച്",
         deleteAccount: "അക്കൗണ്ട് ഇല്ലാതാക്കുക", terms: "നിബന്ധനകളും വ്യവസ്ഥകളും", privacy: "സ്വകാര്യതാ നയം", logout: "ലോഗ്ഔട്ട്",
-        owner: "ഉടമ", tenant: "വാടകക്കാരൻ", familyMember: "കുടുംബാംഗം"
+        owner: "ഉടമ", tenant: "വാടകക്കാരൻ", familyMember: "കുടുംബാംഗം", residentRole: "താമസക്കാരൻ"
       }
     };
 
-    let currentLang = localStorage.getItem("webLang") || "en";
+    // Render Localized User Profile Badge
+    window.renderUserProfileBadge = function() {
+      const dict = i18n[currentLang] || i18n.en;
+      if (!currentUserData) return;
+
+      let typeText = currentUserData.type || dict.residentRole;
+      if (currentUserData.type === "Owner") typeText = dict.owner;
+      else if (currentUserData.type === "Tenant") typeText = dict.tenant;
+      else if (currentUserData.type === "Family Member") typeText = dict.familyMember;
+
+      const flatWord = dict.flat || "Flat";
+      const posText = currentUserData.position ? ` (${currentUserData.position})` : '';
+
+      document.getElementById("lblUserRolePosition").innerText = `${flatWord} ${currentUserData.flat || '--'} | ${typeText}${posText}`;
+    };
 
     // Dynamic Greeting Calculator
     window.updateGreetingMessage = function(userName) {
@@ -706,6 +727,14 @@
       document.getElementById("txtSignUpTitle").innerText = dict.signUpTitle;
       document.getElementById("txtGoLogin").innerText = dict.goLogin;
 
+      // Top Quick Nav
+      document.getElementById("txtQnHome").innerText = dict.home;
+      document.getElementById("txtQnNotices").innerText = dict.notices;
+      document.getElementById("txtQnBookings").innerText = dict.facilityBookings;
+      document.getElementById("txtQnStatement").innerText = dict.viewStatement;
+      document.getElementById("txtQnComplaints").innerText = dict.complaints;
+
+      // Side Menu
       document.getElementById("mHome").innerText = dict.home;
       document.getElementById("mNoticeBoard").innerText = dict.notices;
       document.getElementById("mSocietyTeam").innerText = dict.societyTeam;
@@ -716,9 +745,12 @@
       document.getElementById("mAdminPanel").innerText = dict.approvals;
       document.getElementById("mAppoint").innerText = dict.appointAdmins;
       document.getElementById("mBroadcast").innerText = dict.broadcastNotice;
+      document.getElementById("mSocietyActions").innerText = dict.societyActions;
+      document.getElementById("mAccountMaster").innerText = dict.accountMaster;
       document.getElementById("mAccounting").innerText = dict.accounting;
       document.getElementById("mOrders").innerText = dict.orders;
       document.getElementById("mVisitors").innerText = dict.visitorLog;
+      document.getElementById("mDutyLogs").innerText = dict.dutyLogs;
       document.getElementById("mAlerts").innerText = dict.residentAlerts;
       document.getElementById("mFlatMaster").innerText = dict.flats;
       document.getElementById("mCorrection").innerText = dict.correction;
@@ -741,6 +773,7 @@
       document.getElementById("txtSessionExpiredTitle").innerText = dict.sessionExpiredTitle;
       document.getElementById("txtSessionExpiredMsg").innerText = dict.sessionExpiredMsg;
 
+      if (currentUserData) renderUserProfileBadge();
       if (currentUserName) updateGreetingMessage(currentUserName);
     };
 
@@ -1123,29 +1156,28 @@
           let isVerified = false;
 
           if (userSnap.exists()) {
-            const data = userSnap.data();
-            const raw = data.verified;
-            isVerified = raw === true || raw === "true" || raw === "yes" || data.role === "super_admin";
+            currentUserData = userSnap.data();
+            const raw = currentUserData.verified;
+            isVerified = raw === true || raw === "true" || raw === "yes" || currentUserData.role === "super_admin";
 
-            currentUserFlat = data.flat || "";
-            currentUserName = data.name || user.email.split("@")[0];
+            currentUserFlat = currentUserData.flat || "";
+            currentUserName = currentUserData.name || user.email.split("@")[0];
 
-            // Update Greeting Message
             updateGreetingMessage(currentUserName);
 
-            // Set Top Bar Profile Badge details
             document.getElementById("lblUserName").innerText = currentUserName;
-            const posText = data.position ? ` (${data.position})` : '';
-            document.getElementById("lblUserRolePosition").innerText = `Flat ${data.flat || '--'} | ${data.type || 'Resident'}${posText}`;
-            if (data.profileImageUrl) {
-              document.getElementById("imgUserProfile").src = data.profileImageUrl;
-              document.getElementById("imgHomeGreetingAvatar").src = data.profileImageUrl;
+            renderUserProfileBadge();
+
+            if (currentUserData.profileImageUrl) {
+              document.getElementById("imgUserProfile").src = currentUserData.profileImageUrl;
+              document.getElementById("imgHomeGreetingAvatar").src = currentUserData.profileImageUrl;
             }
           } else {
             currentUserName = user.email.split("@")[0];
+            currentUserData = { name: currentUserName, flat: "--", type: "Resident" };
             updateGreetingMessage(currentUserName);
             document.getElementById("lblUserName").innerText = currentUserName;
-            document.getElementById("lblUserRolePosition").innerText = "Resident";
+            renderUserProfileBadge();
           }
 
           if (isVerified || isSuperAdmin) {
@@ -1265,7 +1297,9 @@
 
     // Calculate Total Outstanding Dues for Flat
     function loadHomeDuesSummary(flatNo) {
-      document.getElementById("lblHomeFlatInfo").innerText = `Flat ${flatNo || "--"}`;
+      const dict = i18n[currentLang] || i18n.en;
+      const flatWord = dict.flat || "Flat";
+      document.getElementById("lblHomeFlatInfo").innerText = `${flatWord} ${flatNo || "--"}`;
       if (!flatNo) {
         document.getElementById("lblHomeTotalDues").innerText = "₹ 0.00";
         return;
@@ -1284,7 +1318,9 @@
 
     // Load Detailed Account Statement
     function loadAccountStatement(flatNo) {
-      document.getElementById("lblStatementFlatHeader").innerText = `Account Statement & Dues Breakdown for Flat ${flatNo || "--"}`;
+      const dict = i18n[currentLang] || i18n.en;
+      const flatWord = dict.flat || "Flat";
+      document.getElementById("lblStatementFlatHeader").innerText = `Account Statement & Dues Breakdown for ${flatWord} ${flatNo || "--"}`;
       const tbody = document.getElementById("tbStatementRows");
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading statement details...</td></tr>';
 
