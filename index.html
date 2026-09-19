@@ -1,118 +1,448 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVS Residency | Society Management App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVS Residency - Multi-Platform Portal</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1e88e5;
+      --primary-dark: #1565c0;
+      --accent: #e53935;
+      --bg: #f4f6f9;
+      --card-bg: #ffffff;
+      --text: #2c3e50;
+      --text-muted: #7f8c8d;
+      --border: #e0e0e0;
+      --success: #4caf50;
+      --warning: #ff9800;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Top Header Bar */
+    .navbar { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 42px; height: 42px; border-radius: 50%; background: white; padding: 2px; }
+    .brand-title { font-size: 1.4rem; font-weight: 700; }
+    .brand-address { font-size: 0.8rem; opacity: 0.9; }
+
+    .nav-controls { display: flex; align-items: center; gap: 16px; }
+    .lang-select { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); border-radius: 6px; padding: 6px 12px; font-weight: 500; cursor: pointer; }
+    .lang-select option { color: var(--text); background: white; }
+    .user-badge { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; }
+    .btn-logout { background: var(--accent); color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+
+    /* Main Container & Tabs */
+    .container { max-width: 1200px; margin: 24px auto; padding: 0 16px; width: 100%; flex: 1; }
+    .tab-bar { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 8px; overflow-x: auto; }
+    .tab-btn { background: none; border: none; padding: 10px 20px; font-size: 1rem; font-weight: 600; color: var(--text-muted); cursor: pointer; border-radius: 8px; transition: all 0.2s; }
+    .tab-btn.active { background: var(--primary); color: white; }
+
+    /* Cards & Grid */
+    .card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
+    .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; color: var(--primary-dark); display: flex; align-items: center; gap: 8px; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background-color: #f8f9fa; font-weight: 600; color: var(--text-muted); }
+    tr:hover { background-color: #f1f4f8; }
+
+    /* Status Badges */
+    .badge { padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; display: inline-block; }
+    .badge-occupied { background: #e8f5e9; color: #2e7d32; }
+    .badge-vacate { background: #ffebee; color: #c62828; }
+    .badge-tenant { background: #e3f2fd; color: #1565c0; }
+
+    /* Action Buttons */
+    .btn { padding: 8px 16px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+    .btn-approve { background: var(--success); color: white; }
+    .btn-reject { background: var(--accent); color: white; }
+    .btn:hover { opacity: 0.9; }
+
+    /* Grid Layout for Flat Master */
+    .flat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1rem)); gap: 14px; margin-top: 12px; }
+    .flat-box { background: white; border: 2px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
+    .flat-box.occupied { border-color: var(--success); background: #f1f8e9; }
+    .flat-box.vacate { border-color: var(--accent); background: #fbe9e7; }
+    .flat-box.tenant { border-color: var(--primary); background: #e3f2fd; }
+    .flat-num { font-size: 1.1rem; font-weight: 700; }
+    .flat-status { font-size: 0.75rem; margin-top: 4px; text-transform: uppercase; font-weight: 600; }
+
+    /* Session Modal Alert */
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 9999; }
+    .modal { background: white; padding: 24px; border-radius: 12px; max-width: 420px; width: 90%; text-align: center; }
+    .modal h3 { color: var(--accent); margin-bottom: 12px; }
+    .modal p { margin-bottom: 20px; color: var(--text-muted); }
+  </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">SVS Residency</div>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="help.html">Help</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+  <!-- Top Navigation Header -->
+  <nav class="navbar">
+    <div class="brand">
+      <img id="headerLogo" src="/user.png" alt="Logo" onerror="this.src='https://via.placeholder.com/42'">
+      <div>
+        <div class="brand-title" id="lblAptName">SVS Residency</div>
+        <div class="brand-address" id="lblAptAddress">Ameenapur, Hyderabad</div>
+      </div>
+    </div>
+    <div class="nav-controls">
+      <!-- Multi-Language Selector -->
+      <select id="selLang" class="lang-select" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        <option value="ml">മലയാളം (Malayalam)</option>
+      </select>
+      <div id="userSection" class="user-badge" style="display:none;">
+        <i class="fa-solid fa-user"></i>
+        <span id="lblUserName">User</span>
+        <button class="btn-logout" onclick="logoutWebSession()">Logout</button>
+      </div>
+    </div>
+  </nav>
 
-    <section class="hero" id="home">
-        <h1>Smart Living for SVS Residents</h1>
-        <p>A unified digital platform for maintenance, notices, and community interaction.</p>
-        <a href="#" class="btn-download">Coming Soon to Google Play</a>
-    </section>
-
-    <section class="features" id="features">
-        <h2>Modern Society Management</h2>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h3>Multi-Language</h3>
-                <p>Access the app in Telugu, Hindi, Tamil, Malayalam, and Kannada with AI-powered translation.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Digital Accounting</h3>
-                <p>View maintenance receipts, outstanding balances, and society statements instantly.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Smart Notice Board</h3>
-                <p>Stay updated with society meetings and events. Post comments and interact with neighbors.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Facility Booking</h3>
-                <p>Book society amenities like 'Cellular' easily with real-time availability checks.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="privacy-section" id="privacy">
-        <div class="privacy-content">
-            <h2>Privacy Policy</h2>
-            <p><strong>Last Updated: August 07, 2026</strong></p>
-            <p>Welcome to SVS Residency. We value your privacy and are committed to protecting your personal data. This policy explains how we collect, use, share, and safeguard information when you use our application and services.</p>
-
-            <h3>Information We Collect</h3>
-            <p>We may collect information such as your name, contact details, apartment or resident information, maintenance-related records, and communications you send through the platform.</p>
-
-            <h3>How We Use Your Information</h3>
-            <p>Your information helps us provide resident services, process maintenance requests, send notices, manage community communication, and improve the overall experience for the society.</p>
-
-            <h3>Sharing of Information</h3>
-            <p>We do not sell your personal information. We may share it only with authorized society management personnel, service providers assisting us with operations, or as required by law.</p>
-
-            <h3>Data Security</h3>
-            <p>We take reasonable technical and organizational measures to protect your personal information against unauthorized access, loss, or misuse.</p>
-
-            <h3>Your Choices</h3>
-            <p>You may contact us to review, update, or request details about the personal information we hold about you, subject to applicable law and verification requirements.</p>
-
-            <h3>Contact Us</h3>
-            <p>If you have questions about this Privacy Policy or how your information is handled, please contact the SVS Residency management team through the contact details provided on this website.</p>
-        </div>
-    </section>
-
-    <section class="contact-section" id="contact">
-        <div class="contact-card">
-            <div class="contact-details">
-                <h2>Contact Us</h2>
-                <div class="contact-item">
-                    <span class="contact-label">Organization</span>
-                    <p>SVS Residency Management Committee</p>
-                </div>
-                <div class="contact-item">
-                    <span class="contact-label">Address</span>
-                    <p>H.No. 6–57/2, Road No.5B, Bhavanipuram, Ameenapur<br>Sangareddy, Telangana 502 032</p>
-                </div>
-                <div class="contact-item">
-                    <span class="contact-label">Email</span>
-                    <p><a href="mailto:remgeorge@gmail.com">remgeorge@gmail.com</a></p>
-                </div>
-            </div>
-            <form class="contact-form" id="contact-form" method="POST" action="https://formsubmit.co/ajax/remgeorge@gmail.com">
-                <input id="name" name="name" type="text" placeholder="Your Name" required>
-                <input id="email" name="email" type="email" placeholder="Your Email" required>
-                <textarea id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
-                <input type="hidden" name="_subject" value="New message from SVS Residency website">
-                <input type="hidden" name="_next" value="https://remgeorge.github.io/SVS-Residency/">
-                <button type="submit">Send Message</button>
-                <p class="form-note">This sends your message through a real email delivery service.</p>
-                <p id="form-message" class="form-message" aria-live="polite"></p>
-            </form>
-        </div>
-        
-    </section>
-    <div style="text-align: center; padding: 20px;">
-        <a href="terms.html" style="color: #0303F4; text-decoration: none; font-weight: bold;">Terms and Conditions</a>
+  <!-- Main Portal Container -->
+  <div class="container">
+    <!-- Navigation Tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('approvals')" id="tabApprovals"><i class="fa-solid fa-user-check"></i> <span id="txtTabApprovals">Sign-Up Approvals</span></button>
+      <button class="tab-btn" onclick="switchTab('flats')" id="tabFlats"><i class="fa-solid fa-building"></i> <span id="txtTabFlats">Flat Master</span></button>
+      <button class="tab-btn" onclick="switchTab('notices')" id="tabNotices"><i class="fa-solid fa-bullhorn"></i> <span id="txtTabNotices">Notice Board</span></button>
     </div>
 
-    <footer>
-        <p>&copy; 2026 SVS Residency. Developed by Remo George.</p>
-    </footer>
+    <!-- Section 1: Sign-Up Approvals & Rejections -->
+    <div id="secApprovals" class="card">
+      <div class="card-title"><i class="fa-solid fa-user-clock"></i> <span id="txtPendingSignups">Pending Sign-Up Approvals</span></div>
+      <table>
+        <thead>
+          <tr>
+            <th id="thName">Name</th>
+            <th id="thEmail">Email</th>
+            <th id="thFlat">Flat</th>
+            <th id="thType">Type / Status</th>
+            <th id="thAction">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbApprovals">
+          <tr><td colspan="5" style="text-align:center; color: var(--text-muted);">Loading pending approvals...</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <script src="script.js"></script>
+    <!-- Section 2: Flat Master Matrix -->
+    <div id="secFlats" class="card" style="display:none;">
+      <div class="card-title"><i class="fa-solid fa-hotel"></i> <span id="txtFlatMasterTitle">Flat Status Matrix</span></div>
+      <div class="flat-grid" id="gridFlats">
+        <div style="grid-column: 1/-1; text-align:center;">Loading flat status...</div>
+      </div>
+    </div>
+
+    <!-- Section 3: Notice Board -->
+    <div id="secNotices" class="card" style="display:none;">
+      <div class="card-title"><i class="fa-solid fa-bell"></i> <span id="txtNoticesTitle">Society Announcements</span></div>
+      <div id="listNotices">Loading announcements...</div>
+    </div>
+  </div>
+
+  <!-- Session Expired Modal -->
+  <div id="modalSessionExpired" class="modal-overlay">
+    <div class="modal">
+      <h3><i class="fa-solid fa-triangle-exclamation"></i> <span id="txtSessionExpiredTitle">Session Expired</span></h3>
+      <p id="txtSessionExpiredMsg">You have been logged in on another device or browser. This active web session has ended.</p>
+      <button class="btn btn-reject" onclick="acknowledgeSessionLogout()">OK</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDK Modules -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, doc, getDoc, getDocs, onSnapshot, updateDoc, deleteDoc, setDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // Firebase Config for svs-residency-68b41
+    const firebaseConfig = {
+      apiKey: "AIzaSyDummyKeyForSvsResidency68b41",
+      authDomain: "svs-residency-68b41.firebaseapp.com",
+      projectId: "svs-residency-68b41",
+      storageBucket: "svs-residency-68b41.appspot.com",
+      messagingSenderId: "1029384756",
+      appId: "1:1029384756:web:abcd1234efgh5678"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app, "svsresidency");
+    const auth = getAuth(app);
+
+    window.db = db;
+    window.auth = auth;
+
+    // Multi-Language Dictionary
+    const i18n = {
+      en: {
+        approvals: "Sign-Up Approvals", flats: "Flat Master", notices: "Notice Board",
+        pendingSignups: "Pending Sign-Up Approvals", name: "Name", email: "Email",
+        flat: "Flat", type: "Type / Status", action: "Actions",
+        flatMasterTitle: "Flat Status Matrix", noticesTitle: "Society Announcements",
+        sessionExpiredTitle: "Session Expired", sessionExpiredMsg: "You have been logged in on another device or browser. This session has ended."
+      },
+      hi: {
+        approvals: "साइन-अप अनुमोदन", flats: "फ्लैट मास्टर", notices: "सूचना पट्ट",
+        pendingSignups: "लंबित साइन-अप अनुमोदन", name: "नाम", email: "ईमेल",
+        flat: "फ्लैट", type: "प्रकार / स्थिति", action: "कार्रवाई",
+        flatMasterTitle: "फ्लैट स्थिति आव्यूह", noticesTitle: "समाज घोषणाएं",
+        sessionExpiredTitle: "सत्र समाप्त", sessionExpiredMsg: "आप दूसरे डिवाइस पर लॉग इन हैं। यह सत्र समाप्त हो गया है।"
+      },
+      te: {
+        approvals: "సైనప్ ఆమోదాలు", flats: "ఫ్లాట్ మాస్టర్", notices: "నోటీసు బోర్డు",
+        pendingSignups: "పెండింగ్ సైనప్ ఆమోదాలు", name: "పేరు", email: "ఈమెయిల్",
+        flat: "ఫ్లాట్", type: "రకం / స్థితి", action: "చర్యలు",
+        flatMasterTitle: "ఫ్లాట్ స్థితి మ్యాట్రిక్స్", noticesTitle: "సంఘం ప్రకటనలు",
+        sessionExpiredTitle: "సెషన్ ముగిసింది", sessionExpiredMsg: "మీరు మరొక పరికరంలో లాగిన్ అయ్యారు. ఈ సెషన్ ముగిసింది."
+      },
+      ta: {
+        approvals: "பதிவு ஒப்புதல்கள்", flats: "பிளாட் மாஸ்டர்", notices: "அறிவிப்பு பலகை",
+        pendingSignups: "நிலுவையில் உள்ள ஒப்புதல்கள்", name: "பெயர்", email: "மின்னஞ்சல்",
+        flat: "பிளாட்", type: "வகை / நிலை", action: "நடவடிக்கைகள்",
+        flatMasterTitle: "பிளாட் நிலை மேட்ரிக்స్", noticesTitle: "சங்க அறிவிப்புகள்",
+        sessionExpiredTitle: "அமர்வு காலாவதியானது", sessionExpiredMsg: "நீங்கள் మరொரு சாதனத்தில் లాగిన్ செய்துள்ளீர்கள்."
+      },
+      kn: {
+        approvals: "ಸೈನ್-ಅಪ್ ಅನುಮೋದನೆಗಳು", flats: "ಫ್ಲಾಟ್ ಮಾಸ್ಟರ್", notices: "ಸೂಚನಾ ಫಲಕ",
+        pendingSignups: "ಬಾಕಿ ಇರುವ ಅನುಮೋದನೆಗಳು", name: "ಹೆಸರು", email: "ಇಮೇಲ್",
+        flat: "ಫ್ಲಾಟ್", type: "ಪ್ರಕಾರ / ಸ್ಥಿತಿ", action: "ಕ್ರಿಯೆಗಳು",
+        flatMasterTitle: "ಫ್ಲಾಟ್ ಸ್ಥಿತಿ ಮ್ಯಾಟ್ರಿಕ್ಸ್", noticesTitle: "ಸೊಸೈಟಿ ಪ್ರಕಟಣೆಗಳು",
+        sessionExpiredTitle: "ಸೇಶನ್ ಅವಧಿ ಮುಗಿದಿದೆ", sessionExpiredMsg: "ನೀವು ಇನ್ನೊಂದು ಸಾಧನದಲ್ಲಿ ಲಾಗ್ ಇನ್ ಆಗಿದ್ದೀರಿ."
+      },
+      ml: {
+        approvals: "സൈൻ-അപ്പ് അംഗീകാരങ്ങൾ", flats: "ഫ്ലാറ്റ് മാസ്റ്റർ", notices: "നോട്ടീസ് ബോർഡ്",
+        pendingSignups: "തീർപ്പുകൽപ്പിക്കാത്ത അംഗീകാരങ്ങൾ", name: "പേര്", email: "ഇമെയിൽ",
+        flat: "ഫ്ലാറ്റ്", type: "തരം / നില", action: "നടപടികൾ",
+        flatMasterTitle: "ഫ്ലാറ്റ് നില മാട്രിക്സ്", noticesTitle: "സൊസൈറ്റി അറിയിപ്പുകൾ",
+        sessionExpiredTitle: "സെഷൻ കാലാവധി കഴിഞ്ഞു", sessionExpiredMsg: "നിങ്ങൾ മറ്റൊരു ഉപകരണത്തിൽ ലോഗിൻ ചെയ്തിരിക്കുന്നു."
+      }
+    };
+
+    let currentLang = localStorage.getItem("webLang") || "en";
+
+    window.changeLanguage = function(lang) {
+      currentLang = lang;
+      localStorage.setItem("webLang", lang);
+      const dict = i18n[lang] || i18n.en;
+
+      document.getElementById("txtTabApprovals").innerText = dict.approvals;
+      document.getElementById("txtTabFlats").innerText = dict.flats;
+      document.getElementById("txtTabNotices").innerText = dict.notices;
+      document.getElementById("txtPendingSignups").innerText = dict.pendingSignups;
+      document.getElementById("thName").innerText = dict.name;
+      document.getElementById("thEmail").innerText = dict.email;
+      document.getElementById("thFlat").innerText = dict.flat;
+      document.getElementById("thType").innerText = dict.type;
+      document.getElementById("thAction").innerText = dict.action;
+      document.getElementById("txtFlatMasterTitle").innerText = dict.flatMasterTitle;
+      document.getElementById("txtNoticesTitle").innerText = dict.noticesTitle;
+      document.getElementById("txtSessionExpiredTitle").innerText = dict.sessionExpiredTitle;
+      document.getElementById("txtSessionExpiredMsg").innerText = dict.sessionExpiredMsg;
+    };
+
+    // Load Branding
+    async function loadBranding() {
+      try {
+        const assetSnap = await getDoc(doc(db, "settings", "Assets"));
+        if (assetSnap.exists()) {
+          const data = assetSnap.data();
+          if (data.apartmentName) document.getElementById("lblAptName").innerText = data.apartmentName;
+          if (data.apartmentAddress) document.getElementById("lblAptAddress").innerText = data.apartmentAddress;
+          if (data.apartmentImageUrl) document.getElementById("headerLogo").src = data.apartmentImageUrl;
+        }
+      } catch (e) { console.error("Branding load error", e); }
+    }
+
+    // Real-Time Listeners
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("userSection").style.display = "flex";
+        document.getElementById("lblUserName").innerText = user.email.split("@")[0];
+        initSingleDeviceSessionListener(user.uid);
+        loadPendingApprovals();
+        loadFlatMaster();
+        loadNotices();
+      } else {
+        document.getElementById("userSection").style.display = "none";
+      }
+    });
+
+    // Single Active Device Session Listener
+    let sessionUnsub = null;
+    let localWebSessionToken = "";
+
+    function initSingleDeviceSessionListener(uid) {
+      localWebSessionToken = "sess_web_" + Date.now() + "_" + Math.random().toString(36).substring(2, 7);
+
+      // Update session token in Firestore
+      updateDoc(doc(db, "residents", uid), {
+        activeSessionToken: localWebSessionToken,
+        lastActiveTimestamp: Date.now()
+      }).catch(e => console.log("Session init update error", e));
+
+      if (sessionUnsub) sessionUnsub();
+      sessionUnsub = onSnapshot(doc(db, "residents", uid), (snap) => {
+        if (!snap.exists()) return;
+        const remoteToken = snap.data().activeSessionToken || "";
+        if (remoteToken && remoteToken !== localWebSessionToken) {
+          document.getElementById("modalSessionExpired").style.display = "flex";
+        }
+      });
+    }
+
+    window.acknowledgeSessionLogout = function() {
+      signOut(auth).then(() => { window.location.reload(); });
+    };
+
+    window.logoutWebSession = function() {
+      signOut(auth).then(() => { window.location.reload(); });
+    };
+
+    // Load Pending Approvals
+    function loadPendingApprovals() {
+      onSnapshot(collection(db, "residents"), (snaps) => {
+        const tbody = document.getElementById("tbApprovals");
+        tbody.innerHTML = "";
+        let count = 0;
+
+        snaps.forEach((docSnap) => {
+          const res = docSnap.data();
+          if (res.verified === "false" && res.email) {
+            count++;
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td><strong>${res.name || "N/A"}</strong></td>
+              <td>${res.email}</td>
+              <td>${res.flat || "--"}</td>
+              <td><span class="badge badge-tenant">${res.type || "Resident"}</span></td>
+              <td>
+                <button class="btn btn-approve" onclick="approveResident('${docSnap.id}', '${res.flat}')">Approve</button>
+                <button class="btn btn-reject" onclick="rejectResident('${docSnap.id}', '${res.flat}', '${res.type}')">Reject</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          }
+        });
+
+        if (count === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-muted);">No pending sign-up requests.</td></tr>`;
+        }
+      });
+    }
+
+    // Approve Resident
+    window.approveResident = async function(uid, flat) {
+      try {
+        await updateDoc(doc(db, "residents", uid), { verified: "true", approvedDate: new Date().toISOString() });
+        if (flat) {
+          await updateDoc(doc(db, "occupancy", flat), { verified: "true" }).catch(() => {});
+        }
+        alert("Resident Approved Successfully!");
+      } catch (e) { alert("Error approving: " + e.message); }
+    };
+
+    // Reject Resident (Strict Rejection Rules)
+    window.rejectResident = async function(uid, flat, type) {
+      if (!confirm("Are you sure you want to reject and delete this request?")) return;
+
+      try {
+        const isOwner = (type || "").toLowerCase() === "owner";
+        const isTenant = (type || "").toLowerCase() === "tenant" || (type || "").toLowerCase() === "tenent";
+
+        if (isOwner && flat) {
+          // Rule 1: Delete occupancy, residents for flat, set flats -> status = " "
+          await deleteDoc(doc(db, "occupancy", flat)).catch(() => {});
+          await updateDoc(doc(db, "flats", flat), { status: " " }).catch(() => {});
+          const qRes = query(collection(db, "residents"), where("flat", "==", flat));
+          const resSnaps = await getDocs(qRes);
+          resSnaps.forEach(async (d) => await deleteDoc(d.ref));
+        } else if (isTenant && flat) {
+          // Rule 2: Delete tenant/family occupancy & residents for flat, set flats -> status = "Vacate"
+          await deleteDoc(doc(db, "occupancy", flat)).catch(() => {});
+          await updateDoc(doc(db, "flats", flat), { status: "Vacate" }).catch(() => {});
+          const qRes = query(collection(db, "residents"), where("flat", "==", flat));
+          const resSnaps = await getDocs(qRes);
+          resSnaps.forEach(async (d) => {
+            const data = d.data();
+            if (d.id === uid || (data.type || "").toLowerCase() === "tenant" || (data.familyheadType || "").toLowerCase() === "tenant") {
+              await deleteDoc(d.ref);
+            }
+          });
+        } else {
+          // Rule 3: Family member rejection -> delete specific resident doc
+          await deleteDoc(doc(db, "residents", uid));
+        }
+        alert("Request Rejected Successfully! Auth cleanup triggered.");
+      } catch (e) { alert("Error rejecting request: " + e.message); }
+    };
+
+    // Load Flat Master Matrix
+    function loadFlatMaster() {
+      onSnapshot(collection(db, "flats"), (snaps) => {
+        const grid = document.getElementById("gridFlats");
+        grid.innerHTML = "";
+        snaps.forEach((d) => {
+          const f = d.data();
+          const flatNum = f.flatNumber || d.id;
+          const status = (f.status || "vacate").trim().toLowerCase();
+
+          const box = document.createElement("div");
+          box.className = `flat-box ${status === "occupied" ? "occupied" : status === "tenant" ? "tenant" : "vacate"}`;
+          box.innerHTML = `
+            <div class="flat-num">${flatNum}</div>
+            <div class="flat-status">${f.status || "VACATE"}</div>
+          `;
+          grid.appendChild(box);
+        });
+      });
+    }
+
+    // Load Announcements
+    function loadNotices() {
+      onSnapshot(collection(db, "notices"), (snaps) => {
+        const list = document.getElementById("listNotices");
+        list.innerHTML = "";
+        snaps.forEach((d) => {
+          const n = d.data();
+          const item = document.createElement("div");
+          item.style.marginBottom = "14px";
+          item.style.borderBottom = "1px solid #eee";
+          item.style.paddingBottom = "10px";
+          item.innerHTML = `
+            <h4 style="color:var(--primary-dark);">${n.title || "Notice"}</h4>
+            <p style="font-size:0.9rem; margin-top:4px;">${n.description || ""}</p>
+          `;
+          list.appendChild(item);
+        });
+      });
+    }
+
+    // Initialize UI
+    loadBranding();
+    changeLanguage(currentLang);
+    document.getElementById("selLang").value = currentLang;
+
+    window.switchTab = function(tab) {
+      document.getElementById("secApprovals").style.display = tab === "approvals" ? "block" : "none";
+      document.getElementById("secFlats").style.display = tab === "flats" ? "block" : "none";
+      document.getElementById("secNotices").style.display = tab === "notices" ? "block" : "none";
+
+      document.getElementById("tabApprovals").className = `tab-btn ${tab === "approvals" ? "active" : ""}`;
+      document.getElementById("tabFlats").className = `tab-btn ${tab === "flats" ? "active" : ""}`;
+      document.getElementById("tabNotices").className = `tab-btn ${tab === "notices" ? "active" : ""}`;
+    };
+  </script>
 </body>
 </html>
-
