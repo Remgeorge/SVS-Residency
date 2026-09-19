@@ -151,7 +151,7 @@
           <span id="lblUserName" style="font-weight:700;">User</span>
           <span id="lblUserRolePosition" style="font-size:0.75rem; opacity:0.85;">Flat -- | Resident</span>
         </div>
-        <button class="btn-logout" onclick="logoutWebSession()"><i class="fa-solid fa-power-off"></i> Logout</button>
+        <button class="btn-logout" onclick="logoutWebSession()"><i class="fa-solid fa-power-off"></i> <span id="txtLogoutBtn">Logout</span></button>
       </div>
     </div>
   </nav>
@@ -277,12 +277,12 @@
       <!-- Group 1: Resident Services -->
       <div class="menu-group">
         <div class="group-title" id="grpResident">Resident Services</div>
-        <a class="menu-item active" onclick="navTo('home', this)"><i class="fa-solid fa-house" style="color:#1e88e5;"></i> <span>Home / Overview</span></a>
-        <a class="menu-item" onclick="navTo('notices', this)"><i class="fa-solid fa-bullhorn" style="color:#fb8c00;"></i> <span id="mNoticeBoard">Notice Board</span></a>
+        <a class="menu-item active" onclick="navTo('home', this)" id="mHomeItem"><i class="fa-solid fa-house" style="color:#1e88e5;"></i> <span id="mHome">Home / Overview</span></a>
+        <a class="menu-item" onclick="navTo('notices', this)" id="mNoticesItem"><i class="fa-solid fa-bullhorn" style="color:#fb8c00;"></i> <span id="mNoticeBoard">Notice Board</span></a>
         <a class="menu-item" onclick="navTo('directory', this)"><i class="fa-solid fa-users" style="color:#00897b;"></i> <span id="mSocietyTeam">Society Team</span></a>
         <a class="menu-item" onclick="navTo('assets', this)"><i class="fa-solid fa-building-user" style="color:#1e88e5;"></i> <span id="mAssets">Asset Info</span></a>
         <a class="menu-item" onclick="navTo('bookings', this)"><i class="fa-solid fa-calendar-check" style="color:#8e24aa;"></i> <span id="mBookings">Facility Bookings</span></a>
-        <a class="menu-item" onclick="navTo('statement', this)"><i class="fa-solid fa-file-invoice-dollar" style="color:#4caf50;"></i> <span>View Statement</span></a>
+        <a class="menu-item" onclick="navTo('statement', this)"><i class="fa-solid fa-file-invoice-dollar" style="color:#4caf50;"></i> <span id="mStatement">View Statement</span></a>
         <a class="menu-item" onclick="navTo('complaints', this)"><i class="fa-solid fa-circle-exclamation" style="color:#e53935;"></i> <span id="mComplaints">Complaints</span></a>
         <a class="menu-item" onclick="navTo('approvals', this)"><i class="fa-solid fa-user-check" style="color:#1565c0;"></i> <span id="mAdminPanel">Sign-Up Approvals</span></a>
       </div>
@@ -331,24 +331,24 @@
             <img id="imgHomeGreetingAvatar" src="https://via.placeholder.com/48" alt="Avatar" onerror="this.src='https://via.placeholder.com/48'" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid var(--primary);">
             <div>
               <h2 id="lblHomeGreeting" style="color:var(--primary-dark); font-size:1.3rem; font-weight:700;">Good Morning, User! Welcome Back!</h2>
-              <p style="color:var(--text-muted); font-size:0.85rem; margin-top:2px;">SVS Residency Resident Portal</p>
+              <p style="color:var(--text-muted); font-size:0.85rem; margin-top:2px;" id="lblHomeSubGreeting">SVS Residency Resident Portal</p>
             </div>
           </div>
         </div>
 
         <div class="dues-card">
           <div>
-            <div style="font-size:0.9rem; opacity:0.9;">Total Outstanding Dues</div>
+            <div style="font-size:0.9rem; opacity:0.9;" id="txtTotalDuesLabel">Total Outstanding Dues</div>
             <div id="lblHomeFlatInfo" style="font-size:1.1rem; font-weight:700; margin-top:2px;">Flat --</div>
             <div id="lblHomeTotalDues" class="dues-amount">₹ 0.00</div>
           </div>
           <button class="btn-statement" onclick="navTo('statement')">
-            <i class="fa-solid fa-file-invoice-dollar"></i> View Statement
+            <i class="fa-solid fa-file-invoice-dollar"></i> <span id="btnTxtViewStatement">View Statement</span>
           </button>
         </div>
 
         <div class="card">
-          <div class="card-title"><i class="fa-solid fa-bullhorn" style="color:#fb8c00;"></i> <span>Latest Society Notices</span></div>
+          <div class="card-title"><i class="fa-solid fa-bullhorn" style="color:#fb8c00;"></i> <span id="txtLatestNoticesTitle">Latest Society Notices</span></div>
           <div id="listHomeNotices">Loading latest notices...</div>
         </div>
       </div>
@@ -366,10 +366,10 @@
         <table>
           <thead>
             <tr>
-              <th>Title / Category</th>
-              <th>Purpose / Description</th>
-              <th>Date</th>
-              <th>Amount (₹)</th>
+              <th id="thCategory">Title / Category</th>
+              <th id="thPurpose">Purpose / Description</th>
+              <th id="thDate">Date</th>
+              <th id="thAmount">Amount (₹)</th>
             </tr>
           </thead>
           <tbody id="tbStatementRows">
@@ -377,7 +377,7 @@
           </tbody>
           <tfoot>
             <tr style="background:#f8f9fa; font-weight:700;">
-              <td colspan="3" style="text-align:right;">Total Outstanding:</td>
+              <td colspan="3" style="text-align:right;" id="txtTotalSumLabel">Total Outstanding:</td>
               <td id="lblStatementTotalSum" style="color:var(--accent); font-size:1.1rem;">₹ 0.00</td>
             </tr>
           </tfoot>
@@ -556,6 +556,7 @@
 
     let webOccupancyChoice = "false";
     let currentUserFlat = "";
+    let currentUserName = "";
 
     // Toggle Password Input Visibility
     window.togglePasswordVisibility = function(inputId, eyeId) {
@@ -570,18 +571,6 @@
       }
     };
 
-    // Update Greeting Message
-    window.updateGreetingMessage = function(userName) {
-      const hour = new Date().getHours();
-      let timeGreeting = "Good Morning";
-      if (hour >= 12 && hour < 17) timeGreeting = "Good Afternoon";
-      else if (hour >= 17 && hour < 22) timeGreeting = "Good Evening";
-      else if (hour >= 22 || hour < 5) timeGreeting = "Good Night";
-
-      const name = userName || 'Resident';
-      document.getElementById("lblHomeGreeting").innerText = `${timeGreeting}, ${name}! Welcome Back!`;
-    };
-
     // Multi-Language Dictionary
     const i18n = {
       en: {
@@ -592,7 +581,14 @@
         pendingSignups: "Pending Sign-Up Approvals", name: "Name", email: "Email",
         flat: "Flat", type: "Type / Status", action: "Actions",
         flatMasterTitle: "Flat Status Matrix", noticesTitle: "Society Announcements",
-        sessionExpiredTitle: "Session Expired", sessionExpiredMsg: "You have been logged in on another device or browser. This session has ended."
+        sessionExpiredTitle: "Session Expired", sessionExpiredMsg: "You have been logged in on another device or browser. This session has ended.",
+        gm: "Good Morning", ga: "Good Afternoon", ge: "Good Evening", gn: "Good Night", wb: "Welcome Back!",
+        totalDues: "Total Outstanding Dues", viewStatement: "View Statement", home: "Home / Overview",
+        societyTeam: "Society Team", assetInfo: "Asset Info", facilityBookings: "Facility Bookings", complaints: "Complaints",
+        appointAdmins: "Appoint Admins", broadcastNotice: "Broadcast Notice", accounting: "Accounting & Ledger", orders: "Orders & Vendors",
+        visitorLog: "Visitor Entry Log", residentAlerts: "Resident Alerts", correction: "Profile Correction", aboutUs: "About Us",
+        deleteAccount: "Delete Account", terms: "Terms & Conditions", privacy: "Privacy Policy", logout: "Logout",
+        owner: "Owner", tenant: "Tenant", familyMember: "Family Member"
       },
       hi: {
         loginTitle: "SVS रेजिडेंसी में लॉगिन करें", emailHint: "ईमेल पता", passwordHint: "पासवर्ड", btnLogin: "लॉगिन",
@@ -602,7 +598,14 @@
         pendingSignups: "लंबित साइन-अप अनुमोदन", name: "नाम", email: "ईमेल",
         flat: "फ्लैट", type: "प्रकार / स्थिति", action: "कार्रवाई",
         flatMasterTitle: "फ्लैट स्थिति आव्यूह", noticesTitle: "समाज घोषणाएं",
-        sessionExpiredTitle: "सत्र समाप्त", sessionExpiredMsg: "आप दूसरे डिवाइस पर लॉग इन हैं। यह सत्र समाप्त हो गया है।"
+        sessionExpiredTitle: "सत्र समाप्त", sessionExpiredMsg: "आप दूसरे डिवाइस पर लॉग इन हैं। यह सत्र समाप्त हो गया है।",
+        gm: "शुभ प्रभात", ga: "शुभ दोपहर", ge: "शुभ संध्या", gn: "शुभ रात्रि", wb: "वापसी पर स्वागत है!",
+        totalDues: "कुल बकाया शुल्क", viewStatement: "विवरण देखें", home: "होम / अवलोकन",
+        societyTeam: "सोसायटी टीम", assetInfo: "संपत्ति विवरण", facilityBookings: "सुविधा बुकिंग", complaints: "शिकायतें",
+        appointAdmins: "एडमिन नियुक्त करें", broadcastNotice: "प्रसारण सूचना", accounting: "लेखा और बहीखाता", orders: "आदेश और विक्रेता",
+        visitorLog: "आगंतुक प्रविष्टि लॉग", residentAlerts: "निवासी अलर्ट", correction: "प्रोफ़ाइल सुधार", aboutUs: "हमारे बारे में",
+        deleteAccount: "खाता हटाएँ", terms: "नियम और शर्तें", privacy: "गोपनीयता नीति", logout: "लॉगआउट",
+        owner: "मालिक", tenant: "किरायादार", familyMember: "परिवार का सदस्य"
       },
       te: {
         loginTitle: "SVS రెసిడెన్సీ లాగిన్", emailHint: "ఈమెయిల్ చిరునామా", passwordHint: "పాస్‌వర్డ్", btnLogin: "లాగిన్",
@@ -612,7 +615,14 @@
         pendingSignups: "పెండింగ్ సైనప్ ఆమోదాలు", name: "పేరు", email: "ఈమెయిల్",
         flat: "ఫ్లాట్", type: "రకం / స్థితి", action: "చర్యలు",
         flatMasterTitle: "ఫ్లాట్ స్థితి మ్యాట్రిక్స్", noticesTitle: "సంఘం ప్రకటనలు",
-        sessionExpiredTitle: "సెషన్ ముగిసింది", sessionExpiredMsg: "మీరు మరొక పరికరంలో లాగిన్ అయ్యారు. ఈ సెషన్ ముగిసింది."
+        sessionExpiredTitle: "సెషన్ ముగిసింది", sessionExpiredMsg: "మీరు మరొక పరికరంలో లాగిన్ అయ్యారు. ఈ సెషన్ ముగిసింది.",
+        gm: "శుభోదయం", ga: "శుభ మధ్యాహ్నం", ge: "శుభ సాయంత్రం", gn: "శుభరాత్రి", wb: "మళ్లీ స్వాగతం!",
+        totalDues: "మొత్తం చెల్లించాల్సిన బకాయిలు", viewStatement: "స్టేట్‌మెంట్ చూడండి", home: "హోమ్ / అంచనా",
+        societyTeam: "సంఘం బృందం", assetInfo: "ఆస్తి సమాచారం", facilityBookings: "సౌకర్యాల బుకింగ్", complaints: "ఫిర్యాదులు",
+        appointAdmins: "అడ్మిన్‌లను నియమించండి", broadcastNotice: "బ్రాడ్‌కాస్ట్ నోటీసు", accounting: "అకౌంటింగ్ మరియు లెడ్జర్", orders: "ఆర్డర్లు & విక్రేతలు",
+        visitorLog: "సందర్శకుల ఎంట్రీ లాగ్", residentAlerts: "నివాసి హెచ్చరికలు", correction: "ప్రొఫైల్ దిద్దుబాటు", aboutUs: "మా గురించి",
+        deleteAccount: "ఖాతాను తొలగించండి", terms: "నిబంధనలు మరియు షరతులు", privacy: "గోప్యతా విధానం", logout: "లాగౌట్",
+        owner: "యజమాని", tenant: "అద్దెదారు", familyMember: "కుటుంబ సభ్యుడు"
       },
       ta: {
         loginTitle: "SVS ரெசிடென்சி உள்நுழைவு", emailHint: "மின்னஞ்சல் முகவரி", passwordHint: "கடவுச்சொல்", btnLogin: "உள்நுழை",
@@ -622,7 +632,14 @@
         pendingSignups: "நிலுவையில் உள்ள ஒப்புதல்கள்", name: "பெயர்", email: "மின்னஞ்சல்",
         flat: "பிளாட்", type: "வகை / நிலை", action: "நடவடிக்கைகள்",
         flatMasterTitle: "பிளாட் நிலை மேட்ரிக்ஸ்", noticesTitle: "சங்க அறிவிப்புகள்",
-        sessionExpiredTitle: "அமர்வு காலாவதியானது", sessionExpiredMsg: "நீங்கள் మరொரு சாதனத்தில் లాగిన్ செய்துள்ளீர்கள்."
+        sessionExpiredTitle: "அமர்வு காலாவதியானது", sessionExpiredMsg: "நீங்கள் మరொரு சாதனத்தில் లాగిన్ செய்துள்ளீர்கள்.",
+        gm: "காலை வணக்கம்", ga: "மதிய வணக்கம்", ge: "மாலை வணக்கம்", gn: "இரவு வணக்கம்", wb: "மீண்டும் வருக!",
+        totalDues: "மொத்த நிலுவைத் தொகை", viewStatement: "அறிக்கையைப் பார்க்கவும்", home: "முகப்பு",
+        societyTeam: "சங்கக் குழு", assetInfo: "சொத்து விவரங்கள்", facilityBookings: "வசதி முன்பதிவு", complaints: "புகார்கள்",
+        appointAdmins: "நிர்வாகிகளை நியமிக்கவும்", broadcastNotice: "அறிவிப்பு ஒளிபரப்பு", accounting: "கணக்கியல்", orders: "ஆர்டர்கள்",
+        visitorLog: "பார்வையாளர் பதிவு", residentAlerts: "எச்சரிக்கைகள்", correction: "சுயவிவர திருத்தம்", aboutUs: "எங்களைப் பற்றி",
+        deleteAccount: "கணக்கை நீக்கு", terms: "விதிகள் மற்றும் நிபந்தனைகள்", privacy: "தனியுரிமைக் கொள்கை", logout: "வெளியேறு",
+        owner: "உரிமையாளர்", tenant: "வாடகைதாரர்", familyMember: "குடும்ப உறுப்பினர்"
       },
       kn: {
         loginTitle: "SVS ರೆಸಿಡೆನ್ಸಿ ಲಾಗಿನ್", emailHint: "ಇಮೇಲ್ ವಿಳಾಸ", passwordHint: "ಪಾಸ್‌ವರ್ಡ್", btnLogin: "ಲಾಗಿನ್",
@@ -632,7 +649,14 @@
         pendingSignups: "ಬಾಕಿ ಇರುವ ಅನುಮೋದನೆಗಳು", name: "ಹೆಸರು", email: "ಇಮೇಲ್",
         flat: "ಫ್ಲಾಟ್", type: "ಪ್ರಕಾರ / ಸ್ಥಿತಿ", action: "ಕ್ರಿಯೆಗಳು",
         flatMasterTitle: "ಫ್ಲಾಟ್ ಸ್ಥಿತಿ ಮ್ಯಾಟ್ರಿಕ್ಸ್", noticesTitle: "ಸೊಸೈಟಿ ಪ್ರಕಟಣೆಗಳು",
-        sessionExpiredTitle: "ಸೇಶನ್ ಅವಧಿ ಮುಗಿದಿದೆ", sessionExpiredMsg: "ನೀವು ಇನ್ನೊಂದು ಸಾಧನದಲ್ಲಿ ಲಾಗ್ ಇನ್ ಆಗಿದ್ದೀರಿ."
+        sessionExpiredTitle: "ಸೇಶನ್ ಅವಧಿ ಮುಗಿದಿದೆ", sessionExpiredMsg: "ನೀವು ಇನ್ನೊಂದು ಸಾಧನದಲ್ಲಿ ಲಾಗ್ ಇನ್ ಆಗಿದ್ದೀರಿ.",
+        gm: "ಶುಭೋದಯ", ga: "ಶುಭ ಮಧ್ಯಾಹ್ನ", ge: "ಶುಭ ಸಂಜೆ", gn: "ಶುಭ ರಾತ್ರಿ", wb: "ಮತ್ತೆ ಸುಸ್ವಾಗತ!",
+        totalDues: "ಒಟ್ಟು ಬಾಕಿ ಮೊತ್ತ", viewStatement: "ಸ್ಟೇಟ್‌ಮೆಂಟ್ ನೋಡಿ", home: "ಹೋಮ್",
+        societyTeam: "ಸೊಸೈಟಿ ತಂಡ", assetInfo: "ಆಸ್ತಿ ವಿವರಗಳು", facilityBookings: "ಸೌಲಭ್ಯ ಬುಕಿಂಗ್", complaints: "ದೂರುಗಳು",
+        appointAdmins: "ಅಡ್ಮಿನ್ ನೇಮಿಸಿ", broadcastNotice: "ಪ್ರಕಟಣೆ ಪ್ರಸಾರ", accounting: "ಲೆಕ್ಕಪತ್ರ", orders: "ಆರ್ಡರ್‌ಗಳು",
+        visitorLog: "ಸಂದರ್ಶಕರ ಲಾಗ್", residentAlerts: "ಎಚ್ಚರಿಕೆಗಳು", correction: "ಪ್ರೊಫೈಲ್ ತಿದ್ದುಪಡಿ", aboutUs: "ನಮ್ಮ ಬಗ್ಗೆ",
+        deleteAccount: "ಖಾತೆ ಅಳಿಸಿ", terms: "ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು", privacy: "ಗೌಪ್ಯತಾ ನೀತಿ", logout: "ಲಾಗ್‌ಔಟ್",
+        owner: "ಮಾಲೀಕರು", tenant: "ಬಾಡಿಗೆದಾರ", familyMember: "ಕುಟುಂಬದ ಸದಸ್ಯ"
       },
       ml: {
         loginTitle: "SVS റെസിഡൻസി ലോഗിൻ", emailHint: "ഇമെയിൽ വിലാസം", passwordHint: "പാസ്‌വേഡ്", btnLogin: "ലോഗിൻ",
@@ -642,11 +666,31 @@
         pendingSignups: "തീർപ്പുകൽപ്പിക്കാത്ത അംഗീകാരങ്ങൾ", name: "പേര്", email: "ഇമെയിൽ",
         flat: "ഫ്ലാറ്റ്", type: "തരം / നില", action: "നടപടികൾ",
         flatMasterTitle: "ഫ്ലാറ്റ് നില മാട്രിക്സ്", noticesTitle: "സൊസൈറ്റി അറിയിപ്പുകൾ",
-        sessionExpiredTitle: "സെഷൻ കാലാവധി കഴിഞ്ഞു", sessionExpiredMsg: "നിങ്ങൾ മറ്റൊരു ഉപകരണത്തിൽ ലോഗിൻ ചെയ്തിരിക്കുന്നു."
+        sessionExpiredTitle: "സെഷൻ കാലാവധി കഴിഞ്ഞു", sessionExpiredMsg: "നിങ്ങൾ മറ്റൊരു ഉപകരണത്തിൽ ലോഗിൻ ചെയ്തിരിക്കുന്നു.",
+        gm: "സുപ്രഭാതം", ga: "ഉച്ചയ്ക്കുശേഷം വന്ദനം", ge: "സന്ധ്യാവന്ദനം", gn: "ശുഭരാത്രി", wb: "വീണ്ടും സ്വാഗതം!",
+        totalDues: "ആകെ കുടിശ്ശിക തുക", viewStatement: "സ്റ്റേറ്റ്മെന്റ് കാണുക", home: "ഹോം",
+        societyTeam: "സൊസൈറ്റി ടീം", assetInfo: "സ്വത്ത് വിവരങ്ങൾ", facilityBookings: "സൗകര്യ ബുക്കിംഗ്", complaints: "പരാതികൾ",
+        appointAdmins: "അഡ്മിനെ നിയമിക്കുക", broadcastNotice: "അറിയിപ്പ് പ്രക്ഷേപണം", accounting: "അക്കൗണ്ടിംഗ്", orders: "ഓർഡറുകൾ",
+        visitorLog: "സന്ദർശക ലോഗ്", residentAlerts: "അലേർട്ടുകൾ", correction: "പ്രൊഫൈൽ തിരുത്തൽ", aboutUs: "ഞങ്ങളെ കുറിച്ച്",
+        deleteAccount: "അക്കൗണ്ട് ഇല്ലാതാക്കുക", terms: "നിബന്ധനകളും വ്യവസ്ഥകളും", privacy: "സ്വകാര്യതാ നയം", logout: "ലോഗ്ഔട്ട്",
+        owner: "ഉടമ", tenant: "വാടകക്കാരൻ", familyMember: "കുടുംബാംഗം"
       }
     };
 
     let currentLang = localStorage.getItem("webLang") || "en";
+
+    // Dynamic Greeting Calculator
+    window.updateGreetingMessage = function(userName) {
+      const dict = i18n[currentLang] || i18n.en;
+      const hour = new Date().getHours();
+      let timeGreeting = dict.gm;
+      if (hour >= 12 && hour < 17) timeGreeting = dict.ga;
+      else if (hour >= 17 && hour < 22) timeGreeting = dict.ge;
+      else if (hour >= 22 || hour < 5) timeGreeting = dict.gn;
+
+      const name = userName || 'Resident';
+      document.getElementById("lblHomeGreeting").innerText = `${timeGreeting}, ${name}! ${dict.wb}`;
+    };
 
     window.changeLanguage = function(lang) {
       currentLang = lang;
@@ -662,9 +706,30 @@
       document.getElementById("txtSignUpTitle").innerText = dict.signUpTitle;
       document.getElementById("txtGoLogin").innerText = dict.goLogin;
 
+      document.getElementById("mHome").innerText = dict.home;
       document.getElementById("mNoticeBoard").innerText = dict.notices;
-      document.getElementById("mFlatMaster").innerText = dict.flats;
+      document.getElementById("mSocietyTeam").innerText = dict.societyTeam;
+      document.getElementById("mAssets").innerText = dict.assetInfo;
+      document.getElementById("mBookings").innerText = dict.facilityBookings;
+      document.getElementById("mStatement").innerText = dict.viewStatement;
+      document.getElementById("mComplaints").innerText = dict.complaints;
       document.getElementById("mAdminPanel").innerText = dict.approvals;
+      document.getElementById("mAppoint").innerText = dict.appointAdmins;
+      document.getElementById("mBroadcast").innerText = dict.broadcastNotice;
+      document.getElementById("mAccounting").innerText = dict.accounting;
+      document.getElementById("mOrders").innerText = dict.orders;
+      document.getElementById("mVisitors").innerText = dict.visitorLog;
+      document.getElementById("mAlerts").innerText = dict.residentAlerts;
+      document.getElementById("mFlatMaster").innerText = dict.flats;
+      document.getElementById("mCorrection").innerText = dict.correction;
+      document.getElementById("mAbout").innerText = dict.aboutUs;
+      document.getElementById("mDeleteAccount").innerText = dict.deleteAccount;
+      document.getElementById("mTerms").innerText = dict.terms;
+      document.getElementById("mPrivacy").innerText = dict.privacy;
+      document.getElementById("txtLogoutBtn").innerText = dict.logout;
+
+      document.getElementById("txtTotalDuesLabel").innerText = dict.totalDues;
+      document.getElementById("btnTxtViewStatement").innerText = dict.viewStatement;
       document.getElementById("txtPendingSignups").innerText = dict.pendingSignups;
       document.getElementById("thName").innerText = dict.name;
       document.getElementById("thEmail").innerText = dict.email;
@@ -675,6 +740,8 @@
       document.getElementById("txtNoticesTitle").innerText = dict.noticesTitle;
       document.getElementById("txtSessionExpiredTitle").innerText = dict.sessionExpiredTitle;
       document.getElementById("txtSessionExpiredMsg").innerText = dict.sessionExpiredMsg;
+
+      if (currentUserName) updateGreetingMessage(currentUserName);
     };
 
     // Live Title Case & English Only Filter
@@ -1061,13 +1128,13 @@
             isVerified = raw === true || raw === "true" || raw === "yes" || data.role === "super_admin";
 
             currentUserFlat = data.flat || "";
-            const userName = data.name || user.email.split("@")[0];
+            currentUserName = data.name || user.email.split("@")[0];
 
             // Update Greeting Message
-            updateGreetingMessage(userName);
+            updateGreetingMessage(currentUserName);
 
             // Set Top Bar Profile Badge details
-            document.getElementById("lblUserName").innerText = userName;
+            document.getElementById("lblUserName").innerText = currentUserName;
             const posText = data.position ? ` (${data.position})` : '';
             document.getElementById("lblUserRolePosition").innerText = `Flat ${data.flat || '--'} | ${data.type || 'Resident'}${posText}`;
             if (data.profileImageUrl) {
@@ -1075,9 +1142,9 @@
               document.getElementById("imgHomeGreetingAvatar").src = data.profileImageUrl;
             }
           } else {
-            const userName = user.email.split("@")[0];
-            updateGreetingMessage(userName);
-            document.getElementById("lblUserName").innerText = userName;
+            currentUserName = user.email.split("@")[0];
+            updateGreetingMessage(currentUserName);
+            document.getElementById("lblUserName").innerText = currentUserName;
             document.getElementById("lblUserRolePosition").innerText = "Resident";
           }
 
