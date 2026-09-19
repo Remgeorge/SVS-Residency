@@ -26,7 +26,7 @@
     /* Top Header Bar */
     .navbar { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .brand { display: flex; align-items: center; gap: 12px; }
-    .brand img { width: 42px; height: 42px; border-radius: 50%; background: white; padding: 2px; }
+    .brand img { width: 42px; height: 42px; border-radius: 50%; background: white; padding: 2px; object-fit: cover; }
     .brand-title { font-size: 1.4rem; font-weight: 700; }
     .brand-address { font-size: 0.8rem; opacity: 0.9; }
 
@@ -43,8 +43,17 @@
     .tab-btn.active { background: var(--primary); color: white; }
 
     /* Cards & Grid */
-    .card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
     .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; color: var(--primary-dark); display: flex; align-items: center; gap: 8px; }
+
+    /* Login Form Card */
+    .login-container { max-width: 420px; margin: 40px auto; text-align: center; }
+    .login-form { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
+    .form-input { padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+    .form-input:focus { border-color: var(--primary); }
+    .btn-login-submit { background: var(--primary); color: white; padding: 12px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-login-submit:hover { background: var(--primary-dark); }
+    .error-msg { color: var(--accent); font-size: 0.9rem; margin-top: 8px; display: none; }
 
     /* Tables */
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -65,7 +74,7 @@
     .btn:hover { opacity: 0.9; }
 
     /* Grid Layout for Flat Master */
-    .flat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1rem)); gap: 14px; margin-top: 12px; }
+    .flat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 14px; margin-top: 12px; }
     .flat-box { background: white; border: 2px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
     .flat-box.occupied { border-color: var(--success); background: #f1f8e9; }
     .flat-box.vacate { border-color: var(--accent); background: #fbe9e7; }
@@ -85,7 +94,7 @@
   <!-- Top Navigation Header -->
   <nav class="navbar">
     <div class="brand">
-      <img id="headerLogo" src="/user.png" alt="Logo" onerror="this.src='https://via.placeholder.com/42'">
+      <img id="headerLogo" src="https://via.placeholder.com/42" alt="Logo">
       <div>
         <div class="brand-title" id="lblAptName">SVS Residency</div>
         <div class="brand-address" id="lblAptAddress">Ameenapur, Hyderabad</div>
@@ -109,47 +118,66 @@
     </div>
   </nav>
 
-  <!-- Main Portal Container -->
+  <!-- Main Container -->
   <div class="container">
-    <!-- Navigation Tabs -->
-    <div class="tab-bar">
-      <button class="tab-btn active" onclick="switchTab('approvals')" id="tabApprovals"><i class="fa-solid fa-user-check"></i> <span id="txtTabApprovals">Sign-Up Approvals</span></button>
-      <button class="tab-btn" onclick="switchTab('flats')" id="tabFlats"><i class="fa-solid fa-building"></i> <span id="txtTabFlats">Flat Master</span></button>
-      <button class="tab-btn" onclick="switchTab('notices')" id="tabNotices"><i class="fa-solid fa-bullhorn"></i> <span id="txtTabNotices">Notice Board</span></button>
+
+    <!-- Login Card (Displayed when NOT logged in) -->
+    <div id="secLogin" class="card login-container">
+      <div class="card-title" style="justify-content: center;">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span id="txtLoginTitle">Login to SVS Residency</span>
+      </div>
+      <form class="login-form" onsubmit="event.preventDefault(); submitWebLogin();">
+        <input type="email" id="txtLoginEmail" class="form-input" placeholder="Email Address" required>
+        <input type="password" id="txtLoginPassword" class="form-input" placeholder="Password" required>
+        <button type="submit" id="btnLoginSubmit" class="btn-login-submit">Login</button>
+        <div id="lblLoginError" class="error-msg">Invalid email or password.</div>
+      </form>
     </div>
 
-    <!-- Section 1: Sign-Up Approvals & Rejections -->
-    <div id="secApprovals" class="card">
-      <div class="card-title"><i class="fa-solid fa-user-clock"></i> <span id="txtPendingSignups">Pending Sign-Up Approvals</span></div>
-      <table>
-        <thead>
-          <tr>
-            <th id="thName">Name</th>
-            <th id="thEmail">Email</th>
-            <th id="thFlat">Flat</th>
-            <th id="thType">Type / Status</th>
-            <th id="thAction">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="tbApprovals">
-          <tr><td colspan="5" style="text-align:center; color: var(--text-muted);">Loading pending approvals...</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <!-- Main Content Portal (Displayed when Logged In) -->
+    <div id="secMainPortal" style="display:none;">
+      <!-- Navigation Tabs -->
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('approvals')" id="tabApprovals"><i class="fa-solid fa-user-check"></i> <span id="txtTabApprovals">Sign-Up Approvals</span></button>
+        <button class="tab-btn" onclick="switchTab('flats')" id="tabFlats"><i class="fa-solid fa-building"></i> <span id="txtTabFlats">Flat Master</span></button>
+        <button class="tab-btn" onclick="switchTab('notices')" id="tabNotices"><i class="fa-solid fa-bullhorn"></i> <span id="txtTabNotices">Notice Board</span></button>
+      </div>
 
-    <!-- Section 2: Flat Master Matrix -->
-    <div id="secFlats" class="card" style="display:none;">
-      <div class="card-title"><i class="fa-solid fa-hotel"></i> <span id="txtFlatMasterTitle">Flat Status Matrix</span></div>
-      <div class="flat-grid" id="gridFlats">
-        <div style="grid-column: 1/-1; text-align:center;">Loading flat status...</div>
+      <!-- Section 1: Sign-Up Approvals & Rejections -->
+      <div id="secApprovals" class="card">
+        <div class="card-title"><i class="fa-solid fa-user-clock"></i> <span id="txtPendingSignups">Pending Sign-Up Approvals</span></div>
+        <table>
+          <thead>
+            <tr>
+              <th id="thName">Name</th>
+              <th id="thEmail">Email</th>
+              <th id="thFlat">Flat</th>
+              <th id="thType">Type / Status</th>
+              <th id="thAction">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbApprovals">
+            <tr><td colspan="5" style="text-align:center; color: var(--text-muted);">Loading pending approvals...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section 2: Flat Master Matrix -->
+      <div id="secFlats" class="card" style="display:none;">
+        <div class="card-title"><i class="fa-solid fa-hotel"></i> <span id="txtFlatMasterTitle">Flat Status Matrix</span></div>
+        <div class="flat-grid" id="gridFlats">
+          <div style="grid-column: 1/-1; text-align:center;">Loading flat status...</div>
+        </div>
+      </div>
+
+      <!-- Section 3: Notice Board -->
+      <div id="secNotices" class="card" style="display:none;">
+        <div class="card-title"><i class="fa-solid fa-bell"></i> <span id="txtNoticesTitle">Society Announcements</span></div>
+        <div id="listNotices">Loading announcements...</div>
       </div>
     </div>
 
-    <!-- Section 3: Notice Board -->
-    <div id="secNotices" class="card" style="display:none;">
-      <div class="card-title"><i class="fa-solid fa-bell"></i> <span id="txtNoticesTitle">Society Announcements</span></div>
-      <div id="listNotices">Loading announcements...</div>
-    </div>
   </div>
 
   <!-- Session Expired Modal -->
@@ -164,17 +192,17 @@
   <!-- Firebase SDK Modules -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, doc, getDoc, getDocs, onSnapshot, updateDoc, deleteDoc, setDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, doc, getDoc, getDocs, onSnapshot, updateDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     // Firebase Config for svs-residency-68b41
     const firebaseConfig = {
-      apiKey: "AIzaSyDummyKeyForSvsResidency68b41",
+      apiKey: "AIzaSyCnW5rbq2Wljs0CpJP9owwbdsr8vuiSANU",
       authDomain: "svs-residency-68b41.firebaseapp.com",
       projectId: "svs-residency-68b41",
-      storageBucket: "svs-residency-68b41.appspot.com",
-      messagingSenderId: "1029384756",
-      appId: "1:1029384756:web:abcd1234efgh5678"
+      storageBucket: "svs-residency-68b41.firebasestorage.app",
+      messagingSenderId: "726306669398",
+      appId: "1:726306669398:web:88c857d9f93050243f8cf7"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -187,6 +215,7 @@
     // Multi-Language Dictionary
     const i18n = {
       en: {
+        loginTitle: "Login to SVS Residency", emailHint: "Email Address", passwordHint: "Password", btnLogin: "Login",
         approvals: "Sign-Up Approvals", flats: "Flat Master", notices: "Notice Board",
         pendingSignups: "Pending Sign-Up Approvals", name: "Name", email: "Email",
         flat: "Flat", type: "Type / Status", action: "Actions",
@@ -194,6 +223,7 @@
         sessionExpiredTitle: "Session Expired", sessionExpiredMsg: "You have been logged in on another device or browser. This session has ended."
       },
       hi: {
+        loginTitle: "SVS रेजिडेंसी में लॉगिन करें", emailHint: "ईमेल पता", passwordHint: "पासवर्ड", btnLogin: "लॉगिन",
         approvals: "साइन-अप अनुमोदन", flats: "फ्लैट मास्टर", notices: "सूचना पट्ट",
         pendingSignups: "लंबित साइन-अप अनुमोदन", name: "नाम", email: "ईमेल",
         flat: "फ्लैट", type: "प्रकार / स्थिति", action: "कार्रवाई",
@@ -201,6 +231,7 @@
         sessionExpiredTitle: "सत्र समाप्त", sessionExpiredMsg: "आप दूसरे डिवाइस पर लॉग इन हैं। यह सत्र समाप्त हो गया है।"
       },
       te: {
+        loginTitle: "SVS రెసిడెన్సీ లాగిన్", emailHint: "ఈమెయిల్ చిరునామా", passwordHint: "పాస్‌వర్డ్", btnLogin: "లాగిన్",
         approvals: "సైనప్ ఆమోదాలు", flats: "ఫ్లాట్ మాస్టర్", notices: "నోటీసు బోర్డు",
         pendingSignups: "పెండింగ్ సైనప్ ఆమోదాలు", name: "పేరు", email: "ఈమెయిల్",
         flat: "ఫ్లాట్", type: "రకం / స్థితి", action: "చర్యలు",
@@ -208,13 +239,15 @@
         sessionExpiredTitle: "సెషన్ ముగిసింది", sessionExpiredMsg: "మీరు మరొక పరికరంలో లాగిన్ అయ్యారు. ఈ సెషన్ ముగిసింది."
       },
       ta: {
+        loginTitle: "SVS ரெசிடென்சி உள்நுழைவு", emailHint: "மின்னஞ்சல் முகவரி", passwordHint: "கடவுச்சொல்", btnLogin: "உள்நுழை",
         approvals: "பதிவு ஒப்புதல்கள்", flats: "பிளாட் மாஸ்டர்", notices: "அறிவிப்பு பலகை",
         pendingSignups: "நிலுவையில் உள்ள ஒப்புதல்கள்", name: "பெயர்", email: "மின்னஞ்சல்",
         flat: "பிளாட்", type: "வகை / நிலை", action: "நடவடிக்கைகள்",
-        flatMasterTitle: "பிளாட் நிலை மேட்ரிக்స్", noticesTitle: "சங்க அறிவிப்புகள்",
+        flatMasterTitle: "பிளாட் நிலை மேட்ரிக்ஸ்", noticesTitle: "சங்க அறிவிப்புகள்",
         sessionExpiredTitle: "அமர்வு காலாவதியானது", sessionExpiredMsg: "நீங்கள் మరொரு சாதனத்தில் లాగిన్ செய்துள்ளீர்கள்."
       },
       kn: {
+        loginTitle: "SVS ರೆಸಿಡೆನ್ಸಿ ಲಾಗಿನ್", emailHint: "ಇಮೇಲ್ ವಿಳಾಸ", passwordHint: "ಪಾಸ್‌ವರ್ಡ್", btnLogin: "ಲಾಗಿನ್",
         approvals: "ಸೈನ್-ಅಪ್ ಅನುಮೋದನೆಗಳು", flats: "ಫ್ಲಾಟ್ ಮಾಸ್ಟರ್", notices: "ಸೂಚನಾ ಫಲಕ",
         pendingSignups: "ಬಾಕಿ ಇರುವ ಅನುಮೋದನೆಗಳು", name: "ಹೆಸರು", email: "ಇಮೇಲ್",
         flat: "ಫ್ಲಾಟ್", type: "ಪ್ರಕಾರ / ಸ್ಥಿತಿ", action: "ಕ್ರಿಯೆಗಳು",
@@ -222,6 +255,7 @@
         sessionExpiredTitle: "ಸೇಶನ್ ಅವಧಿ ಮುಗಿದಿದೆ", sessionExpiredMsg: "ನೀವು ಇನ್ನೊಂದು ಸಾಧನದಲ್ಲಿ ಲಾಗ್ ಇನ್ ಆಗಿದ್ದೀರಿ."
       },
       ml: {
+        loginTitle: "SVS റെസിഡൻസി ലോഗിൻ", emailHint: "ഇമെയിൽ വിലാസം", passwordHint: "പാസ്‌വേഡ്", btnLogin: "ലോഗിൻ",
         approvals: "സൈൻ-അപ്പ് അംഗീകാരങ്ങൾ", flats: "ഫ്ലാറ്റ് മാസ്റ്റർ", notices: "നോട്ടീസ് ബോർഡ്",
         pendingSignups: "തീർപ്പുകൽപ്പിക്കാത്ത അംഗീകാരങ്ങൾ", name: "പേര്", email: "ഇമെയിൽ",
         flat: "ഫ്ലാറ്റ്", type: "തരം / നില", action: "നടപടികൾ",
@@ -236,6 +270,11 @@
       currentLang = lang;
       localStorage.setItem("webLang", lang);
       const dict = i18n[lang] || i18n.en;
+
+      document.getElementById("txtLoginTitle").innerText = dict.loginTitle;
+      document.getElementById("txtLoginEmail").placeholder = dict.emailHint;
+      document.getElementById("txtLoginPassword").placeholder = dict.passwordHint;
+      document.getElementById("btnLoginSubmit").innerText = dict.btnLogin;
 
       document.getElementById("txtTabApprovals").innerText = dict.approvals;
       document.getElementById("txtTabFlats").innerText = dict.flats;
@@ -265,9 +304,26 @@
       } catch (e) { console.error("Branding load error", e); }
     }
 
-    // Real-Time Listeners
+    // Submit Web Login
+    window.submitWebLogin = async function() {
+      const email = document.getElementById("txtLoginEmail").value.trim();
+      const password = document.getElementById("txtLoginPassword").value;
+      const errLbl = document.getElementById("lblLoginError");
+      errLbl.style.display = "none";
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (error) {
+        errLbl.innerText = "Login Failed: " + error.message;
+        errLbl.style.display = "block";
+      }
+    };
+
+    // Real-Time Auth State Listener
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        document.getElementById("secLogin").style.display = "none";
+        document.getElementById("secMainPortal").style.display = "block";
         document.getElementById("userSection").style.display = "flex";
         document.getElementById("lblUserName").innerText = user.email.split("@")[0];
         initSingleDeviceSessionListener(user.uid);
@@ -275,6 +331,8 @@
         loadFlatMaster();
         loadNotices();
       } else {
+        document.getElementById("secLogin").style.display = "block";
+        document.getElementById("secMainPortal").style.display = "none";
         document.getElementById("userSection").style.display = "none";
       }
     });
@@ -286,7 +344,6 @@
     function initSingleDeviceSessionListener(uid) {
       localWebSessionToken = "sess_web_" + Date.now() + "_" + Math.random().toString(36).substring(2, 7);
 
-      // Update session token in Firestore
       updateDoc(doc(db, "residents", uid), {
         activeSessionToken: localWebSessionToken,
         lastActiveTimestamp: Date.now()
@@ -362,14 +419,12 @@
         const isTenant = (type || "").toLowerCase() === "tenant" || (type || "").toLowerCase() === "tenent";
 
         if (isOwner && flat) {
-          // Rule 1: Delete occupancy, residents for flat, set flats -> status = " "
           await deleteDoc(doc(db, "occupancy", flat)).catch(() => {});
           await updateDoc(doc(db, "flats", flat), { status: " " }).catch(() => {});
           const qRes = query(collection(db, "residents"), where("flat", "==", flat));
           const resSnaps = await getDocs(qRes);
           resSnaps.forEach(async (d) => await deleteDoc(d.ref));
         } else if (isTenant && flat) {
-          // Rule 2: Delete tenant/family occupancy & residents for flat, set flats -> status = "Vacate"
           await deleteDoc(doc(db, "occupancy", flat)).catch(() => {});
           await updateDoc(doc(db, "flats", flat), { status: "Vacate" }).catch(() => {});
           const qRes = query(collection(db, "residents"), where("flat", "==", flat));
@@ -381,10 +436,9 @@
             }
           });
         } else {
-          // Rule 3: Family member rejection -> delete specific resident doc
           await deleteDoc(doc(db, "residents", uid));
         }
-        alert("Request Rejected Successfully! Auth cleanup triggered.");
+        alert("Request Rejected Successfully!");
       } catch (e) { alert("Error rejecting request: " + e.message); }
     };
 
