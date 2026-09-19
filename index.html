@@ -31,14 +31,20 @@
     .brand-title { font-size: 1.4rem; font-weight: 700; }
     .brand-address { font-size: 0.8rem; opacity: 0.9; }
 
+    /* Top Bar Quick Action Navigation (Replacing Bottom Bar) */
+    .quick-nav { background: #0d47a1; color: white; padding: 8px 24px; display: flex; gap: 20px; align-items: center; font-size: 0.9rem; font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,0.1); overflow-x: auto; }
+    .quick-nav-item { color: white; text-decoration: none; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; transition: background 0.2s; white-space: nowrap; }
+    .quick-nav-item:hover, .quick-nav-item.active { background: rgba(255,255,255,0.25); }
+
     .nav-controls { display: flex; align-items: center; gap: 16px; }
     .lang-select { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.4); border-radius: 6px; padding: 6px 12px; font-weight: 500; cursor: pointer; }
     .lang-select option { color: var(--text); background: white; }
-    .user-badge { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; }
+    .user-badge { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; }
+    .user-badge img { width: 34px; height: 32px; border-radius: 50%; object-fit: cover; border: 1.5px solid white; background: white; }
     .btn-logout { background: var(--accent); color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
     /* Layout Wrapper */
-    .app-layout { display: flex; flex: 1; min-height: calc(100vh - 66px); }
+    .app-layout { display: flex; flex: 1; min-height: calc(100vh - 100px); }
 
     /* Sidebar Navigation */
     .sidebar { width: var(--sidebar-width); background: white; border-right: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
@@ -54,6 +60,19 @@
     /* Cards & Grid */
     .card { background: var(--card-bg); border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
     .card-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; color: var(--primary-dark); display: flex; align-items: center; gap: 10px; }
+
+    /* Outstanding Dues Banner Card */
+    .dues-card { background: linear-gradient(135deg, #1e88e5, #0d47a1); color: white; border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; box-shadow: 0 4px 14px rgba(30,136,229,0.3); }
+    .dues-amount { font-size: 2rem; font-weight: 700; margin-top: 4px; color: #ffeb3b; }
+    .btn-statement { background: white; color: var(--primary-dark); border: none; padding: 12px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+    .btn-statement:hover { background: #f1f4f8; }
+
+    /* Form Input Groups with Icons & Eye Toggle */
+    .input-group { position: relative; display: flex; align-items: center; width: 100%; }
+    .input-group i.input-icon { position: absolute; left: 14px; color: var(--primary); font-size: 1rem; pointer-events: none; }
+    .input-group .form-input { padding-left: 42px; padding-right: 42px; }
+    .input-group i.eye-icon { position: absolute; right: 14px; color: var(--text-muted); cursor: pointer; font-size: 1rem; transition: color 0.2s; }
+    .input-group i.eye-icon:hover { color: var(--primary); }
 
     /* Login & Signup Container */
     .auth-container { max-width: 460px; margin: 40px auto; text-align: center; }
@@ -124,13 +143,27 @@
         <option value="kn">ಕನ್ನಡ (Kannada)</option>
         <option value="ml">മലയാളം (Malayalam)</option>
       </select>
+
+      <!-- User Profile Badge in Top Bar -->
       <div id="userSection" class="user-badge" style="display:none;">
-        <i class="fa-solid fa-user-circle"></i>
-        <span id="lblUserName">User</span>
+        <img id="imgUserProfile" src="https://via.placeholder.com/32" alt="User" onerror="this.src='https://via.placeholder.com/32'">
+        <div style="display:flex; flex-direction:column; text-align:left; line-height:1.2;">
+          <span id="lblUserName" style="font-weight:700;">User</span>
+          <span id="lblUserRolePosition" style="font-size:0.75rem; opacity:0.85;">Flat -- | Resident</span>
+        </div>
         <button class="btn-logout" onclick="logoutWebSession()"><i class="fa-solid fa-power-off"></i> Logout</button>
       </div>
     </div>
   </nav>
+
+  <!-- Top Bar Quick Action Navigation (Replacing Bottom Bar for Desktop/Web) -->
+  <div id="quickNavBar" class="quick-nav" style="display:none;">
+    <a class="quick-nav-item active" onclick="navTo('home', this)" id="qnHome"><i class="fa-solid fa-house"></i> <span>Home</span></a>
+    <a class="quick-nav-item" onclick="navTo('notices', this)" id="qnNotices"><i class="fa-solid fa-bullhorn"></i> <span>Notices</span></a>
+    <a class="quick-nav-item" onclick="navTo('bookings', this)" id="qnBookings"><i class="fa-solid fa-calendar-check"></i> <span>Bookings</span></a>
+    <a class="quick-nav-item" onclick="navTo('statement', this)" id="qnStatement"><i class="fa-solid fa-file-invoice-dollar"></i> <span>View Statement</span></a>
+    <a class="quick-nav-item" onclick="navTo('complaints', this)" id="qnComplaints"><i class="fa-solid fa-circle-exclamation"></i> <span>Complaints</span></a>
+  </div>
 
   <!-- Login View (When NOT Logged In) -->
   <div id="secLogin" class="container">
@@ -140,8 +173,20 @@
         <span id="txtLoginTitle">Login to SVS Residency</span>
       </div>
       <form class="auth-form" onsubmit="event.preventDefault(); submitWebLogin();">
-        <input type="email" id="txtLoginEmail" class="form-input" placeholder="Email Address" required>
-        <input type="password" id="txtLoginPassword" class="form-input" placeholder="Password" required>
+
+        <!-- Email Input with Envelope Icon -->
+        <div class="input-group">
+          <i class="fa-solid fa-envelope input-icon"></i>
+          <input type="email" id="txtLoginEmail" class="form-input" placeholder="Email Address" required>
+        </div>
+
+        <!-- Password Input with Lock Icon & Eye Toggle -->
+        <div class="input-group">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input type="password" id="txtLoginPassword" class="form-input" placeholder="Password" required>
+          <i class="fa-solid fa-eye eye-icon" id="eyeLoginPwd" onclick="togglePasswordVisibility('txtLoginPassword', 'eyeLoginPwd')"></i>
+        </div>
+
         <button type="submit" id="btnLoginSubmit" class="btn-auth-submit">Login</button>
 
         <div class="auth-links">
@@ -162,7 +207,12 @@
         <span id="txtSignUpTitle">Sign Up for SVS Residency</span>
       </div>
       <form class="auth-form" id="formSignUp" onsubmit="event.preventDefault(); submitWebRegistration();">
-        <input type="text" id="regName" class="form-input" placeholder="Full Name (English Letters Only)" required oninput="filterEnglishAndTitleCase(this)">
+
+        <!-- Full Name Input with User Icon -->
+        <div class="input-group">
+          <i class="fa-solid fa-user input-icon"></i>
+          <input type="text" id="regName" class="form-input" placeholder="Full Name (English Letters Only)" required oninput="filterEnglishAndTitleCase(this)">
+        </div>
 
         <select id="regGender" class="form-select" required onchange="onWebGenderChanged(this.value)">
           <option value="">Select Gender</option>
@@ -181,9 +231,25 @@
           <option value="Family Member">Family Member</option>
         </select>
 
-        <input type="email" id="regEmail" class="form-input" placeholder="Email Address" required oninput="filterEmailOnly(this)">
-        <input type="password" id="regPassword" class="form-input" placeholder="Password (8 chars: Capital, Small, Number, Symbol)" required maxlength="8">
-        <input type="password" id="regConfirmPassword" class="form-input" placeholder="Confirm Password" required maxlength="8">
+        <!-- Registration Email Input with Envelope Icon -->
+        <div class="input-group">
+          <i class="fa-solid fa-envelope input-icon"></i>
+          <input type="email" id="regEmail" class="form-input" placeholder="Email Address" required oninput="filterEmailOnly(this)">
+        </div>
+
+        <!-- Registration Password Input with Lock Icon & Eye Toggle -->
+        <div class="input-group">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input type="password" id="regPassword" class="form-input" placeholder="Password (8 chars: Capital, Small, Number, Symbol)" required maxlength="8">
+          <i class="fa-solid fa-eye eye-icon" id="eyeRegPwd" onclick="togglePasswordVisibility('regPassword', 'eyeRegPwd')"></i>
+        </div>
+
+        <!-- Registration Confirm Password Input with Lock Icon & Eye Toggle -->
+        <div class="input-group">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input type="password" id="regConfirmPassword" class="form-input" placeholder="Confirm Password" required maxlength="8">
+          <i class="fa-solid fa-eye eye-icon" id="eyeRegConfirmPwd" onclick="togglePasswordVisibility('regConfirmPassword', 'eyeRegConfirmPwd')"></i>
+        </div>
 
         <div style="display:flex; align-items:center; gap:8px; text-align:left; font-size:0.85rem;">
           <input type="checkbox" id="regTerms" required>
@@ -211,10 +277,12 @@
       <!-- Group 1: Resident Services -->
       <div class="menu-group">
         <div class="group-title" id="grpResident">Resident Services</div>
-        <a class="menu-item active" onclick="navTo('notices', this)"><i class="fa-solid fa-bullhorn" style="color:#fb8c00;"></i> <span id="mNoticeBoard">Notice Board</span></a>
+        <a class="menu-item active" onclick="navTo('home', this)"><i class="fa-solid fa-house" style="color:#1e88e5;"></i> <span>Home / Overview</span></a>
+        <a class="menu-item" onclick="navTo('notices', this)"><i class="fa-solid fa-bullhorn" style="color:#fb8c00;"></i> <span id="mNoticeBoard">Notice Board</span></a>
         <a class="menu-item" onclick="navTo('directory', this)"><i class="fa-solid fa-users" style="color:#00897b;"></i> <span id="mSocietyTeam">Society Team</span></a>
         <a class="menu-item" onclick="navTo('assets', this)"><i class="fa-solid fa-building-user" style="color:#1e88e5;"></i> <span id="mAssets">Asset Info</span></a>
         <a class="menu-item" onclick="navTo('bookings', this)"><i class="fa-solid fa-calendar-check" style="color:#8e24aa;"></i> <span id="mBookings">Facility Bookings</span></a>
+        <a class="menu-item" onclick="navTo('statement', this)"><i class="fa-solid fa-file-invoice-dollar" style="color:#4caf50;"></i> <span>View Statement</span></a>
         <a class="menu-item" onclick="navTo('complaints', this)"><i class="fa-solid fa-circle-exclamation" style="color:#e53935;"></i> <span id="mComplaints">Complaints</span></a>
         <a class="menu-item" onclick="navTo('approvals', this)"><i class="fa-solid fa-user-check" style="color:#1565c0;"></i> <span id="mAdminPanel">Sign-Up Approvals</span></a>
       </div>
@@ -243,6 +311,8 @@
       <!-- Group 4: Support & System -->
       <div class="menu-group">
         <div class="group-title" id="grpSystem">System & Support</div>
+        <a class="menu-item" onclick="navTo('about', this)"><i class="fa-solid fa-circle-info" style="color:#0288d1;"></i> <span id="mAbout">About Us</span></a>
+        <a class="menu-item" onclick="openDeleteAccountModal()"><i class="fa-solid fa-user-minus" style="color:#e53935;"></i> <span id="mDeleteAccount">Delete Account</span></a>
         <a class="menu-item" onclick="openPolicy('terms')"><i class="fa-solid fa-file-contract" style="color:#1565c0;"></i> <span id="mTerms">Terms & Conditions</span></a>
         <a class="menu-item" onclick="openPolicy('privacy')"><i class="fa-solid fa-shield-halved" style="color:#43a047;"></i> <span id="mPrivacy">Privacy Policy</span></a>
       </div>
@@ -252,13 +322,69 @@
     <!-- Main Content Panel Area -->
     <main class="main-content">
 
+      <!-- Panel 0: Home Overview with Greeting & Total Outstanding Dues Banner -->
+      <div id="pnlHome">
+
+        <!-- Welcome Greeting Banner Card -->
+        <div class="card" style="background: linear-gradient(135deg, #ffffff, #e3f2fd); border-left: 5px solid var(--primary); margin-bottom: 20px;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <img id="imgHomeGreetingAvatar" src="https://via.placeholder.com/48" alt="Avatar" onerror="this.src='https://via.placeholder.com/48'" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid var(--primary);">
+            <div>
+              <h2 id="lblHomeGreeting" style="color:var(--primary-dark); font-size:1.3rem; font-weight:700;">Good Morning, User! Welcome Back!</h2>
+              <p style="color:var(--text-muted); font-size:0.85rem; margin-top:2px;">SVS Residency Resident Portal</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dues-card">
+          <div>
+            <div style="font-size:0.9rem; opacity:0.9;">Total Outstanding Dues</div>
+            <div id="lblHomeFlatInfo" style="font-size:1.1rem; font-weight:700; margin-top:2px;">Flat --</div>
+            <div id="lblHomeTotalDues" class="dues-amount">₹ 0.00</div>
+          </div>
+          <button class="btn-statement" onclick="navTo('statement')">
+            <i class="fa-solid fa-file-invoice-dollar"></i> View Statement
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-bullhorn" style="color:#fb8c00;"></i> <span>Latest Society Notices</span></div>
+          <div id="listHomeNotices">Loading latest notices...</div>
+        </div>
+      </div>
+
       <!-- Panel 1: Notice Board -->
-      <div id="pnlNotices" class="card">
+      <div id="pnlNotices" class="card" style="display:none;">
         <div class="card-title"><i class="fa-solid fa-bullhorn" style="color:#fb8c00;"></i> <span id="txtNoticesTitle">Society Announcements</span></div>
         <div id="listNotices">Loading notices...</div>
       </div>
 
-      <!-- Panel 2: Sign-Up Approvals & Rejections -->
+      <!-- Panel 2: Account Statement & Billing History -->
+      <div id="pnlStatement" class="card" style="display:none;">
+        <div class="card-title"><i class="fa-solid fa-file-invoice-dollar" style="color:#4caf50;"></i> <span id="lblStatementTitle">Account Statement</span></div>
+        <div style="margin-bottom:16px; font-weight:600; color:var(--text-muted);" id="lblStatementFlatHeader">Flat Dues Overview</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Title / Category</th>
+              <th>Purpose / Description</th>
+              <th>Date</th>
+              <th>Amount (₹)</th>
+            </tr>
+          </thead>
+          <tbody id="tbStatementRows">
+            <tr><td colspan="4" style="text-align:center; color:var(--text-muted);">Loading account statement...</td></tr>
+          </tbody>
+          <tfoot>
+            <tr style="background:#f8f9fa; font-weight:700;">
+              <td colspan="3" style="text-align:right;">Total Outstanding:</td>
+              <td id="lblStatementTotalSum" style="color:var(--accent); font-size:1.1rem;">₹ 0.00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Panel 3: Sign-Up Approvals & Rejections -->
       <div id="pnlApprovals" class="card" style="display:none;">
         <div class="card-title"><i class="fa-solid fa-user-check" style="color:#1565c0;"></i> <span id="txtPendingSignups">Pending Sign-Up Approvals</span></div>
         <table>
@@ -277,7 +403,7 @@
         </table>
       </div>
 
-      <!-- Panel 3: Flat Master Matrix -->
+      <!-- Panel 4: Flat Master Matrix -->
       <div id="pnlFlats" class="card" style="display:none;">
         <div class="card-title"><i class="fa-solid fa-hotel" style="color:#00897b;"></i> <span id="txtFlatMasterTitle">Flat Status Matrix</span></div>
         <div class="flat-grid" id="gridFlats">
@@ -285,28 +411,58 @@
         </div>
       </div>
 
-      <!-- Panel 4: Society Directory -->
+      <!-- Panel 5: Society Directory -->
       <div id="pnlDirectory" class="card" style="display:none;">
         <div class="card-title"><i class="fa-solid fa-users" style="color:#00897b;"></i> <span>Society Residents & Team</span></div>
         <div id="listResidents">Loading directory...</div>
       </div>
 
-      <!-- Panel 5: Complaints -->
+      <!-- Panel 6: Complaints -->
       <div id="pnlComplaints" class="card" style="display:none;">
         <div class="card-title"><i class="fa-solid fa-circle-exclamation" style="color:#e53935;"></i> <span>Complaints & Requests</span></div>
         <div id="listComplaints">Loading complaints...</div>
       </div>
 
-      <!-- Panel 6: Facility Bookings -->
+      <!-- Panel 7: Facility Bookings -->
       <div id="pnlBookings" class="card" style="display:none;">
-        <div class="card-title"><i class="fa-solid fa-calendar-check" style="color:#8e24aa;"></i> <span>Facility Bookings</span></div>
+        <div class="card-title"><i class="fa-solid fa-calendar-check" style="color:#8e24aa;"></i> <span>Book a Society Facility</span></div>
+        <form id="formBooking" onsubmit="event.preventDefault(); submitWebBooking();" style="display:flex; flex-direction:column; gap:14px; max-width:500px; margin-bottom:24px;">
+          <select id="bkFacility" class="form-select" required>
+            <option value="Cellular Hall">Cellular Hall</option>
+            <option value="Community Clubhouse">Community Clubhouse</option>
+            <option value="Terrace Function Area">Terrace Function Area</option>
+            <option value="Guest Room">Guest Room</option>
+          </select>
+          <input type="date" id="bkDate" class="form-input" required>
+          <input type="text" id="bkOccasion" class="form-input" placeholder="Occasion / Purpose (e.g., Birthday Party)" required>
+          <div style="display:flex; align-items:center; gap:8px; font-size:0.85rem;">
+            <input type="checkbox" id="bkTerms" required>
+            <label for="bkTerms">I agree to society booking rules and charges</label>
+          </div>
+          <button type="submit" id="btnSubmitBk" class="btn-auth-submit" style="background:#8e24aa;">Submit Booking Request</button>
+          <div id="lblBkSuccess" class="success-msg">Booking request submitted! Pending admin approval.</div>
+          <div id="lblBkError" class="error-msg"></div>
+        </form>
+
+        <h4 style="color:var(--primary-dark); margin-bottom:12px;">Facility Booking Requests</h4>
         <div id="listBookings">Loading bookings...</div>
       </div>
 
-      <!-- Panel 7: Asset Info -->
+      <!-- Panel 8: Asset Info -->
       <div id="pnlAssets" class="card" style="display:none;">
         <div class="card-title"><i class="fa-solid fa-building-user" style="color:#1e88e5;"></i> <span>Apartment Asset Details</span></div>
         <div id="detailsAssets">Loading asset details...</div>
+      </div>
+
+      <!-- Panel 9: About Us -->
+      <div id="pnlAbout" class="card" style="display:none;">
+        <div class="card-title"><i class="fa-solid fa-circle-info" style="color:#0288d1;"></i> <span>About SVS Residency</span></div>
+        <div id="detailsAbout">
+          <p style="margin-bottom:12px; line-height:1.6;"><strong>SVS Residency</strong> is a modern residential apartment community designed for comfortable, secure, and collaborative living.</p>
+          <p style="margin-bottom:12px; line-height:1.6;"><strong>Location:</strong> Ameenapur, Hyderabad, Telangana</p>
+          <p style="margin-bottom:12px; line-height:1.6;"><strong>Management:</strong> SVS Residency Executive Association & Committee</p>
+          <p style="line-height:1.6;"><strong>Platform Support:</strong> Multi-Platform App & Web Portal by Remo Developer Team</p>
+        </div>
       </div>
 
       <!-- Generic Panel for Other Admin Tools -->
@@ -316,6 +472,23 @@
       </div>
 
     </main>
+  </div>
+
+  <!-- Delete Account Request Modal -->
+  <div id="modalDeleteAccount" class="modal-overlay">
+    <div class="modal">
+      <h3><i class="fa-solid fa-user-minus" style="color:var(--accent);"></i> <span>Request Account Deletion</span></h3>
+      <p style="margin-bottom:16px;">Are you sure you want to submit an account deletion request? An admin will review and process your request.</p>
+      <select id="delActionType" class="form-select" style="margin-bottom:14px;">
+        <option value="Delete Account">Delete My Account</option>
+        <option value="Vacate">Vacate Flat (Move Out)</option>
+      </select>
+      <div id="lblDelStatus" class="error-msg" style="margin-bottom:14px;"></div>
+      <div style="display:flex; justify-content:center; gap:12px;">
+        <button class="btn btn-reject" onclick="submitDeleteAccountRequest()">Submit Request</button>
+        <button class="btn" style="background:#ccc; color:black;" onclick="closeDeleteAccountModal()">Cancel</button>
+      </div>
+    </div>
   </div>
 
   <!-- Occupancy Choice Modal for Owner -->
@@ -382,6 +555,32 @@
     window.auth = auth;
 
     let webOccupancyChoice = "false";
+    let currentUserFlat = "";
+
+    // Toggle Password Input Visibility
+    window.togglePasswordVisibility = function(inputId, eyeId) {
+      const pwdInput = document.getElementById(inputId);
+      const eyeIcon = document.getElementById(eyeId);
+      if (pwdInput.type === "password") {
+        pwdInput.type = "text";
+        eyeIcon.className = "fa-solid fa-eye-slash eye-icon";
+      } else {
+        pwdInput.type = "password";
+        eyeIcon.className = "fa-solid fa-eye eye-icon";
+      }
+    };
+
+    // Update Greeting Message
+    window.updateGreetingMessage = function(userName) {
+      const hour = new Date().getHours();
+      let timeGreeting = "Good Morning";
+      if (hour >= 12 && hour < 17) timeGreeting = "Good Afternoon";
+      else if (hour >= 17 && hour < 22) timeGreeting = "Good Evening";
+      else if (hour >= 22 || hour < 5) timeGreeting = "Good Night";
+
+      const name = userName || 'Resident';
+      document.getElementById("lblHomeGreeting").innerText = `${timeGreeting}, ${name}! Welcome Back!`;
+    };
 
     // Multi-Language Dictionary
     const i18n = {
@@ -512,6 +711,7 @@
       document.getElementById("secLogin").style.display = "none";
       document.getElementById("secSignUp").style.display = "block";
       document.getElementById("secMainPortal").style.display = "none";
+      document.getElementById("quickNavBar").style.display = "none";
       loadWebMasterFlats();
     };
 
@@ -519,6 +719,7 @@
       document.getElementById("secSignUp").style.display = "none";
       document.getElementById("secLogin").style.display = "block";
       document.getElementById("secMainPortal").style.display = "none";
+      document.getElementById("quickNavBar").style.display = "none";
     };
 
     // Forgot Password Modal
@@ -551,6 +752,59 @@
       } catch (e) {
         lbl.innerText = "Error: " + e.message;
         lbl.className = "error-msg";
+        lbl.style.display = "block";
+      }
+    };
+
+    // Delete Account Request Modal
+    window.openDeleteAccountModal = function() {
+      document.getElementById("modalDeleteAccount").style.display = "flex";
+      document.getElementById("lblDelStatus").style.display = "none";
+    };
+
+    window.closeDeleteAccountModal = function() {
+      document.getElementById("modalDeleteAccount").style.display = "none";
+    };
+
+    window.submitDeleteAccountRequest = async function() {
+      const actionType = document.getElementById("delActionType").value;
+      const lbl = document.getElementById("lblDelStatus");
+      const user = auth.currentUser;
+
+      if (!user) {
+        lbl.innerText = "Please log in to submit a request.";
+        lbl.className = "error-msg";
+        lbl.style.display = "block";
+        return;
+      }
+
+      try {
+        const userSnap = await getDoc(doc(db, "residents", user.uid));
+        const userData = userSnap.exists() ? userSnap.data() : {};
+        const reqId = "del_" + Date.now();
+
+        const reqData = {
+          id: reqId,
+          requesterUid: user.uid,
+          requesterName: userData.name || user.email,
+          requesterFlat: userData.flat || "--",
+          requesterType: userData.type || "Resident",
+          requesterRole: userData.role || "resident",
+          requesterImage: userData.profileImageUrl || "",
+          actionType: actionType,
+          status: "Pending",
+          timestamp: Date.now()
+        };
+
+        await setDoc(doc(db, "deletion_requests", reqId), reqData);
+
+        lbl.className = "success-msg";
+        lbl.innerText = "Account deletion request submitted to Admin!";
+        lbl.style.display = "block";
+        setTimeout(() => { closeDeleteAccountModal(); }, 2500);
+      } catch (e) {
+        lbl.className = "error-msg";
+        lbl.innerText = "Error: " + e.message;
         lbl.style.display = "block";
       }
     };
@@ -595,21 +849,17 @@
         const status = flatSnap.exists() ? (flatSnap.data().status || "").trim().toLowerCase() : "";
 
         if (status === "occupied") {
-          // Occupied -> Family Member ONLY
           selStatus.innerHTML = '<option value="Family Member">Family Member</option>';
           selStatus.value = "Family Member";
           selStatus.disabled = true;
         } else if (status === "tenant" || status === "tenent") {
-          // Tenant -> Family Member ONLY
           selStatus.innerHTML = '<option value="Family Member">Family Member</option>';
           selStatus.value = "Family Member";
           selStatus.disabled = true;
         } else if (status === "vacate" || status === "vacated") {
-          // Vacate -> Tenant & Family Member
           selStatus.innerHTML = '<option value="Tenant">Tenant</option><option value="Family Member">Family Member</option>';
           selStatus.disabled = false;
         } else {
-          // New / Unregistered -> Owner
           selStatus.innerHTML = '<option value="Owner">Owner</option>';
           selStatus.value = "Owner";
           selStatus.disabled = false;
@@ -683,7 +933,6 @@
           await setDoc(doc(db, "occupancy", flat), userMap).catch(() => {});
         }
 
-        // Update Flat status
         let newFlatStatus = null;
         if (status === "Owner" && occupiedValue === "true") newFlatStatus = "Occupied";
         else if (status === "Owner" && occupiedValue === "false") newFlatStatus = "Vacate";
@@ -693,7 +942,6 @@
           await updateDoc(doc(db, "flats", flat), { status: newFlatStatus }).catch(() => {});
         }
 
-        // Sign out newly registered unverified user immediately
         await signOut(auth);
 
         succLbl.innerText = "Registration Successful! Pending admin approval.";
@@ -704,6 +952,69 @@
         }, 3000);
       } catch (e) {
         errLbl.innerText = "Registration Failed: " + e.message;
+        errLbl.style.display = "block";
+      }
+    };
+
+    // Submit Facility Booking Request
+    window.submitWebBooking = async function() {
+      const facility = document.getElementById("bkFacility").value;
+      const date = document.getElementById("bkDate").value;
+      const occasion = document.getElementById("bkOccasion").value.trim();
+      const errLbl = document.getElementById("lblBkError");
+      const succLbl = document.getElementById("lblBkSuccess");
+      errLbl.style.display = "none";
+      succLbl.style.display = "none";
+
+      const user = auth.currentUser;
+      if (!user) {
+        errLbl.innerText = "Please log in to submit a booking.";
+        errLbl.style.display = "block";
+        return;
+      }
+
+      try {
+        const userSnap = await getDoc(doc(db, "residents", user.uid));
+        const userData = userSnap.exists() ? userSnap.data() : {};
+        const bId = "booking_" + Date.now();
+        const ts = new Date().toLocaleString();
+
+        const bookingData = {
+          id: bId,
+          uid: user.uid,
+          userName: userData.name || user.email.split("@")[0],
+          flatNo: userData.flat || "--",
+          occupied: userData.occupied || "false",
+          facility: facility,
+          bookingOccasion: occasion,
+          bookingDate: date,
+          currentDate: new Date().toISOString().split("T")[0],
+          status: "pending",
+          timestamp: ts,
+          numericTimestamp: Date.now()
+        };
+
+        await setDoc(doc(db, "bookings", bId), bookingData);
+
+        const noticeData = {
+          id: "notice_" + bId,
+          complaintId: bId,
+          title: "New Booking: " + occasion,
+          description: `Resident: ${userData.name || user.email}\nFlat: ${userData.flat || "--"}\nDate: ${date}`,
+          category: "Facility Booking",
+          status: "pending",
+          residentName: userData.name || user.email,
+          flatNumber: userData.flat || "--",
+          timestamp: ts,
+          submissionDate: ts,
+          bookingData: bookingData
+        };
+        await setDoc(doc(db, "notices", "notice_" + bId), noticeData).catch(() => {});
+
+        succLbl.style.display = "block";
+        document.getElementById("formBooking").reset();
+      } catch (e) {
+        errLbl.innerText = "Booking Error: " + e.message;
         errLbl.style.display = "block";
       }
     };
@@ -748,15 +1059,38 @@
             const data = userSnap.data();
             const raw = data.verified;
             isVerified = raw === true || raw === "true" || raw === "yes" || data.role === "super_admin";
+
+            currentUserFlat = data.flat || "";
+            const userName = data.name || user.email.split("@")[0];
+
+            // Update Greeting Message
+            updateGreetingMessage(userName);
+
+            // Set Top Bar Profile Badge details
+            document.getElementById("lblUserName").innerText = userName;
+            const posText = data.position ? ` (${data.position})` : '';
+            document.getElementById("lblUserRolePosition").innerText = `Flat ${data.flat || '--'} | ${data.type || 'Resident'}${posText}`;
+            if (data.profileImageUrl) {
+              document.getElementById("imgUserProfile").src = data.profileImageUrl;
+              document.getElementById("imgHomeGreetingAvatar").src = data.profileImageUrl;
+            }
+          } else {
+            const userName = user.email.split("@")[0];
+            updateGreetingMessage(userName);
+            document.getElementById("lblUserName").innerText = userName;
+            document.getElementById("lblUserRolePosition").innerText = "Resident";
           }
 
           if (isVerified || isSuperAdmin) {
             document.getElementById("secLogin").style.display = "none";
             document.getElementById("secSignUp").style.display = "none";
             document.getElementById("secMainPortal").style.display = "flex";
+            document.getElementById("quickNavBar").style.display = "flex";
             document.getElementById("userSection").style.display = "flex";
-            document.getElementById("lblUserName").innerText = user.email.split("@")[0];
             initSingleDeviceSessionListener(user.uid);
+
+            // Load Dues Summary and Statement for User's Flat
+            loadHomeDuesSummary(currentUserFlat);
             loadPendingApprovals();
             loadFlatMaster();
             loadNotices();
@@ -769,6 +1103,7 @@
             document.getElementById("secLogin").style.display = "block";
             document.getElementById("secSignUp").style.display = "none";
             document.getElementById("secMainPortal").style.display = "none";
+            document.getElementById("quickNavBar").style.display = "none";
             document.getElementById("userSection").style.display = "none";
           }
         } catch (e) {
@@ -776,12 +1111,14 @@
           document.getElementById("secLogin").style.display = "block";
           document.getElementById("secSignUp").style.display = "none";
           document.getElementById("secMainPortal").style.display = "none";
+          document.getElementById("quickNavBar").style.display = "none";
           document.getElementById("userSection").style.display = "none";
         }
       } else {
         document.getElementById("secLogin").style.display = "block";
         document.getElementById("secSignUp").style.display = "none";
         document.getElementById("secMainPortal").style.display = "none";
+        document.getElementById("quickNavBar").style.display = "none";
         document.getElementById("userSection").style.display = "none";
       }
     });
@@ -819,18 +1156,34 @@
     // Navigation Handler
     window.navTo = function(target, element) {
       document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+      document.querySelectorAll(".quick-nav-item").forEach(item => item.classList.remove("active"));
+
       if (element) element.classList.add("active");
 
-      const panels = ["pnlNotices", "pnlApprovals", "pnlFlats", "pnlDirectory", "pnlComplaints", "pnlBookings", "pnlAssets", "pnlGeneric"];
+      const panels = ["pnlHome", "pnlNotices", "pnlStatement", "pnlApprovals", "pnlFlats", "pnlDirectory", "pnlComplaints", "pnlBookings", "pnlAssets", "pnlAbout", "pnlGeneric"];
       panels.forEach(id => document.getElementById(id).style.display = "none");
 
-      if (target === "notices") document.getElementById("pnlNotices").style.display = "block";
-      else if (target === "approvals") document.getElementById("pnlApprovals").style.display = "block";
+      if (target === "home") {
+        document.getElementById("pnlHome").style.display = "block";
+        document.getElementById("qnHome").classList.add("active");
+      } else if (target === "notices") {
+        document.getElementById("pnlNotices").style.display = "block";
+        document.getElementById("qnNotices").classList.add("active");
+      } else if (target === "statement") {
+        document.getElementById("pnlStatement").style.display = "block";
+        document.getElementById("qnStatement").classList.add("active");
+        loadAccountStatement(currentUserFlat);
+      } else if (target === "approvals") document.getElementById("pnlApprovals").style.display = "block";
       else if (target === "flats") document.getElementById("pnlFlats").style.display = "block";
       else if (target === "directory") document.getElementById("pnlDirectory").style.display = "block";
-      else if (target === "complaints") document.getElementById("pnlComplaints").style.display = "block";
-      else if (target === "bookings") document.getElementById("pnlBookings").style.display = "block";
-      else if (target === "assets") document.getElementById("pnlAssets").style.display = "block";
+      else if (target === "complaints") {
+        document.getElementById("pnlComplaints").style.display = "block";
+        document.getElementById("qnComplaints").classList.add("active");
+      } else if (target === "bookings") {
+        document.getElementById("pnlBookings").style.display = "block";
+        document.getElementById("qnBookings").classList.add("active");
+      } else if (target === "assets") document.getElementById("pnlAssets").style.display = "block";
+      else if (target === "about") document.getElementById("pnlAbout").style.display = "block";
       else {
         document.getElementById("pnlGeneric").style.display = "block";
         document.getElementById("lblGenericTitle").innerText = target.toUpperCase();
@@ -842,6 +1195,63 @@
       if (type === "terms") window.open("https://remgeorge.github.io/SVS-Residency/terms.html", "_blank");
       else window.open("https://remgeorge.github.io/SVS-Residency/index.html", "_blank");
     };
+
+    // Calculate Total Outstanding Dues for Flat
+    function loadHomeDuesSummary(flatNo) {
+      document.getElementById("lblHomeFlatInfo").innerText = `Flat ${flatNo || "--"}`;
+      if (!flatNo) {
+        document.getElementById("lblHomeTotalDues").innerText = "₹ 0.00";
+        return;
+      }
+
+      onSnapshot(query(collection(db, "receivables"), where("flatNo", "==", flatNo)), (snaps) => {
+        let totalDues = 0.0;
+        snaps.forEach((docSnap) => {
+          const r = docSnap.data();
+          const amt = parseFloat(r.balance || r.amount || 0);
+          totalDues += amt;
+        });
+        document.getElementById("lblHomeTotalDues").innerText = "₹ " + totalDues.toFixed(2);
+      });
+    }
+
+    // Load Detailed Account Statement
+    function loadAccountStatement(flatNo) {
+      document.getElementById("lblStatementFlatHeader").innerText = `Account Statement & Dues Breakdown for Flat ${flatNo || "--"}`;
+      const tbody = document.getElementById("tbStatementRows");
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading statement details...</td></tr>';
+
+      if (!flatNo) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No flat number associated with account.</td></tr>';
+        return;
+      }
+
+      onSnapshot(query(collection(db, "receivables"), where("flatNo", "==", flatNo)), (snaps) => {
+        tbody.innerHTML = "";
+        let totalSum = 0.0;
+
+        snaps.forEach((docSnap) => {
+          const r = docSnap.data();
+          const amt = parseFloat(r.balance || r.amount || 0);
+          totalSum += amt;
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${r.chargeTitle || r.category || "Maintenance"}</strong></td>
+            <td>${r.purpose || r.description || "--"}</td>
+            <td>${r.dateString || r.date || "--"}</td>
+            <td style="font-weight:700; color:var(--accent);">₹ ${amt.toFixed(2)}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        document.getElementById("lblStatementTotalSum").innerText = "₹ " + totalSum.toFixed(2);
+
+        if (snaps.empty) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--success); font-weight:600;">No outstanding dues for Flat ' + flatNo + '!</td></tr>';
+        }
+      });
+    }
 
     // Load Pending Approvals
     function loadPendingApprovals() {
@@ -942,8 +1352,11 @@
     // Load Announcements
     function loadNotices() {
       onSnapshot(collection(db, "notices"), (snaps) => {
-        const list = document.getElementById("listNotices");
-        list.innerHTML = "";
+        const listNotices = document.getElementById("listNotices");
+        const listHomeNotices = document.getElementById("listHomeNotices");
+        listNotices.innerHTML = "";
+        listHomeNotices.innerHTML = "";
+
         snaps.forEach((d) => {
           const n = d.data();
           const item = document.createElement("div");
@@ -954,8 +1367,14 @@
             <h4 style="color:var(--primary-dark);">${n.title || "Notice"}</h4>
             <p style="font-size:0.9rem; margin-top:4px;">${n.description || ""}</p>
           `;
-          list.appendChild(item);
+          listNotices.appendChild(item);
+          listHomeNotices.appendChild(item.cloneNode(true));
         });
+
+        if (snaps.empty) {
+          listNotices.innerHTML = '<p style="color:var(--text-muted);">No notices posted yet.</p>';
+          listHomeNotices.innerHTML = '<p style="color:var(--text-muted);">No notices posted yet.</p>';
+        }
       });
     }
 
@@ -1001,11 +1420,27 @@
         snaps.forEach((d) => {
           const b = d.data();
           const item = document.createElement("div");
-          item.style.padding = "10px";
+          item.style.padding = "12px";
           item.style.borderBottom = "1px solid #eee";
-          item.innerHTML = `<strong>${b.facilityName || "Facility"}</strong> - Booked by ${b.userName || "User"} (${b.date || ""})`;
+          item.style.display = "flex";
+          item.style.justifyContent = "space-between";
+          item.style.alignItems = "center";
+
+          const statusColor = (b.status || "").toLowerCase() === "approved" ? "#2e7d32" : (b.status || "").toLowerCase() === "rejected" ? "#c62828" : "#f57c00";
+
+          item.innerHTML = `
+            <div>
+              <strong>${b.facility || "Facility"}</strong> - ${b.bookingOccasion || "Occasion"}
+              <div style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;">Resident: ${b.userName || "User"} (${b.flatNo || "--"}) | Date: ${b.bookingDate || ""}</div>
+            </div>
+            <span class="badge" style="background:${statusColor}22; color:${statusColor}; font-weight:700;">${(b.status || "Pending").toUpperCase()}</span>
+          `;
           list.appendChild(item);
         });
+
+        if (snaps.empty) {
+          list.innerHTML = '<p style="color:var(--text-muted);">No facility booking records found.</p>';
+        }
       });
     }
 
