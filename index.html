@@ -120,6 +120,36 @@
     .modal { background: white; padding: 24px; border-radius: 12px; max-width: 440px; width: 90%; text-align: center; }
     .modal h3 { color: var(--primary-dark); margin-bottom: 12px; }
     .modal p { margin-bottom: 20px; color: var(--text-muted); }
+
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; padding: 16px 12px; gap: 14px; align-items: stretch; }
+      .brand { flex-direction: column; text-align: center; gap: 6px; }
+      .brand div { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+      .brand-title { font-size: 1.25rem; text-align: center; }
+      .brand-address { font-size: 0.8rem; text-align: center; white-space: normal; }
+
+      .nav-controls { width: 100%; flex-direction: column; gap: 12px; }
+      .lang-select { width: 100%; text-align: center; padding: 10px; font-size: 1rem; }
+
+      .user-badge { width: 100%; justify-content: space-between; padding: 12px; box-sizing: border-box; }
+      .user-info { flex: 1; text-align: left; padding-left: 10px; overflow: hidden; }
+
+      .quick-nav { padding: 10px 12px; gap: 12px; justify-content: flex-start; }
+      .quick-nav-item { padding: 8px 12px; font-size: 0.85rem; }
+
+      .app-layout { flex-direction: column; }
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); max-height: 220px; padding: 12px; }
+      .main-content { padding: 16px 12px; }
+
+      .dues-card { flex-direction: column; text-align: center; gap: 16px; padding: 20px 16px; }
+      .btn-statement { width: 100%; justify-content: center; padding: 14px; }
+
+      .flat-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+      .auth-container { margin: 20px auto; padding: 20px 16px; }
+
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -147,9 +177,9 @@
       <!-- User Profile Badge in Top Bar -->
       <div id="userSection" class="user-badge" style="display:none;">
         <img id="imgUserProfile" src="https://via.placeholder.com/32" alt="User" onerror="this.src='https://via.placeholder.com/32'">
-        <div style="display:flex; flex-direction:column; text-align:left; line-height:1.2;">
-          <span id="lblUserName" style="font-weight:700;">User</span>
-          <span id="lblUserRolePosition" style="font-size:0.75rem; opacity:0.85;">Flat -- | Resident</span>
+        <div class="user-info" style="display:flex; flex-direction:column; text-align:left; line-height:1.2;">
+          <span id="lblUserName" style="font-weight:700; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">User</span>
+          <span id="lblUserRolePosition" style="font-size:0.75rem; opacity:0.85; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">Flat -- | Resident</span>
         </div>
         <button class="btn-logout" onclick="logoutWebSession()"><i class="fa-solid fa-power-off"></i> <span id="txtLogoutBtn">Logout</span></button>
       </div>
@@ -611,7 +641,7 @@
         owner: "मालिक", tenant: "किरायादार", familyMember: "परिवार का सदस्य", residentRole: "निवासी"
       },
       te: {
-        loginTitle: "SVS రెసిడెన్సీ లాగిన్", emailHint: "ఈమెయిల్ చిరునామా", passwordHint: "పాస్‌వర్డ్", btnLogin: "లాగిన్",
+        loginTitle: "SVS రెసిడెన్సీ లాగిన్", emailHint: "ఈమెయిల్ చిరునామా", passwordHint: "పాస్‌వర్ಡ್", btnLogin: "లాగిన్",
         forgotPassword: "పాస్‌వర్డ్ మర్చిపోయారా?", goSignUp: "ఖాతా లేదా? సైన్ అప్ చేయండి",
         signUpTitle: "SVS రెసిడెన్సీ సైన్ అప్", goLogin: "ఇప్పటికే ఖాతా ఉందా? లాగిన్ చేయండి",
         approvals: "సైనప్ ఆమోదాలు", flats: "ఫ్లాట్ మాస్టర్", notices: "నోటీసు బోర్డు",
