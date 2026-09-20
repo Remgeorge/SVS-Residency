@@ -564,7 +564,7 @@
   <!-- Firebase SDK Modules -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, doc, getDoc, getDocs, onSnapshot, updateDoc, deleteDoc, setDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, doc, getDoc, getDocs, onSnapshot, updateDoc, deleteDoc, setDoc, query, where, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     // Firebase Config for svs-residency-68b41
@@ -579,6 +579,12 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app, "svsresidency");
+
+    // Enable offline persistence
+    enableIndexedDbPersistence(db).catch((err) => {
+      console.warn("Firestore persistence disabled: ", err.code);
+    });
+
     const auth = getAuth(app);
 
     window.db = db;
