@@ -123,23 +123,28 @@
 
     /* Mobile Responsive Adjustments */
     @media (max-width: 768px) {
-      .navbar { flex-direction: column; padding: 16px 12px; gap: 14px; align-items: stretch; }
-      .brand { flex-direction: column; text-align: center; gap: 6px; }
-      .brand div { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-      .brand-title { font-size: 1.25rem; text-align: center; }
-      .brand-address { font-size: 0.8rem; text-align: center; white-space: normal; }
+      .navbar { flex-direction: row; padding: 12px 16px; gap: 10px; align-items: center; flex-wrap: wrap; }
+      .brand { flex-direction: row; text-align: left; gap: 10px; flex: 1; }
+      .brand div { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+      .brand-title { font-size: 1.1rem; text-align: left; }
+      .brand-address { font-size: 0.7rem; text-align: left; white-space: normal; }
 
-      .nav-controls { width: 100%; flex-direction: column; gap: 12px; }
-      .lang-select { width: 100%; text-align: center; padding: 10px; font-size: 1rem; }
+      .nav-controls { width: 100%; flex-direction: row; justify-content: space-between; gap: 10px; margin-top: 10px; }
+      .lang-select { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; }
 
-      .user-badge { width: 100%; justify-content: space-between; padding: 12px; box-sizing: border-box; }
-      .user-info { flex: 1; text-align: left; padding-left: 10px; overflow: hidden; }
+      .user-badge { flex: 2; justify-content: space-between; padding: 8px 12px; box-sizing: border-box; font-size: 0.8rem; }
+      .user-info { flex: 1; text-align: left; padding-left: 8px; overflow: hidden; }
+      .btn-logout { padding: 6px 10px; font-size: 0.8rem; }
 
       .quick-nav { padding: 10px 12px; gap: 12px; justify-content: flex-start; }
       .quick-nav-item { padding: 8px 12px; font-size: 0.85rem; }
 
-      .app-layout { flex-direction: column; }
-      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); max-height: 220px; padding: 12px; }
+      .app-layout { flex-direction: column; position: relative; }
+
+      /* Mobile Sidebar Slider */
+      .sidebar { position: fixed; left: -300px; top: 0; bottom: 0; width: 260px; max-height: 100vh; padding: 16px; z-index: 10000; transition: left 0.3s ease; box-shadow: 2px 0 12px rgba(0,0,0,0.2); }
+      .sidebar.open { left: 0; }
+
       .main-content { padding: 16px 12px; }
 
       .dues-card { flex-direction: column; text-align: center; gap: 16px; padding: 20px 16px; }
@@ -150,6 +155,12 @@
 
       table { display: block; overflow-x: auto; white-space: nowrap; }
     }
+
+    .btn-hamburger { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 4px; margin-right: 8px; }
+    @media (max-width: 768px) { .btn-hamburger { display: block; } }
+
+    .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 9999; }
+    .sidebar-overlay.show { display: block; }
   </style>
 </head>
 <body>
@@ -157,9 +168,10 @@
   <!-- Top Navigation Header -->
   <nav class="navbar">
     <div class="brand">
+      <button class="btn-hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
       <img id="headerLogo" src="https://via.placeholder.com/42" alt="Logo">
       <div>
-        <div class="brand-title" id="lblAptName">SVS Residency</div>
+        <div class="brand-title" id="lblAptName">SVS Residency</div>d="lblAptName">SVS Residency</div>
         <div class="brand-address" id="lblAptAddress">Ameenapur, Hyderabad</div>
       </div>
     </div>
@@ -301,8 +313,10 @@
   <!-- Main App Layout (When Logged In) -->
   <div id="secMainPortal" class="app-layout" style="display:none;">
 
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
     <!-- Full Multi-Group Sidebar Navigation Matching Android Drawer -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="mainSidebar">
 
       <!-- Group 1: Resident Services -->
       <div class="menu-group">
@@ -514,13 +528,14 @@
 
         <!-- Centered Profile Image Upload -->
         <div style="text-align:center; margin-bottom:24px;">
-           <div style="position:relative; display:inline-block;" onclick="document.getElementById('profImgUpload').click()">
+           <div style="position:relative; display:inline-block;" onclick="openImagePickerModal()">
              <img id="profImgPreview" src="https://via.placeholder.com/120" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid var(--primary); cursor:pointer;" alt="Profile Preview">
              <div style="position:absolute; bottom:5px; right:5px; background:var(--primary); color:white; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
                <i class="fa-solid fa-camera"></i>
              </div>
            </div>
-           <input type="file" id="profImgUpload" style="display:none;" accept="image/*" onchange="previewProfileImage(event)">
+           <input type="file" id="profImgUploadGallery" style="display:none;" accept="image/*" onchange="previewProfileImage(event)">
+           <input type="file" id="profImgUploadCamera" style="display:none;" accept="image/*" capture="environment" onchange="previewProfileImage(event)">
            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">Tap to upload profile photo</div>
            <div id="profImgUploading" style="display:none; font-size:0.8rem; color:var(--primary); margin-top:4px;">Uploading...</div>
         </div>
@@ -550,7 +565,7 @@
             </div>
             <div style="flex:1; min-width:150px;">
               <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Date of Birth</label>
-              <input type="date" id="profDob" class="form-input" required>
+              <input type="text" id="profDob" class="form-input" placeholder="DD-MM" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)" required>
             </div>
           </div>
 
@@ -593,7 +608,7 @@
           <div style="display:flex; gap:14px; flex-wrap:wrap;">
             <div style="flex:1; min-width:150px;">
               <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Marriage Date (Optional)</label>
-              <input type="date" id="profMarriage" class="form-input">
+              <input type="text" id="profMarriage" class="form-input" placeholder="DD-MM" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)">
             </div>
           </div>
 
@@ -620,7 +635,7 @@
                    <option value="Male">Male</option><option value="Female">Female</option>
                 </select>
                 <input type="number" id="famAge" class="form-input" placeholder="Age" min="1" max="99">
-                <input type="date" id="famDob" class="form-input" placeholder="DOB">
+                <input type="text" id="famDob" class="form-input" placeholder="DOB (DD-MM)" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)">
                 <select id="famOccupation" class="form-select" style="grid-column: 1/-1;">
                    <option value="Student">Student</option>
                    <option value="Private Employee">Private Employee</option>
@@ -653,6 +668,19 @@
       </div>
 
     </main>
+  </div>
+
+  <!-- Image Source Picker Modal -->
+  <div id="modalImagePicker" class="modal-overlay">
+    <div class="modal" style="max-width:320px;">
+      <h3><i class="fa-solid fa-image" style="color:var(--primary);"></i> Upload Photo</h3>
+      <p style="margin-bottom:16px;">Select an option to upload your profile picture.</p>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <button class="btn btn-approve" onclick="document.getElementById('profImgUploadCamera').click(); document.getElementById('modalImagePicker').style.display='none';"><i class="fa-solid fa-camera"></i> Take Photo</button>
+        <button class="btn btn-approve" style="background:var(--primary);" onclick="document.getElementById('profImgUploadGallery').click(); document.getElementById('modalImagePicker').style.display='none';"><i class="fa-solid fa-images"></i> Choose from Gallery</button>
+        <button class="btn btn-reject" onclick="document.getElementById('modalImagePicker').style.display='none';">Cancel</button>
+      </div>
+    </div>
   </div>
 
   <!-- Delete Account Request Modal -->
@@ -984,6 +1012,14 @@
       input.value = input.value.replace(/[^a-zA-Z0-9@._\-+]/g, "");
     };
 
+    window.formatDateDDMM = function(input) {
+      let val = input.value.replace(/\D/g, "");
+      if (val.length >= 2) {
+        val = val.substring(0, 2) + "-" + val.substring(2, 4);
+      }
+      input.value = val;
+    };
+
     // Auto Prefix Mr. / Ms. on Gender Change
     window.onWebGenderChanged = function(gender) {
       const nameInput = document.getElementById("regName");
@@ -1312,6 +1348,11 @@
     };
 
     let profileImageFile = null;
+
+    window.openImagePickerModal = function() {
+      document.getElementById('modalImagePicker').style.display = 'flex';
+    };
+
     window.previewProfileImage = function(event) {
       const file = event.target.files[0];
       if (file) {
@@ -1744,6 +1785,22 @@
         document.getElementById("pnlGeneric").style.display = "block";
         document.getElementById("lblGenericTitle").innerText = target.toUpperCase();
         document.getElementById("lblGenericMsg").innerText = `Module '${target}' is active and synced with database.`;
+      }
+
+      if (window.innerWidth <= 768) toggleSidebar();
+    };
+
+    window.toggleSidebar = function() {
+      const sb = document.getElementById('mainSidebar');
+      const ov = document.getElementById('sidebarOverlay');
+      if (sb && ov) {
+        if (sb.classList.contains('open')) {
+          sb.classList.remove('open');
+          ov.classList.remove('show');
+        } else {
+          sb.classList.add('open');
+          ov.classList.add('show');
+        }
       }
     };
 
