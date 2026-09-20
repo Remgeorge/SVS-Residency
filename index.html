@@ -1137,6 +1137,7 @@
       const email = document.getElementById("txtLoginEmail").value.trim();
       const password = document.getElementById("txtLoginPassword").value;
       const errLbl = document.getElementById("lblLoginError");
+      const btn = document.getElementById("btnLoginSubmit");
       errLbl.style.display = "none";
 
       if (!email || !password) {
@@ -1145,6 +1146,9 @@
         return;
       }
 
+      btn.disabled = true;
+      btn.innerText = "Logging in...";
+
       try {
         const userCred = await signInWithEmailAndPassword(auth, email, password);
         const user = userCred.user;
@@ -1152,43 +1156,61 @@
         // Check user approval status in Firestore
         const userSnap = await getDoc(doc(db, "residents", user.uid));
         const isSuperAdmin = user.email.toLowerCase() === "remgeorge@gmail.com";
-        let isVerified = false;
+        let isVerified = isSuperAdmin;
 
         if (userSnap.exists()) {
           const data = userSnap.data();
-          const raw = (data.verified || "").toString().toLowerCase();
-          isVerified = raw === "true" || raw === "yes" || raw === "approved" || data.role === "super_admin" || data.role === "admin";
+          const raw = (data.verified || "").toString().toLowerCase().trim();
+          isVerified = isVerified || raw === "true" || raw === "yes" || raw === "approved" || raw === "1" ||
+                       data.role === "super_admin" || data.role === "admin" || (data.position || "").trim() !== "";
         }
 
-        if (!isVerified && !isSuperAdmin) {
+        if (!isVerified) {
           await signOut(auth);
           errLbl.innerText = "Account Pending Approval: An admin must approve your registration before you can log in.";
           errLbl.style.display = "block";
+          btn.disabled = false;
+          btn.innerText = "Login";
         }
       } catch (error) {
-        errLbl.innerText = "Login Failed: " + error.message;
+        btn.disabled = false;
+        btn.innerText = "Login";
+
+        let msg = "Login Failed: " + error.message;
+        if (error.code === "auth/invalid-credential" || error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+          msg = "Invalid email or password. Please check your credentials.";
+        } else if (error.code === "auth/invalid-email") {
+          msg = "Please enter a valid email address.";
+        } else if (error.code === "auth/too-many-requests") {
+          msg = "Access disabled temporarily due to many failed attempts. Try resetting your password or try again later.";
+        }
+        errLbl.innerText = msg;
         errLbl.style.display = "block";
       }
     };
 
     // Real-Time Auth State Listener
     onAuthStateChanged(auth, async (user) => {
+      const btn = document.getElementById("btnLoginSubmit");
+      if (btn) { btn.disabled = false; btn.innerText = "Login"; }
+
       if (user) {
         try {
           const userSnap = await getDoc(doc(db, "residents", user.uid));
           const isSuperAdmin = user.email.toLowerCase() === "remgeorge@gmail.com";
-          let isVerified = false;
+          let isVerified = isSuperAdmin;
 
           if (userSnap.exists()) {
             currentUserData = userSnap.data();
-            const raw = (currentUserData.verified || "").toString().toLowerCase();
-            isVerified = raw === "true" || raw === "yes" || raw === "approved" || currentUserData.role === "super_admin" || currentUserData.role === "admin";
+            const raw = (currentUserData.verified || "").toString().toLowerCase().trim();
+            isVerified = isVerified || raw === "true" || raw === "yes" || raw === "approved" || raw === "1" ||
+                         currentUserData.role === "super_admin" || currentUserData.role === "admin" ||
+                         (currentUserData.position || "").trim() !== "";
 
             currentUserFlat = currentUserData.flat || "";
             currentUserName = currentUserData.name || user.email.split("@")[0];
 
             updateGreetingMessage(currentUserName);
-
             document.getElementById("lblUserName").innerText = currentUserName;
             renderUserProfileBadge();
 
@@ -1198,13 +1220,13 @@
             }
           } else {
             currentUserName = user.email.split("@")[0];
-            currentUserData = { name: currentUserName, flat: "--", type: "Resident" };
+            currentUserData = { name: currentUserName, flat: "--", type: isSuperAdmin ? "Super Admin" : "Resident" };
             updateGreetingMessage(currentUserName);
             document.getElementById("lblUserName").innerText = currentUserName;
             renderUserProfileBadge();
           }
 
-          if (isVerified || isSuperAdmin) {
+          if (isVerified) {
             document.getElementById("secLogin").style.display = "none";
             document.getElementById("secSignUp").style.display = "none";
             document.getElementById("secMainPortal").style.display = "flex";
@@ -1212,7 +1234,6 @@
             document.getElementById("userSection").style.display = "flex";
             initSingleDeviceSessionListener(user.uid);
 
-            // Load Dues Summary and Statement for User's Flat
             loadHomeDuesSummary(currentUserFlat);
             loadPendingApprovals();
             loadFlatMaster();
@@ -1228,6 +1249,8 @@
             document.getElementById("secMainPortal").style.display = "none";
             document.getElementById("quickNavBar").style.display = "none";
             document.getElementById("userSection").style.display = "none";
+            document.getElementById("lblLoginError").innerText = "Account Pending Approval: An admin must approve your registration before you can log in.";
+            document.getElementById("lblLoginError").style.display = "block";
           }
         } catch (e) {
           console.error("Auth check error", e);
