@@ -495,6 +495,152 @@
         </div>
       </div>
 
+      <!-- Panel 10: Profile Update Form -->
+      <div id="pnlProfileUpdate" class="card" style="display:none; border-left: 5px solid var(--primary);">
+        <div class="card-title"><i class="fa-solid fa-user-pen" style="color:var(--primary);"></i> <span>Update Your Profile</span></div>
+
+        <!-- Flat Details Section -->
+        <div style="background:#f8f9fa; padding:16px; border-radius:8px; margin-bottom:20px; border:1px solid var(--border);">
+          <h4 style="color:var(--primary-dark); margin-bottom:12px;"><i class="fa-solid fa-circle-info"></i> Flat Technical Details</h4>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:0.9rem;" id="profFlatDetails">
+             <div><strong>Flat No:</strong> --</div>
+             <div><strong>Area:</strong> -- Sqft</div>
+             <div><strong>Floor:</strong> --</div>
+             <div><strong>Lane:</strong> --</div>
+             <div><strong>Meter:</strong> --</div>
+             <div><strong>Tax:</strong> --</div>
+          </div>
+        </div>
+
+        <!-- Centered Profile Image Upload -->
+        <div style="text-align:center; margin-bottom:24px;">
+           <img id="profImgPreview" src="https://via.placeholder.com/120" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid var(--primary); cursor:pointer;" onclick="document.getElementById('profImgUpload').click()">
+           <input type="file" id="profImgUpload" style="display:none;" accept="image/*" onchange="previewProfileImage(event)">
+           <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">Tap to upload profile photo</div>
+           <div id="profImgUploading" style="display:none; font-size:0.8rem; color:var(--primary); margin-top:4px;">Uploading...</div>
+        </div>
+
+        <form id="formProfileUpdate" onsubmit="event.preventDefault(); submitWebProfileUpdate();" style="display:flex; flex-direction:column; gap:14px; max-width:600px; margin:0 auto; width:100%;">
+
+          <h4 style="color:var(--primary-dark); border-bottom:1px solid var(--border); padding-bottom:6px; margin-bottom:6px;">Personal Information</h4>
+
+          <!-- Read-only Info -->
+          <div class="input-group">
+            <i class="fa-solid fa-user input-icon"></i>
+            <input type="text" id="profReadOnlyName" class="form-input" disabled style="background:#f5f5f5;">
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" id="profReadOnlyEmail" class="form-input" disabled style="background:#f5f5f5;">
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-venus-mars input-icon"></i>
+            <input type="text" id="profReadOnlyGender" class="form-input" disabled style="background:#f5f5f5;">
+          </div>
+
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:150px;">
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Age</label>
+              <input type="number" id="profAge" class="form-input" placeholder="Age" required min="19" max="98">
+            </div>
+            <div style="flex:1; min-width:150px;">
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Date of Birth</label>
+              <input type="text" id="profDob" class="form-input" placeholder="DD-MM" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <i class="fa-solid fa-phone input-icon"></i>
+            <input type="tel" id="profPhone" class="form-input" placeholder="Contact Number (10 Digits)" required minlength="10" maxlength="10">
+          </div>
+
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:150px;">
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Religion</label>
+              <select id="profReligion" class="form-select" required>
+                <option value="">Select Religion</option>
+                <option value="Hindu">Hindu</option>
+                <option value="Muslim">Muslim</option>
+                <option value="Christian">Christian</option>
+              </select>
+            </div>
+            <div style="flex:1; min-width:150px;">
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Occupation</label>
+              <select id="profOccupation" class="form-select" required>
+                <option value="">Select Occupation</option>
+                <option value="Private Employee">Private Employee</option>
+                <option value="Government Employee">Government Employee</option>
+                <option value="Business">Business</option>
+                <option value="Retired">Retired</option>
+                <option value="Student">Student</option>
+                <option value="House Wife" id="profOccHouseWife" style="display:none;">House Wife</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:14px; flex-wrap:wrap; align-items: center; border: 1px solid var(--border); padding: 10px; border-radius: 8px;">
+            <label style="font-size:0.9rem; color:var(--text); font-weight:600; min-width:120px;">Food Preference:</label>
+            <label style="display:flex; align-items:center; gap:4px; cursor:pointer;"><input type="radio" name="profFoodPref" value="Veg" required> Veg</label>
+            <label style="display:flex; align-items:center; gap:4px; cursor:pointer;"><input type="radio" name="profFoodPref" value="Non-Veg"> Non-Veg</label>
+            <label style="display:flex; align-items:center; gap:4px; cursor:pointer;"><input type="radio" name="profFoodPref" value="Both"> Both</label>
+          </div>
+
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:150px;">
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Marriage Date (Optional)</label>
+              <input type="text" id="profMarriage" class="form-input" placeholder="DD-MM" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)">
+            </div>
+          </div>
+
+          <div id="profVehicleSection" style="display:none; flex-direction:column; gap:14px;">
+            <div class="input-group">
+              <i class="fa-solid fa-motorcycle input-icon"></i>
+              <input type="text" id="profVehicle2" class="form-input" placeholder="2-Wheeler Reg No (e.g., TS07AB1234)" style="text-transform:uppercase;" maxlength="10">
+            </div>
+            <div class="input-group" id="prof4wContainer" style="display:none;">
+              <i class="fa-solid fa-car input-icon"></i>
+              <input type="text" id="profVehicle4" class="form-input" placeholder="4-Wheeler Reg No (e.g., TS07AB1234)" style="text-transform:uppercase;" maxlength="10">
+            </div>
+          </div>
+
+          <!-- Family Section -->
+          <div id="profFamilySection" style="display:none; margin-top:20px; background:#f8f9fa; padding:16px; border-radius:8px; border:1px solid var(--border);">
+             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <h4 style="color:var(--primary-dark);">Family Members</h4>
+             </div>
+
+             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:12px;">
+                <input type="text" id="famName" class="form-input" placeholder="Name">
+                <select id="famGender" class="form-select">
+                   <option value="Male">Male</option><option value="Female">Female</option>
+                </select>
+                <input type="number" id="famAge" class="form-input" placeholder="Age" min="1" max="99">
+                <input type="text" id="famDob" class="form-input" placeholder="DOB (DD-MM)" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)">
+                <select id="famOccupation" class="form-select" style="grid-column: 1/-1;">
+                   <option value="Student">Student</option>
+                   <option value="Private Employee">Private Employee</option>
+                   <option value="Government Employee">Government Employee</option>
+                   <option value="Business">Business</option>
+                   <option value="Retired">Retired</option>
+                   <option value="House Wife">House Wife</option>
+                </select>
+                <button type="button" class="btn btn-approve" style="grid-column: 1/-1;" onclick="addWebFamilyMember()">Add Member</button>
+             </div>
+
+             <div style="overflow-x:auto;">
+               <table style="font-size:0.85rem; width:100%;">
+                 <thead><tr><th>Name</th><th>Gen</th><th>Age</th><th>Act</th></tr></thead>
+                 <tbody id="tbFamilyMembers"></tbody>
+               </table>
+             </div>
+          </div>
+
+          <button type="submit" id="btnProfileSubmit" class="btn-auth-submit" style="margin-top:16px;">Update Profile</button>
+          <div id="lblProfileSuccess" class="success-msg">Profile updated! Loading portal...</div>
+          <div id="lblProfileError" class="error-msg"></div>
+        </form>
+      </div>
+
       <!-- Generic Panel for Other Admin Tools -->
       <div id="pnlGeneric" class="card" style="display:none;">
         <div class="card-title"><i class="fa-solid fa-gears" style="color:var(--primary);"></i> <span id="lblGenericTitle">Admin Tool</span></div>
@@ -566,6 +712,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, doc, getDoc, getDocs, onSnapshot, updateDoc, deleteDoc, setDoc, query, where, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
     // Firebase Config for svs-residency-68b41
     const firebaseConfig = {
@@ -586,9 +733,11 @@
     });
 
     const auth = getAuth(app);
+    const storage = getStorage(app, "gs://svs-residency-68b41.firebasestorage.app");
 
     window.db = db;
     window.auth = auth;
+    window.storage = storage;
 
     let webOccupancyChoice = "false";
     let currentUserFlat = "";
@@ -719,6 +868,8 @@
         owner: "ഉടമ", tenant: "വാടകക്കാരൻ", familyMember: "കുടുംബാംഗം", residentRole: "താമസക്കാരൻ"
       }
     };
+
+    let currentLang = localStorage.getItem("webLang") || "en";
 
     // Render Localized User Profile Badge
     window.renderUserProfileBadge = function() {
@@ -1155,6 +1306,162 @@
       }
     };
 
+    let profileImageFile = null;
+    window.previewProfileImage = function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        profileImageFile = file;
+        const reader = new FileReader();
+        reader.onload = e => document.getElementById("profImgPreview").src = e.target.result;
+        reader.readAsDataURL(file);
+      }
+    };
+
+    let webFamilyMembers = [];
+
+    window.addWebFamilyMember = function() {
+      const name = document.getElementById("famName").value.trim();
+      const gender = document.getElementById("famGender").value;
+      const age = document.getElementById("famAge").value;
+      const dob = document.getElementById("famDob").value;
+      const occupation = document.getElementById("famOccupation").value;
+
+      if (!name || !age) {
+        alert("Name and Age are required for family members.");
+        return;
+      }
+
+      const prefix = gender === "Male" ? "Mr. " : "Ms. ";
+      const fullName = prefix + name.replace(/^(Mr\.|Ms\.)\s*/i, "");
+
+      webFamilyMembers.push({ name: fullName, gender, age, dob, occupation });
+      renderWebFamilyMembers();
+
+      document.getElementById("famName").value = "";
+      document.getElementById("famAge").value = "";
+      document.getElementById("famDob").value = "";
+    };
+
+    window.removeWebFamilyMember = function(idx) {
+      webFamilyMembers.splice(idx, 1);
+      renderWebFamilyMembers();
+    };
+
+    function renderWebFamilyMembers() {
+      const tbody = document.getElementById("tbFamilyMembers");
+      tbody.innerHTML = "";
+      webFamilyMembers.forEach((mem, idx) => {
+        tbody.innerHTML += `<tr>
+          <td>${mem.name}</td><td>${mem.gender.charAt(0)}</td><td>${mem.age}</td>
+          <td><button type="button" onclick="removeWebFamilyMember(${idx})" style="color:var(--accent); background:none; border:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+        </tr>`;
+      });
+    }
+
+    // Submit Profile Update
+    window.submitWebProfileUpdate = async function() {
+      const errLbl = document.getElementById("lblProfileError");
+      const succLbl = document.getElementById("lblProfileSuccess");
+      const btn = document.getElementById("btnProfileSubmit");
+      errLbl.style.display = "none";
+      succLbl.style.display = "none";
+
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const age = document.getElementById("profAge").value.trim();
+      const dob = document.getElementById("profDob").value;
+      const phone = document.getElementById("profPhone").value.trim();
+      const religion = document.getElementById("profReligion").value;
+      const occupation = document.getElementById("profOccupation").value;
+
+      const foodPrefEl = document.querySelector('input[name="profFoodPref"]:checked');
+      const foodPref = foodPrefEl ? foodPrefEl.value : "";
+
+      const marriage = document.getElementById("profMarriage").value;
+      const vehicle2 = document.getElementById("profVehicle2").value.trim().toUpperCase();
+      const vehicle4 = document.getElementById("profVehicle4").value.trim().toUpperCase();
+
+      const vehicleRegex = /^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$/;
+
+      if (vehicle2 && !vehicleRegex.test(vehicle2)) {
+        errLbl.innerText = "Invalid 2-Wheeler Number. Format: TS07AB1234";
+        errLbl.style.display = "block";
+        return;
+      }
+      if (vehicle4 && !vehicleRegex.test(vehicle4)) {
+        errLbl.innerText = "Invalid 4-Wheeler Number. Format: TS07AB1234";
+        errLbl.style.display = "block";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "Saving...";
+
+      try {
+        let uploadedImageUrl = currentUserData?.profileImageUrl || "";
+
+        if (profileImageFile) {
+           document.getElementById("profImgUploading").style.display = "block";
+           const storageRef = ref(storage, `Profile/${user.uid}.jpg`);
+           await uploadBytes(storageRef, profileImageFile);
+           uploadedImageUrl = await getDownloadURL(storageRef);
+           document.getElementById("profImgUploading").style.display = "none";
+        }
+
+        const updateData = {
+          profileupdate: "true",
+          age: age,
+          dob: dob,
+          contactNumber: phone,
+          religion: religion,
+          occupation: occupation,
+          foodPreference: foodPref,
+          twoWheelerRegNo: vehicle2,
+          fourWheelerRegNo: vehicle4
+        };
+
+        if (uploadedImageUrl) updateData.profileImageUrl = uploadedImageUrl;
+        if (marriage) updateData.marriageDate = marriage;
+
+        await updateDoc(doc(db, "residents", user.uid), updateData);
+
+        if (currentUserFlat && currentUserData) {
+          if (currentUserData.type === "Owner" && currentUserData.occupied === "false") {
+            // Non-resident owners don't store vehicles in occupancy, but other info yes
+            await setDoc(doc(db, "occupancy", currentUserFlat), updateData, { merge: true }).catch(() => {});
+          } else if (currentUserData.occupied === "true") {
+            await setDoc(doc(db, "occupancy", currentUserFlat), updateData, { merge: true }).catch(() => {});
+          }
+        }
+
+        // Save Family Members
+        if (webFamilyMembers.length > 0) {
+           for (const fm of webFamilyMembers) {
+             const cleanName = fm.name.replace(/[^a-zA-Z]/g, "");
+             const fDocId = `${user.uid}_${cleanName}`;
+             const fData = {
+               name: fm.name, gender: fm.gender, age: fm.age, dob: fm.dob, occupation: fm.occupation,
+               type: "Family Member", familyheadUid: user.uid, familyheadType: currentUserData.type || "Owner",
+               flat: currentUserFlat, verified: "true", profileupdate: "true", role: "resident"
+             };
+             await setDoc(doc(db, "residents", fDocId), fData).catch(() => {});
+           }
+        }
+
+        succLbl.style.display = "block";
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } catch (e) {
+        btn.disabled = false;
+        btn.innerText = "Update Profile";
+        errLbl.innerText = "Error saving profile: " + e.message;
+        errLbl.style.display = "block";
+        document.getElementById("profImgUploading").style.display = "none";
+      }
+    };
+
     // Load Branding
     async function loadBranding() {
       try {
@@ -1210,7 +1517,8 @@
     // Real-Time Auth State Listener
     onAuthStateChanged(auth, async (user) => {
       const btn = document.getElementById("btnLoginSubmit");
-      if (btn) { btn.disabled = false; btn.innerText = "Login"; }
+      const dict = i18n[currentLang] || i18n.en;
+      if (btn) { btn.disabled = false; btn.innerText = dict.btnLogin; }
 
       if (user) {
         try {
@@ -1220,13 +1528,22 @@
           const userSnap = await getDoc(doc(db, "residents", user.uid));
           const isSuperAdmin = user.email.toLowerCase() === "remgeorge@gmail.com";
           let isVerified = isSuperAdmin;
+          let isProfileComplete = isSuperAdmin;
 
           if (userSnap.exists()) {
             currentUserData = userSnap.data();
             const raw = (currentUserData.verified || "").toString().toLowerCase().trim();
+            const rawProfile = (currentUserData.profileupdate || currentUserData.profileUpdate || "").toString().toLowerCase().trim();
+            const userRole = (currentUserData.role || "").toLowerCase().trim();
+
             isVerified = isVerified || raw === "true" || raw === "yes" || raw === "approved" || raw === "1" ||
-                         currentUserData.role === "super_admin" || currentUserData.role === "admin" ||
+                         userRole === "super_admin" || userRole === "admin" ||
                          (currentUserData.position || "").trim() !== "";
+
+            const isProfileUpdated = rawProfile === "true" || rawProfile === "yes" || rawProfile === "1";
+            const isStaff = userRole === "staff" || userRole === "security" || userRole === "guard";
+            const isAdminRole = userRole === "super_admin" || userRole === "admin" || userRole === "event_admin";
+            isProfileComplete = isProfileComplete || isProfileUpdated || isStaff || isAdminRole || (currentUserData.position || "").trim() !== "";
 
             currentUserFlat = currentUserData.flat || "";
             currentUserName = currentUserData.name || user.email.split("@")[0];
@@ -1238,6 +1555,54 @@
             if (currentUserData.profileImageUrl) {
               document.getElementById("imgUserProfile").src = currentUserData.profileImageUrl;
               document.getElementById("imgHomeGreetingAvatar").src = currentUserData.profileImageUrl;
+            }
+
+            // Setup Profile Fields Visibility
+            if (document.getElementById("pnlProfileUpdate")) {
+               // Render personal info immediately into disabled boxes
+               document.getElementById("profReadOnlyName").value = currentUserData.name || currentUserName;
+               document.getElementById("profReadOnlyEmail").value = user.email || "";
+               document.getElementById("profReadOnlyGender").value = currentUserData.gender || "";
+
+               const isNonResidentOwner = currentUserData.type === "Owner" && currentUserData.occupied === "false";
+               const isFamilyMember = currentUserData.type === "Family Member";
+
+               // Populate Flat Details block
+               if (currentUserFlat) {
+                  getDoc(doc(db, "flats", currentUserFlat)).then(fDoc => {
+                    if (fDoc.exists()) {
+                      const f = fDoc.data();
+                      document.getElementById("profFlatDetails").innerHTML = `
+                         <div><strong>Flat No:</strong> ${f.flatNumber || currentUserFlat}</div>
+                         <div><strong>Area:</strong> ${f.areaSqft || "--"} Sqft</div>
+                         <div><strong>Floor:</strong> ${f.floor || "--"}</div>
+                         <div><strong>Lane:</strong> ${f.lane || "--"}</div>
+                         <div><strong>Meter:</strong> ${f.meterNumber || "--"}</div>
+                         <div><strong>Tax:</strong> ${f.taxNumber || "--"}</div>
+                      `;
+
+                      if(f.fourWheelerParking === "true" && currentUserData.occupied === "true") {
+                         document.getElementById("prof4wContainer").style.display = "flex";
+                      } else {
+                         document.getElementById("prof4wContainer").style.display = "none";
+                      }
+                    }
+                  });
+               }
+
+               if (isFamilyMember || isNonResidentOwner) {
+                 document.getElementById("profVehicleSection").style.display = "none";
+                 document.getElementById("profFamilySection").style.display = "none";
+               } else {
+                 document.getElementById("profVehicleSection").style.display = "flex";
+                 document.getElementById("profFamilySection").style.display = "block";
+               }
+
+               if (currentUserData.gender === "Female") {
+                 document.getElementById("profOccHouseWife").style.display = "block";
+               } else {
+                 document.getElementById("profOccHouseWife").style.display = "none";
+               }
             }
           } else {
             currentUserName = user.email.split("@")[0];
@@ -1251,18 +1616,28 @@
             document.getElementById("secLogin").style.display = "none";
             document.getElementById("secSignUp").style.display = "none";
             document.getElementById("secMainPortal").style.display = "flex";
-            document.getElementById("quickNavBar").style.display = "flex";
             document.getElementById("userSection").style.display = "flex";
             initSingleDeviceSessionListener(user.uid);
 
-            loadHomeDuesSummary(currentUserFlat);
-            loadPendingApprovals();
-            loadFlatMaster();
-            loadNotices();
-            loadDirectory();
-            loadComplaints();
-            loadBookings();
-            loadAssetInfo();
+            if (isProfileComplete) {
+              document.getElementById("quickNavBar").style.display = "flex";
+              document.querySelectorAll(".sidebar .menu-group").forEach(g => g.style.display = "flex");
+              navTo('home');
+              loadHomeDuesSummary(currentUserFlat);
+              loadPendingApprovals();
+              loadFlatMaster();
+              loadNotices();
+              loadDirectory();
+              loadComplaints();
+              loadBookings();
+              loadAssetInfo();
+            } else {
+              document.getElementById("quickNavBar").style.display = "none";
+              document.querySelectorAll(".sidebar .menu-group").forEach(g => g.style.display = "none");
+              // Re-enable support group just for logout
+              if(document.querySelectorAll(".sidebar .menu-group")[3]) document.querySelectorAll(".sidebar .menu-group")[3].style.display = "flex";
+              navTo('profileUpdate');
+            }
           } else {
             await signOut(auth);
             document.getElementById("secLogin").style.display = "block";
@@ -1270,16 +1645,23 @@
             document.getElementById("secMainPortal").style.display = "none";
             document.getElementById("quickNavBar").style.display = "none";
             document.getElementById("userSection").style.display = "none";
-            document.getElementById("lblLoginError").innerText = "Account Pending Approval: An admin must approve your registration before you can log in.";
-            document.getElementById("lblLoginError").style.display = "block";
+
+            const errLbl = document.getElementById("lblLoginError");
+            errLbl.innerText = "Account Pending Approval: An admin must approve your registration before you can log in.";
+            errLbl.style.display = "block";
           }
         } catch (e) {
           console.error("Auth check error", e);
+          await signOut(auth);
           document.getElementById("secLogin").style.display = "block";
           document.getElementById("secSignUp").style.display = "none";
           document.getElementById("secMainPortal").style.display = "none";
           document.getElementById("quickNavBar").style.display = "none";
           document.getElementById("userSection").style.display = "none";
+
+          const errLbl = document.getElementById("lblLoginError");
+          errLbl.innerText = "System Error: " + e.message;
+          errLbl.style.display = "block";
         }
       } else {
         document.getElementById("secLogin").style.display = "block";
@@ -1327,28 +1709,30 @@
 
       if (element) element.classList.add("active");
 
-      const panels = ["pnlHome", "pnlNotices", "pnlStatement", "pnlApprovals", "pnlFlats", "pnlDirectory", "pnlComplaints", "pnlBookings", "pnlAssets", "pnlAbout", "pnlGeneric"];
+      const panels = ["pnlHome", "pnlNotices", "pnlStatement", "pnlApprovals", "pnlFlats", "pnlDirectory", "pnlComplaints", "pnlBookings", "pnlAssets", "pnlAbout", "pnlProfileUpdate", "pnlGeneric"];
       panels.forEach(id => document.getElementById(id).style.display = "none");
 
       if (target === "home") {
         document.getElementById("pnlHome").style.display = "block";
-        document.getElementById("qnHome").classList.add("active");
+        if (document.getElementById("qnHome")) document.getElementById("qnHome").classList.add("active");
+      } else if (target === "profileUpdate") {
+        document.getElementById("pnlProfileUpdate").style.display = "block";
       } else if (target === "notices") {
         document.getElementById("pnlNotices").style.display = "block";
-        document.getElementById("qnNotices").classList.add("active");
+        if (document.getElementById("qnNotices")) document.getElementById("qnNotices").classList.add("active");
       } else if (target === "statement") {
         document.getElementById("pnlStatement").style.display = "block";
-        document.getElementById("qnStatement").classList.add("active");
+        if (document.getElementById("qnStatement")) document.getElementById("qnStatement").classList.add("active");
         loadAccountStatement(currentUserFlat);
       } else if (target === "approvals") document.getElementById("pnlApprovals").style.display = "block";
       else if (target === "flats") document.getElementById("pnlFlats").style.display = "block";
       else if (target === "directory") document.getElementById("pnlDirectory").style.display = "block";
       else if (target === "complaints") {
         document.getElementById("pnlComplaints").style.display = "block";
-        document.getElementById("qnComplaints").classList.add("active");
+        if (document.getElementById("qnComplaints")) document.getElementById("qnComplaints").classList.add("active");
       } else if (target === "bookings") {
         document.getElementById("pnlBookings").style.display = "block";
-        document.getElementById("qnBookings").classList.add("active");
+        if (document.getElementById("qnBookings")) document.getElementById("qnBookings").classList.add("active");
       } else if (target === "assets") document.getElementById("pnlAssets").style.display = "block";
       else if (target === "about") document.getElementById("pnlAbout").style.display = "block";
       else {
