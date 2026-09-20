@@ -1186,28 +1186,8 @@
       btn.innerText = "Logging in...";
 
       try {
-        const userCred = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCred.user;
-
-        // Check user approval status in Firestore
-        const userSnap = await getDoc(doc(db, "residents", user.uid));
-        const isSuperAdmin = user.email.toLowerCase() === "remgeorge@gmail.com";
-        let isVerified = isSuperAdmin;
-
-        if (userSnap.exists()) {
-          const data = userSnap.data();
-          const raw = (data.verified || "").toString().toLowerCase().trim();
-          isVerified = isVerified || raw === "true" || raw === "yes" || raw === "approved" || raw === "1" ||
-                       data.role === "super_admin" || data.role === "admin" || (data.position || "").trim() !== "";
-        }
-
-        if (!isVerified) {
-          await signOut(auth);
-          errLbl.innerText = "Account Pending Approval: An admin must approve your registration before you can log in.";
-          errLbl.style.display = "block";
-          btn.disabled = false;
-          btn.innerText = "Login";
-        }
+        await signInWithEmailAndPassword(auth, email, password);
+        // Do NOT run db queries here; let onAuthStateChanged handle the verification logic
       } catch (error) {
         btn.disabled = false;
         btn.innerText = "Login";
@@ -1219,6 +1199,8 @@
           msg = "Please enter a valid email address.";
         } else if (error.code === "auth/too-many-requests") {
           msg = "Access disabled temporarily due to many failed attempts. Try resetting your password or try again later.";
+        } else if (error.code === "auth/network-request-failed") {
+          msg = "Network Error: Please check your internet connection or try using a local server (http://localhost) instead of opening the file directly.";
         }
         errLbl.innerText = msg;
         errLbl.style.display = "block";
@@ -1232,6 +1214,9 @@
 
       if (user) {
         try {
+          // Delay briefly to allow Firestore connection to stabilize
+          await new Promise(resolve => setTimeout(resolve, 500));
+
           const userSnap = await getDoc(doc(db, "residents", user.uid));
           const isSuperAdmin = user.email.toLowerCase() === "remgeorge@gmail.com";
           let isVerified = isSuperAdmin;
