@@ -129,12 +129,12 @@
       .brand-title { font-size: 1.1rem; text-align: left; }
       .brand-address { font-size: 0.7rem; text-align: left; white-space: normal; }
 
-      .nav-controls { width: 100%; flex-direction: row; justify-content: space-between; gap: 10px; margin-top: 10px; }
-      .lang-select { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; }
+      .nav-controls { width: 100%; flex-direction: column; gap: 12px; margin-top: 10px; }
+      .lang-select { width: 100%; text-align: center; padding: 10px; font-size: 1rem; }
 
-      .user-badge { flex: 2; justify-content: space-between; padding: 8px 12px; box-sizing: border-box; font-size: 0.8rem; }
-      .user-info { flex: 1; text-align: left; padding-left: 8px; overflow: hidden; }
-      .btn-logout { padding: 6px 10px; font-size: 0.8rem; }
+      .user-badge { width: 100%; justify-content: space-between; padding: 10px 14px; box-sizing: border-box; }
+      .user-info { flex: 1; text-align: left; padding-left: 10px; overflow: hidden; }
+      .btn-logout { padding: 8px 12px; font-size: 0.9rem; }
 
       .quick-nav { padding: 10px 12px; gap: 12px; justify-content: flex-start; }
       .quick-nav-item { padding: 8px 12px; font-size: 0.85rem; }
@@ -171,7 +171,7 @@
       <button class="btn-hamburger" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
       <img id="headerLogo" src="https://via.placeholder.com/42" alt="Logo">
       <div>
-        <div class="brand-title" id="lblAptName">SVS Residency</div>d="lblAptName">SVS Residency</div>
+        <div class="brand-title" id="lblAptName">SVS Residency</div>
         <div class="brand-address" id="lblAptAddress">Ameenapur, Hyderabad</div>
       </div>
     </div>
@@ -535,7 +535,7 @@
              </div>
            </div>
            <input type="file" id="profImgUploadGallery" style="display:none;" accept="image/*" onchange="previewProfileImage(event)">
-           <input type="file" id="profImgUploadCamera" style="display:none;" accept="image/*" capture="environment" onchange="previewProfileImage(event)">
+           <input type="file" id="profImgUploadCamera" style="display:none;" accept="image/*" capture="user" onchange="previewProfileImage(event)">
            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">Tap to upload profile photo</div>
            <div id="profImgUploading" style="display:none; font-size:0.8rem; color:var(--primary); margin-top:4px;">Uploading...</div>
         </div>
@@ -560,34 +560,40 @@
 
           <div style="display:flex; gap:14px; flex-wrap:wrap;">
             <div style="flex:1; min-width:150px;">
-              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Age</label>
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;" id="lblAge">Age</label>
               <input type="number" id="profAge" class="form-input" placeholder="Age" required min="19" max="98">
             </div>
-            <div style="flex:1; min-width:150px;">
-              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Date of Birth</label>
-              <input type="text" id="profDob" class="form-input" placeholder="DD-MM" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)" required>
+            <div style="flex:1; min-width:150px; position:relative;">
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;" id="lblDob">Date of Birth</label>
+              <div style="position:relative; display:flex; align-items:center;">
+                <input type="text" id="profDob" class="form-input" placeholder="DD-MM" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)" required>
+                <i class="fa-solid fa-calendar-days" style="position:absolute; right:12px; pointer-events:none; color:var(--text-muted);"></i>
+              </div>
             </div>
           </div>
 
           <div class="input-group">
-            <i class="fa-solid fa-phone input-icon"></i>
-            <input type="tel" id="profPhone" class="form-input" placeholder="Contact Number (10 Digits)" required minlength="10" maxlength="10">
+            <div style="position:absolute; left:14px; top:50%; transform:translateY(-50%); display:flex; align-items:center; gap:6px; pointer-events:none; color:var(--primary); font-weight:bold; z-index:1;">
+              <i class="fa-solid fa-phone"></i>
+              <span>+91</span>
+            </div>
+            <input type="tel" id="profPhone" class="form-input" placeholder="Contact Number (10 Digits)" required minlength="10" maxlength="10" style="padding-left: 65px;">
           </div>
 
           <div style="display:flex; gap:14px; flex-wrap:wrap;">
             <div style="flex:1; min-width:150px;">
-              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Religion</label>
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;" id="lblReligion">Religion</label>
               <select id="profReligion" class="form-select" required>
-                <option value="">Select Religion</option>
+                <option value="" id="optSelRel">Select Religion</option>
                 <option value="Hindu">Hindu</option>
                 <option value="Muslim">Muslim</option>
                 <option value="Christian">Christian</option>
               </select>
             </div>
             <div style="flex:1; min-width:150px;">
-              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Occupation</label>
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;" id="lblOccupation">Occupation</label>
               <select id="profOccupation" class="form-select" required>
-                <option value="">Select Occupation</option>
+                <option value="" id="optSelOcc">Select Occupation</option>
                 <option value="Private Employee">Private Employee</option>
                 <option value="Government Employee">Government Employee</option>
                 <option value="Business">Business</option>
@@ -599,16 +605,19 @@
           </div>
 
           <div style="display:flex; gap:14px; flex-wrap:wrap; align-items: center; border: 1px solid var(--border); padding: 10px; border-radius: 8px;">
-            <label style="font-size:0.9rem; color:var(--text); font-weight:600; min-width:120px;">Food Preference:</label>
-            <label style="display:flex; align-items:center; gap:4px; cursor:pointer;"><input type="radio" name="profFoodPref" value="Veg" required> Veg</label>
-            <label style="display:flex; align-items:center; gap:4px; cursor:pointer;"><input type="radio" name="profFoodPref" value="Non-Veg"> Non-Veg</label>
-            <label style="display:flex; align-items:center; gap:4px; cursor:pointer;"><input type="radio" name="profFoodPref" value="Both"> Both</label>
+            <label style="font-size:0.9rem; color:var(--text); font-weight:600; min-width:120px;" id="lblFoodPref">Food Preference:</label>
+            <label style="display:flex; align-items:center; gap:4px; cursor:pointer;"><input type="radio" name="profFoodPref" value="Veg" required> <span id="optVeg">Veg</span></label>
+            <label style="display:flex; align-items:center; gap:4px; cursor:pointer;"><input type="radio" name="profFoodPref" value="Non-Veg"> <span id="optNonVeg">Non-Veg</span></label>
+            <label style="display:flex; align-items:center; gap:4px; cursor:pointer;"><input type="radio" name="profFoodPref" value="Both"> <span id="optBoth">Both</span></label>
           </div>
 
           <div style="display:flex; gap:14px; flex-wrap:wrap;">
-            <div style="flex:1; min-width:150px;">
-              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;">Marriage Date (Optional)</label>
-              <input type="text" id="profMarriage" class="form-input" placeholder="DD-MM" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)">
+            <div style="flex:1; min-width:150px; position:relative;">
+              <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px; display:block;" id="lblMarriage">Marriage Date (Optional)</label>
+              <div style="position:relative; display:flex; align-items:center;">
+                <input type="text" id="profMarriage" class="form-input" placeholder="DD-MM" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)">
+                <i class="fa-solid fa-calendar-days" style="position:absolute; right:12px; pointer-events:none; color:var(--text-muted);"></i>
+              </div>
             </div>
           </div>
 
@@ -626,7 +635,7 @@
           <!-- Family Section -->
           <div id="profFamilySection" style="display:none; margin-top:20px; background:#f8f9fa; padding:16px; border-radius:8px; border:1px solid var(--border);">
              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <h4 style="color:var(--primary-dark);">Family Members</h4>
+                <h4 style="color:var(--primary-dark);" id="txtFamilyTitle">Family Members</h4>
              </div>
 
              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:12px;">
@@ -635,7 +644,11 @@
                    <option value="Male">Male</option><option value="Female">Female</option>
                 </select>
                 <input type="number" id="famAge" class="form-input" placeholder="Age" min="1" max="99">
-                <input type="text" id="famDob" class="form-input" placeholder="DOB (DD-MM)" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)">
+                <div style="position:relative; display:flex; align-items:center;">
+                  <input type="text" id="famDob" class="form-input" placeholder="DOB (DD-MM)" maxlength="5" pattern="\d{2}-\d{2}" oninput="formatDateDDMM(this)">
+                  <input type="date" style="position:absolute; right:0; opacity:0; width:40px; height:100%; cursor:pointer;" onchange="if(this.value){ const [y,m,d] = this.value.split('-'); document.getElementById('famDob').value = d+'-'+m; }">
+                  <i class="fa-solid fa-calendar-days" style="position:absolute; right:12px; pointer-events:none; color:var(--text-muted);"></i>
+                </div>
                 <select id="famOccupation" class="form-select" style="grid-column: 1/-1;">
                    <option value="Student">Student</option>
                    <option value="Private Employee">Private Employee</option>
@@ -644,7 +657,7 @@
                    <option value="Retired">Retired</option>
                    <option value="House Wife">House Wife</option>
                 </select>
-                <button type="button" class="btn btn-approve" style="grid-column: 1/-1;" onclick="addWebFamilyMember()">Add Member</button>
+                <button type="button" class="btn btn-approve" style="grid-column: 1/-1;" onclick="addWebFamilyMember()" id="btnAddMember">Add Member</button>
              </div>
 
              <div style="overflow-x:auto;">
@@ -808,7 +821,12 @@
         accounting: "Accounting & Ledger", orders: "Orders & Vendors", visitorLog: "Visitor Entry Log", dutyLogs: "Duty Logs",
         residentAlerts: "Resident Alerts", correction: "Profile Correction", aboutUs: "About Us",
         deleteAccount: "Delete Account", terms: "Terms & Conditions", privacy: "Privacy Policy", logout: "Logout",
-        owner: "Owner", tenant: "Tenant", familyMember: "Family Member", residentRole: "Resident"
+        owner: "Owner", tenant: "Tenant", familyMember: "Family Member", residentRole: "Resident",
+        updateProfileTitle: "Update Your Profile", flatTechDetails: "Flat Technical Details", tapUpload: "Tap to upload profile photo",
+        personalInfo: "Personal Information", ageLbl: "Age", dobLbl: "Date of Birth", religionLbl: "Religion", occupationLbl: "Occupation",
+        foodPrefLbl: "Food Preference:", optVeg: "Veg", optNonVeg: "Non-Veg", optBoth: "Both", marriageLbl: "Marriage Date (Optional)",
+        familyTitle: "Family Members", thFamName: "Name", thFamGen: "Gen", thFamAge: "Age", thFamAct: "Act", btnAddMember: "Add Member", btnUpdateProfile: "Update Profile",
+        aptName: "S.V.S Residency", aptAddress: "H. No. 6-57/2, Road No. 5b, Bhavanipuram Ameenapur, Sangareddy (Dist), Telangana 502 032"
       },
       hi: {
         loginTitle: "SVS रेजिडेंसी में लॉगिन करें", emailHint: "ईमेल पता", passwordHint: "पासवर्ड", btnLogin: "लॉगिन",
@@ -826,7 +844,12 @@
         accounting: "लेखा और बहीखाता", orders: "आदेश और विक्रेता", visitorLog: "आगंतुक प्रविष्टि लॉग", dutyLogs: "ड्यूटी लॉग",
         residentAlerts: "निवासी अलर्ट", correction: "प्रोफ़ाइल सुधार", aboutUs: "हमारे बारे में",
         deleteAccount: "खाता हटाएँ", terms: "नियम और शर्तें", privacy: "गोपनीयता नीति", logout: "लॉगआउट",
-        owner: "मालिक", tenant: "किरायादार", familyMember: "परिवार का सदस्य", residentRole: "निवासी"
+        owner: "मालिक", tenant: "किरायादार", familyMember: "परिवार का सदस्य", residentRole: "निवासी",
+        updateProfileTitle: "अपनी प्रोफ़ाइल अपडेट करें", flatTechDetails: "फ्लैट तकनीकी विवरण", tapUpload: "प्रोफ़ाइल फ़ोटो अपलोड करें",
+        personalInfo: "व्यक्तिगत जानकारी", ageLbl: "आयु", dobLbl: "जन्म तिथि", religionLbl: "धर्म", occupationLbl: "पेशा",
+        foodPrefLbl: "भोजन प्राथमिकता:", optVeg: "शाकाहारी", optNonVeg: "मांसाहारी", optBoth: "दोनों", marriageLbl: "विवाह तिथि (वैकल्पिक)",
+        familyTitle: "परिवार के सदस्य", thFamName: "नाम", thFamGen: "लिंग", thFamAge: "आयु", thFamAct: "कार्रवाई", btnAddMember: "सदस्य जोड़ें", btnUpdateProfile: "प्रोफ़ाइल अपडेट करें",
+        aptName: "एस.वी.एस रेजिडेंसी", aptAddress: "मकान नंबर 6-57/2, रोड नंबर 5b, भवानीपुरम अमीनपुर, संगारेड्डी (जिला), तेलंगाना 502 032"
       },
       te: {
         loginTitle: "SVS రెసిడెన్సీ లాగిన్", emailHint: "ఈమెయిల్ చిరునామా", passwordHint: "పాస్‌వర్ಡ್", btnLogin: "లాగిన్",
@@ -844,7 +867,12 @@
         accounting: "అకౌంటింగ్ మరియు లెడ్జర్", orders: "ఆర్డర్లు & విక్రేతలు", visitorLog: "సందర్శకుల ఎంట్రీ లాగ్", dutyLogs: "విధి లాగ్‌లు",
         residentAlerts: "నివాసి హెచ్చరికలు", correction: "ప్రొఫైల్ దిద్దుబాటు", aboutUs: "మా గురించి",
         deleteAccount: "ఖాతాను తొలగించండి", terms: "నిబంధనలు మరియు షరతులు", privacy: "గోప్యతా విధానం", logout: "లాగౌట్",
-        owner: "యజమాని", tenant: "అద్దెదారు", familyMember: "కుటుంబ సభ్యుడు", residentRole: "నివాసి"
+        owner: "యజమాని", tenant: "అద్దెదారు", familyMember: "కుటుంబ సభ్యుడు", residentRole: "నివాసి",
+        updateProfileTitle: "మీ ప్రొఫైల్‌ను నవీకరించండి", flatTechDetails: "ఫ్లాట్ సాంకేతిక వివరాలు", tapUpload: "ప్రొఫైల్ ఫోటోను అప్‌లోడ్ చేయండి",
+        personalInfo: "వ్యక్తిగత సమాచారం", ageLbl: "వయస్సు", dobLbl: "పుట్టిన తేది", religionLbl: "మతం", occupationLbl: "వృత్తి",
+        foodPrefLbl: "ఆహార ప్రాధాన్యత:", optVeg: "శాకాహారి", optNonVeg: "మాంసాహారి", optBoth: "రెండూ", marriageLbl: "వివాహ తేదీ (ఐచ్ఛికం)",
+        familyTitle: "కుటుంబ సభ్యులు", thFamName: "పేరు", thFamGen: "లింగం", thFamAge: "వయస్సు", thFamAct: "చర్య", btnAddMember: "సభ్యుడిని జోడించండి", btnUpdateProfile: "ప్రొఫైల్ నవీకరించండి",
+        aptName: "ఎస్.వి.ఎస్ రెసిడెన్సీ", aptAddress: "ఇంటి నెం. 6-57/2, రోడ్ నెం. 5b, భవానీపురం అమీన్‌పూర్, సంగారెడ్డి (జిల్లా), తెలంగాణ 502 032"
       },
       ta: {
         loginTitle: "SVS ரெசிடென்சி உள்நுழைவு", emailHint: "மின்னஞ்சல் முகவரி", passwordHint: "கடவுச்சொல்", btnLogin: "உள்நுழை",
@@ -862,7 +890,12 @@
         accounting: "கணக்கியல்", orders: "ஆர்டர்கள்", visitorLog: "பார்வையாளர் பதிவு", dutyLogs: "பணிப் பதிவுகள்",
         residentAlerts: "எச்சரிக்கைகள்", correction: "சுயவிவர திருத்தம்", aboutUs: "எங்களைப் பற்றி",
         deleteAccount: "கணக்கை நீக்கு", terms: "விதிகள் மற்றும் நிபந்தனைகள்", privacy: "தனியுரிமைக் கொள்கை", logout: "வெளியேறு",
-        owner: "உரிமையாளர்", tenant: "வாடகைதாரர்", familyMember: "குடும்ப உறுப்பினர்", residentRole: "வசிப்பவர்"
+        owner: "உரிமையாளர்", tenant: "வாடகைதாரர்", familyMember: "குடும்ப உறுப்பினர்", residentRole: "வசிப்பவர்",
+        updateProfileTitle: "உங்கள் சுயவிவரத்தை புதுப்பிக்கவும்", flatTechDetails: "பிளாட் தொழில்நுட்ப விவரங்கள்", tapUpload: "புகைப்படத்தை பதிவேற்றவும்",
+        personalInfo: "தனிப்பட்ட தகவல்", ageLbl: "வயது", dobLbl: "பிறந்த தேதி", religionLbl: "மதம்", occupationLbl: "தொழில்",
+        foodPrefLbl: "உணவு விருப்பம்:", optVeg: "சைவம்", optNonVeg: "அசைவம்", optBoth: "இரண்டும்", marriageLbl: "திருமண தேதி (விருப்பத்தேர்வு)",
+        familyTitle: "குடும்ப உறுப்பினர்கள்", thFamName: "பெயர்", thFamGen: "பாலினம்", thFamAge: "வயது", thFamAct: "செயல்", btnAddMember: "உறுப்பினரைச் சேர்", btnUpdateProfile: "சுயவிவரத்தை புதுப்பிக்கவும்",
+        aptName: "எஸ்.வி.எஸ் ரெசிடென்சி", aptAddress: "வீட்டு எண் 6-57/2, சாலை எண் 5b, பவானிபுரம் அமீன்பூர், சங்காரெட்டி (மாவட்டம்), தெலுங்கானா 502 032"
       },
       kn: {
         loginTitle: "SVS ರೆಸಿಡೆನ್ಸಿ ಲಾಗಿನ್", emailHint: "ಇಮೇಲ್ ವಿಳಾಸ", passwordHint: "ಪಾಸ್‌ವರ್ಡ್", btnLogin: "ಲಾಗಿನ್",
@@ -880,7 +913,12 @@
         accounting: "ಲೆಕ್ಕಪತ್ರ", orders: "ಆರ್ಡರ್‌ಗಳು", visitorLog: "ಸಂದರ್ಶಕರ ಲಾಗ್", dutyLogs: "ಕರ್ತವ್ಯದ ಲಾಗ್",
         residentAlerts: "ಎಚ್ಚರಿಕೆಗಳು", correction: "ಪ್ರೊಫೈಲ್ ತಿದ್ದುಪಡಿ", aboutUs: "ನಮ್ಮ ಬಗ್ಗೆ",
         deleteAccount: "ಖಾತೆ ಅಳಿಸಿ", terms: "ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು", privacy: "ಗೌಪ್ಯತಾ ನೀತಿ", logout: "ಲಾಗ್‌ಔಟ್",
-        owner: "ಮಾಲೀಕರು", tenant: "ಬಾಡಿಗೆದಾರ", familyMember: "ಕುಟುಂಬದ ಸದಸ್ಯ", residentRole: "ನಿವಾಸಿ"
+        owner: "ಮಾಲೀಕರು", tenant: "ಬಾಡಿಗೆದಾರ", familyMember: "ಕುಟುಂಬದ ಸದಸ್ಯ", residentRole: "ನಿವಾಸಿ",
+        updateProfileTitle: "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ನವೀಕರಿಸಿ", flatTechDetails: "ಫ್ಲಾಟ್ ತಾಂತ್ರಿಕ ವಿವರಗಳು", tapUpload: "ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+        personalInfo: "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ", ageLbl: "ವಯಸ್ಸು", dobLbl: "ಹುಟ್ಟಿದ ದಿನಾಂಕ", religionLbl: "ಧರ್ಮ", occupationLbl: "ಉದ್ಯೋಗ",
+        foodPrefLbl: "ಆಹಾರದ ಆದ್ಯತೆ:", optVeg: "ಸಸ್ಯಾಹಾರಿ", optNonVeg: "ಮಾಂಸಾಹಾರಿ", optBoth: "ಎರಡೂ", marriageLbl: "ವಿವಾಹ ದಿನಾಂಕ (ಐಚ್ಛಿಕ)",
+        familyTitle: "ಕುಟುಂಬದ ಸದಸ್ಯರು", thFamName: "ಹೆಸರು", thFamGen: "ಲಿಂಗ", thFamAge: "ವಯಸ್ಸು", thFamAct: "ಕ್ರಿಯೆ", btnAddMember: "ಸದಸ್ಯರನ್ನು ಸೇರಿಸಿ", btnUpdateProfile: "ಪ್ರೊಫೈಲ್ ನವೀಕರಿಸಿ",
+        aptName: "ಎಸ್.ವಿ.ಎಸ್ ರೆಸಿಡೆನ್ಸಿ", aptAddress: "ಮನೆ ನಂ. 6-57/2, ರಸ್ತೆ ನಂ. 5b, ಭವಾನಿಪುರಂ ಅಮೀನ್‌ಪುರ್, ಸಂಗಾರೆಡ್ಡಿ (ಜಿಲ್ಲೆ), ತೆಲಂಗಾಣ 502 032"
       },
       ml: {
         loginTitle: "SVS റെസിഡൻസി ലോഗിൻ", emailHint: "ഇമെയിൽ വിലാസം", passwordHint: "പാസ്‌വേഡ്", btnLogin: "ലോഗിൻ",
@@ -898,7 +936,12 @@
         accounting: "അക്കൗണ്ടിംഗ്", orders: "ഓർഡറുകൾ", visitorLog: "സന്ദർശക ലോഗ്", dutyLogs: "ഡ്യൂട്ടി ലോഗുകൾ",
         residentAlerts: "അലേർട്ടുകൾ", correction: "പ്രൊഫൈൽ തിരുത്തൽ", aboutUs: "ഞങ്ങളെ കുറിച്ച്",
         deleteAccount: "അക്കൗണ്ട് ഇല്ലാതാക്കുക", terms: "നിബന്ധനകളും വ്യവസ്ഥകളും", privacy: "സ്വകാര്യതാ നയം", logout: "ലോഗ്ഔട്ട്",
-        owner: "ഉടമ", tenant: "വാടകക്കാരൻ", familyMember: "കുടുംബാംഗം", residentRole: "താമസക്കാരൻ"
+        owner: "ഉടമ", tenant: "വാടകക്കാരൻ", familyMember: "കുടുംബാംഗം", residentRole: "താമസക്കാരൻ",
+        updateProfileTitle: "നിങ്ങളുടെ പ്രൊഫൈൽ അപ്ഡേറ്റ് ചെയ്യുക", flatTechDetails: "ഫ്ലാറ്റ് സാങ്കേതിക വിവരങ്ങൾ", tapUpload: "ഫോട്ടോ അപ്‌ലോഡ് ചെയ്യുക",
+        personalInfo: "വ്യക്തിഗത വിവരങ്ങൾ", ageLbl: "പ്രായം", dobLbl: "ജനനത്തീയതി", religionLbl: "മതം", occupationLbl: "തൊഴിൽ",
+        foodPrefLbl: "ഭക്ഷണ മുൻഗണന:", optVeg: "വെജ്", optNonVeg: "നോൺ വെജ്", optBoth: "രണ്ടും", marriageLbl: "വിവാഹ തീയതി (ഓപ്ഷണൽ)",
+        familyTitle: "കുടുംബാംഗങ്ങൾ", thFamName: "പേര്", thFamGen: "ലിംഗം", thFamAge: "പ്രായം", thFamAct: "പ്രവർത്തനം", btnAddMember: "അംഗത്തെ ചേർക്കുക", btnUpdateProfile: "പ്രൊഫൈൽ അപ്ഡേറ്റ് ചെയ്യുക",
+        aptName: "എസ്.വി.എസ് റെസിഡൻസി", aptAddress: "വീട്ടു നമ്പർ 6-57/2, റോഡ് നമ്പർ 5b, ഭവാനിപുരം അമീൻപൂർ, സംഗറെഡ്ഡി (ജില്ല), തെലങ്കാന 502 032"
       }
     };
 
@@ -937,6 +980,8 @@
       currentLang = lang;
       localStorage.setItem("webLang", lang);
       const dict = i18n[lang] || i18n.en;
+
+      loadBranding();
 
       document.getElementById("txtLoginTitle").innerText = dict.loginTitle;
       document.getElementById("txtLoginEmail").placeholder = dict.emailHint;
@@ -993,6 +1038,36 @@
       document.getElementById("txtSessionExpiredTitle").innerText = dict.sessionExpiredTitle;
       document.getElementById("txtSessionExpiredMsg").innerText = dict.sessionExpiredMsg;
 
+      // Profile Update Page Mapping
+      if (document.getElementById("txtUpdateProfileTitle")) {
+         if(dict.updateProfileTitle) document.getElementById("txtUpdateProfileTitle").innerText = dict.updateProfileTitle;
+         if(dict.flatTechDetails) document.getElementById("txtFlatTechDetails").innerText = dict.flatTechDetails;
+         if(dict.tapUpload) document.getElementById("txtTapUpload").innerText = dict.tapUpload;
+         if(dict.personalInfo) document.getElementById("txtPersonalInfo").innerText = dict.personalInfo;
+         if(dict.ageLbl) document.getElementById("lblAge").innerText = dict.ageLbl;
+         if(dict.dobLbl) document.getElementById("lblDob").innerText = dict.dobLbl;
+         if(dict.religionLbl) document.getElementById("lblReligion").innerText = dict.religionLbl;
+         if(dict.occupationLbl) document.getElementById("lblOccupation").innerText = dict.occupationLbl;
+         if(dict.foodPrefLbl) document.getElementById("lblFoodPref").innerText = dict.foodPrefLbl;
+         if(dict.optVeg) document.getElementById("optVeg").innerText = dict.optVeg;
+         if(dict.optNonVeg) document.getElementById("optNonVeg").innerText = dict.optNonVeg;
+         if(dict.optBoth) document.getElementById("optBoth").innerText = dict.optBoth;
+         if(dict.marriageLbl) document.getElementById("lblMarriage").innerText = dict.marriageLbl;
+         if(dict.familyTitle) document.getElementById("txtFamilyTitle").innerText = dict.familyTitle;
+         if(dict.thFamName) document.getElementById("thFamName").innerText = dict.thFamName;
+         if(dict.thFamGen) document.getElementById("thFamGen").innerText = dict.thFamGen;
+         if(dict.thFamAge) document.getElementById("thFamAge").innerText = dict.thFamAge;
+         if(dict.thFamAct) document.getElementById("thFamAct").innerText = dict.thFamAct;
+         if(dict.btnAddMember) document.getElementById("btnAddMember").innerText = dict.btnAddMember;
+         if(dict.btnUpdateProfile) {
+            document.getElementById("btnProfileSubmit").innerText = dict.btnUpdateProfile;
+            document.getElementById("txtUpdateProfileBtn2").innerText = dict.btnUpdateProfile;
+         }
+
+         document.getElementById("optSelRel").innerText = dict.religionLbl ? "Select " + dict.religionLbl : "Select Religion";
+         document.getElementById("optSelOcc").innerText = dict.occupationLbl ? "Select " + dict.occupationLbl : "Select Occupation";
+      }
+
       if (currentUserData) renderUserProfileBadge();
       if (currentUserName) updateGreetingMessage(currentUserName);
     };
@@ -1023,12 +1098,27 @@
     // Auto Prefix Mr. / Ms. on Gender Change
     window.onWebGenderChanged = function(gender) {
       const nameInput = document.getElementById("regName");
-      let val = nameInput.value.trim().replace(/^(Mr\.|Ms\.)\s*/i, "");
+      let val = nameInput.value.trim().replace(/^(Mr\.|Ms\.|श्री|శ్రీ|திரு\.|ಶ್ರೀ|ശ്രീ\.|सुश्री|శ్రీమతి|திருமதி\.|ಶ್ರೀಮతి|ശ്രീമതി\.)\s*/i, "");
 
-      if (gender === "Male" && val.length > 0) {
-        nameInput.value = "Mr. " + val;
-      } else if (gender === "Female" && val.length > 0) {
-        nameInput.value = "Ms. " + val;
+      let prefix = "";
+      if (gender === "Male") {
+         if(currentLang === 'hi') prefix = "श्री ";
+         else if(currentLang === 'te') prefix = "శ్రీ ";
+         else if(currentLang === 'ta') prefix = "திரு. ";
+         else if(currentLang === 'kn') prefix = "ಶ್ರೀ ";
+         else if(currentLang === 'ml') prefix = "ശ്രീ. ";
+         else prefix = "Mr. ";
+      } else if (gender === "Female") {
+         if(currentLang === 'hi') prefix = "सुश्री ";
+         else if(currentLang === 'te') prefix = "శ్రీమతి ";
+         else if(currentLang === 'ta') prefix = "திருமதி. ";
+         else if(currentLang === 'kn') prefix = "ಶ್ರೀಮతి ";
+         else if(currentLang === 'ml') prefix = "ശ്രീമതി. ";
+         else prefix = "Ms. ";
+      }
+
+      if (prefix && val.length > 0) {
+        nameInput.value = prefix + val;
       } else if (val.length > 0) {
         nameInput.value = val;
       }
@@ -1217,8 +1307,21 @@
       let cleanName = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
 
       let prefix = "";
-      if (gender === "Male") prefix = "Mr. ";
-      else if (gender === "Female") prefix = "Ms. ";
+      if (gender === "Male") {
+         if(currentLang === 'hi') prefix = "श्री ";
+         else if(currentLang === 'te') prefix = "శ్రీ ";
+         else if(currentLang === 'ta') prefix = "திரு. ";
+         else if(currentLang === 'kn') prefix = "ಶ್ರೀ ";
+         else if(currentLang === 'ml') prefix = "ശ്രീ. ";
+         else prefix = "Mr. ";
+      } else if (gender === "Female") {
+         if(currentLang === 'hi') prefix = "सुश्री ";
+         else if(currentLang === 'te') prefix = "శ్రీమతి ";
+         else if(currentLang === 'ta') prefix = "திருமதி. ";
+         else if(currentLang === 'kn') prefix = "ಶ್ರೀಮతి ";
+         else if(currentLang === 'ml') prefix = "ശ്രീമതി. ";
+         else prefix = "Ms. ";
+      }
 
       const formattedFullName = prefix + cleanName;
 
@@ -1377,8 +1480,31 @@
         return;
       }
 
-      const prefix = gender === "Male" ? "Mr. " : "Ms. ";
-      const fullName = prefix + name.replace(/^(Mr\.|Ms\.)\s*/i, "");
+      const dict = i18n[currentLang] || i18n.en;
+      let rawPrefix = gender === "Male" ? "Mr. " : "Ms. ";
+
+      // Use language localized prefix for family members if available, or fallback to the english one
+      let localizedPrefix = "";
+      if (gender === "Male" && dict.owner) {
+         if(currentLang === 'hi') localizedPrefix = "श्री ";
+         else if(currentLang === 'te') localizedPrefix = "శ్రీ ";
+         else if(currentLang === 'ta') localizedPrefix = "திரு. ";
+         else if(currentLang === 'kn') localizedPrefix = "ಶ್ರೀ ";
+         else if(currentLang === 'ml') localizedPrefix = "ശ്രീ. ";
+         else localizedPrefix = "Mr. ";
+      } else if (gender === "Female" && dict.owner) {
+         if(currentLang === 'hi') localizedPrefix = "सुश्री ";
+         else if(currentLang === 'te') localizedPrefix = "శ్రీమతి ";
+         else if(currentLang === 'ta') localizedPrefix = "திருமதி. ";
+         else if(currentLang === 'kn') localizedPrefix = "ಶ್ರೀಮತಿ ";
+         else if(currentLang === 'ml') localizedPrefix = "ശ്രീമതി. ";
+         else localizedPrefix = "Ms. ";
+      } else {
+         localizedPrefix = rawPrefix;
+      }
+
+      const cleanName = name.replace(/^(Mr\.|Ms\.|श्री|శ్రీ|திரு\.|ಶ್ರೀ|ശ്രീ\.|सुश्री|శ్రీమతి|திருமதி\.|ಶ್ರೀಮತಿ|ശ്രീമതി\.)\s*/i, "");
+      const fullName = localizedPrefix + cleanName;
 
       webFamilyMembers.push({ name: fullName, gender, age, dob, occupation });
       renderWebFamilyMembers();
@@ -1417,7 +1543,7 @@
 
       const age = document.getElementById("profAge").value.trim();
       const dob = document.getElementById("profDob").value;
-      const phone = document.getElementById("profPhone").value.trim();
+      const phone = "+91 " + document.getElementById("profPhone").value.trim();
       const religion = document.getElementById("profReligion").value;
       const occupation = document.getElementById("profOccupation").value;
 
@@ -1514,8 +1640,20 @@
         const assetSnap = await getDoc(doc(db, "settings", "Assets"));
         if (assetSnap.exists()) {
           const data = assetSnap.data();
-          if (data.apartmentName) document.getElementById("lblAptName").innerText = data.apartmentName;
-          if (data.apartmentAddress) document.getElementById("lblAptAddress").innerText = data.apartmentAddress;
+          const dict = i18n[currentLang] || i18n.en;
+
+          let aptName = data.apartmentName || "SVS Residency";
+          if (aptName.toLowerCase().includes("svs") || aptName.toLowerCase().includes("residency")) {
+            aptName = dict.aptName || aptName;
+          }
+          let aptAddress = data.apartmentAddress || "Ameenapur, Hyderabad";
+          if (aptAddress.toLowerCase().includes("ameenapur") || aptAddress.toLowerCase().includes("sangareddy")) {
+            aptAddress = dict.aptAddress || aptAddress;
+          }
+
+          document.getElementById("lblAptName").innerText = aptName;
+          document.getElementById("lblAptAddress").innerText = aptAddress;
+
           if (data.apartmentImageUrl) document.getElementById("headerLogo").src = data.apartmentImageUrl;
         }
       } catch (e) { console.error("Branding load error", e); }
