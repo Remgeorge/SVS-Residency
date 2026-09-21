@@ -1782,6 +1782,29 @@
                  document.getElementById("profFamilySection").style.display = "block";
                }
 
+               // Hide personal details for family members
+               if (isFamilyMember) {
+                 document.getElementById("profAgeRow").style.display = "none";
+                 document.getElementById("profPhoneRow").style.display = "none";
+                 document.getElementById("profRelOccRow").style.display = "none";
+                 document.getElementById("profFoodRow").style.display = "none";
+                 document.getElementById("profMarriageRow").style.display = "none";
+
+                 // Remove required tags so form can be submitted
+                 document.getElementById("profAge").removeAttribute("required");
+                 document.getElementById("profDob").removeAttribute("required");
+                 document.getElementById("profPhone").removeAttribute("required");
+                 document.getElementById("profReligion").removeAttribute("required");
+                 document.getElementById("profOccupation").removeAttribute("required");
+                 document.querySelectorAll('input[name="profFoodPref"]').forEach(rb => rb.removeAttribute("required"));
+               } else {
+                 document.getElementById("profAgeRow").style.display = "flex";
+                 document.getElementById("profPhoneRow").style.display = "flex";
+                 document.getElementById("profRelOccRow").style.display = "flex";
+                 document.getElementById("profFoodRow").style.display = "flex";
+                 document.getElementById("profMarriageRow").style.display = "flex";
+               }
+
                if (currentUserData.gender === "Female") {
                  document.getElementById("profOccHouseWife").style.display = "block";
                } else {
