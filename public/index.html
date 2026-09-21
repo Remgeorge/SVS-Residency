@@ -1798,22 +1798,22 @@
                  // Remove required tags so form can be submitted
                  if(document.getElementById("profAge")) document.getElementById("profAge").removeAttribute("required");
                  if(document.getElementById("profDob")) document.getElementById("profDob").removeAttribute("required");
-                 document.getElementById("profPhone").removeAttribute("required");
-                 document.getElementById("profReligion").removeAttribute("required");
-                 document.getElementById("profOccupation").removeAttribute("required");
+                 if(document.getElementById("profPhone")) document.getElementById("profPhone").removeAttribute("required");
+                 if(document.getElementById("profReligion")) document.getElementById("profReligion").removeAttribute("required");
+                 if(document.getElementById("profOccupation")) document.getElementById("profOccupation").removeAttribute("required");
                  document.querySelectorAll('input[name="profFoodPref"]').forEach(rb => rb.removeAttribute("required"));
                } else {
-                 document.getElementById("profAgeRow").style.display = "flex";
-                 document.getElementById("profPhoneRow").style.display = "flex";
-                 document.getElementById("profRelOccRow").style.display = "flex";
-                 document.getElementById("profFoodRow").style.display = "flex";
-                 document.getElementById("profMarriageRow").style.display = "flex";
+                 if(document.getElementById("profAgeRow")) document.getElementById("profAgeRow").style.display = "flex";
+                 if(document.getElementById("profPhoneRow")) document.getElementById("profPhoneRow").style.display = "flex";
+                 if(document.getElementById("profRelOccRow")) document.getElementById("profRelOccRow").style.display = "flex";
+                 if(document.getElementById("profFoodRow")) document.getElementById("profFoodRow").style.display = "flex";
+                 if(document.getElementById("profMarriageRow")) document.getElementById("profMarriageRow").style.display = "flex";
                }
 
                if (currentUserData.gender === "Female") {
-                 document.getElementById("profOccHouseWife").style.display = "block";
+                 if(document.getElementById("profOccHouseWife")) document.getElementById("profOccHouseWife").style.display = "block";
                } else {
-                 document.getElementById("profOccHouseWife").style.display = "none";
+                 if(document.getElementById("profOccHouseWife")) document.getElementById("profOccHouseWife").style.display = "none";
                }
             }
           } else {
