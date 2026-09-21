@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ఎస్వీఎస్ రెసిడెన్సీ</string>
+    <string name="app_head">ఎస్వీఎస్ రెసిడెన్సీ</string>
+    <string name="app_address">హెచ్.నెం. 6–57/2, రోడ్ నెం.5బి, భవానీపురం, అమీనాపూర్, సంగారెడ్డి (జిల్లా), తెలంగాణ 502 032</string>
+    <string name="welcome_message">ఎస్వీఎస్ రెసిడెన్సీకి స్వాగతం</string>
+
+    <!-- Navigation Menus -->
+    <string name="menu_home">హోమ్</string>
+    <string name="menu_gallery">గ్యాలరీ</string>
+    <string name="menu_cashbook">క్యాష్‌బుక్</string>
+    <string name="menu_services">సర్వీసెస్</string>
+    <string name="menu_alerts">అలర్ట్స్</string>
+    <string name="menu_profile">ప్రొఫైల్</string>
+    <string name="menu_notice_board">నోటీసు బోర్డు</string>
+    <string name="menu_society_team">సొసైటీ టీమ్</string>
+    <string name="label_meal_type">అల్పాహారం/భోజనం/రాత్రి భోజనం</string>
+    <string name="btn_add_food_item">ఆహార వస్తువును జోడించండి</string>
+    <string name="hint_food_item">ఆహార వస్తువును నమోదు చేయండి...</string>
+    <string name="menu_account_statement">అకౌంట్ స్టేట్మెంట్</string>
+    <string name="menu_booking">బుకింగ్</string>
+    <string name="menu_complaints">ఫిర్యాదులు</string>
+    <string name="menu_language">భాష</string>
+    <string name="menu_about">మా గురించి</string>
+    <string name="menu_logout">లాగ్ అవుట్</string>
+
+    <!-- Admin Menus -->
+    <string name="menu_admin_panel">నివాసితుల నిర్వహణ</string>
+    <string name="menu_appoint_admins">అడ్మిన్ల నియామకం</string>
+    <string name="menu_manage_complaints">ఫిర్యాదుల నిర్వహణ</string>
+    <string name="menu_broadcast_notice">నోటీసు ప్రసారం</string>
+    <string name="menu_society_actions">సొసైటీ చర్యలు</string>
+    <string name="menu_manage_bookings">బుకింగ్‌ల నిర్వహణ</string>
+    <string name="menu_account_master">అకౌంట్ మాస్టర్</string>
+    <string name="menu_accounting">రసీదు / ఖర్చు</string>
+    <string name="menu_orders">ఆర్డర్లు</string>
+
+    <!-- Master Controls -->
+    <string name="menu_master_controls">మాస్టర్ కంట్రోల్స్</string>
+    <string name="menu_flat_master">ఫ్లాట్ మాస్టర్</string>
+    <string name="menu_correction">డేటా సవరణ</string>
+
+    <!-- Registration / Login -->
+    <string name="app_head1">లాగిన్</string>
+    <string name="app_button">సైన్ ఇన్</string>
+    <string name="app_button1">సైన్ అప్</string>
+    <string name="app_submit">సమర్పించు</string>
+    <string name="app_user1">ఈమెయిల్ ఐడి</string>
+    <string name="app_pass">పాస్వర్డ్</string>
+    <string name="app_pass1">మీ పాస్‌వర్డ్‌ను నమోదు చేయండి</string>
+    <string name="app_forgot">పాస్‌వర్డ్ మరిచిపోయారా?</string>
+    <string name="app_flat">ఫ్లాట్ నంబర్</string>
+    <string name="app_type">హోదా</string>
+    <string name="app_delop">డెవలపర్ :</string>
+    <string name="app_dnane">రెమో జార్జ్</string>
+
+    <!-- Buttons -->
+    <string name="btn_approve">ఆమోదించు</string>
+    <string name="btn_reject">తిరస్కరించు</string>
+    <string name="btn_save_flat">ఫ్లాట్ సేవ్ చేయండి</string>
+    <string name="btn_submit_complaint">ఫిర్యాదును సమర్పించండి</string>
+    <string name="btn_take_photo">ఫోటో తీయండి</string>
+    <string name="btn_book_now">ఇప్పుడే బుక్ చేయండి</string>
+
+    <!-- Toasts / Messages -->
+    <string name="msg_approved">నివాసి ఆమోదించబడ్డారు</string>
+    <string name="msg_rejected">నివాసి తిరస్కరించబడ్డారు</string>
+    <string name="toast_logout">లాగ్ అవుట్ అయ్యారు</string>
+    <string name="msg_password_complexity">పాస్‌వర్డ్‌లో ఒక పెద్ద అక్షరం, ఒక చిన్న అక్షరం, ఒక సంఖ్య మరియు ఒక చిహ్నం ఉండాలి</string>
+    <string name="msg_logging_in">లాగిన్ అవుతోంది...</string>
+    <string name="msg_login_success">లాగిన్ విజయవంతమైంది</string>
+    <string name="msg_pending_approval">ఖాతా అడ్మిన్ ఆమోదం కోసం వేచి ఉంది</string>
+    <string name="msg_admin_recognized">అడ్మిన్ గుర్తించబడ్డారు. యాక్సెస్ మంజూరు చేయబడింది.</string>
+    <string name="msg_profile_not_found">ప్రొఫైల్ కనుగొనబడలేదు. దయచేసి మద్దతును సంప్రదించండి.</string>
+    <string name="msg_connection_error">ధృవీకరణ తనిఖీ సమయంలో కనెక్షన్ లోపం.</string>
+    <string name="msg_login_failed">లాగిన్ విఫలమైంది: %s</string>
+    <string name="msg_complaint_success">ఫిర్యాదు విజయవంతంగా సమర్పించబడింది</string>
+    <string name="msg_notice_deleted">నోటీసు తొలగించబడింది</string>
+    <string name="msg_failed_load_index">ఇండెక్స్ లోడ్ చేయడం విఫలమైంది</string>
+    <string name="msg_no_pdf_viewer">PDF వ్యూయర్ కనుగొనబడలేదు</string>
+    <string name="msg_failed_generate_pdf">PDF రూపొందించడం విఫలమైంది</string>
+    <string name="msg_unexpected_pdf_error">PDF తెరిచేటప్పుడు ఊహించని లోపం జరిగింది</string>
+    <string name="msg_translation_failed_retry">అనువాదం విఫలమైంది. దయచేసి మళ్ళీ ప్రయత్నించండి.</string>
+    <string name="msg_profile_not_found_relogin">ప్రొఫైల్ కనుగొనబడలేదు. మళ్ళీ లాగిన్ అవ్వండి.</string>
+    <string name="msg_post_failed">పోస్ట్ చేయడం విఫలమైంది: %s</string>
+    <string name="msg_phone_not_available">ఫోన్ నంబర్ అందుబాటులో లేదు</string>
+    <string name="msg_error_fetching_team">టీమ్ సమాచారాన్ని లోడ్ చేయడం విఫలమైంది</string>
+    <string name="msg_date_booked">ఈ తేదీ ఇప్పటికే బుక్ చేయబడింది. దయచేసి మరొక తేదీని ఎంచుకోండి.</string>
+    <string name="msg_error_availability">లభ్యతను తనిఖీ చేయడంలో లోపం: %s</string>
+    <string name="msg_checking_availability">లభ్యతను తనిఖీ చేస్తోంది...</string>
+    <string name="msg_fill_all_fields_agree">దయచేసి అన్ని ఫీల్డ్‌లను పూర్తి చేసి, నిబంధనలకు అంగీకరించండి.</string>
+    <string name="msg_user_profile_not_loaded">యూజర్ ప్రొఫైల్ లోడ్ కాలేదు. దయచేసి వేచి ఉండండి.</string>
+    <string name="msg_booking_failed">బుకింగ్ విఫలమైంది: %s</string>
+    <string name="msg_please_fill_all">దయచేసి అన్ని ఫీల్డ్‌లను పూరించండి</string>
+    <string name="msg_submitting">సమర్పిస్తోంది...</string>
+    <string name="msg_translation_retry">అనువాదం విఫలమైంది, దయచేసి మళ్ళీ ప్రయత్నించండి</string>
+    <string name="msg_upload_failed_no_photo">చిత్రం అప్‌లోడ్ విఫలమైంది, ఫోటో లేకుండా సమర్పిస్తోంది</string>
+    <string name="msg_counter_update_failed">కౌంటర్ అప్‌డేట్ విఫలమైంది: %s</string>
+    <string name="msg_save_failed">సేవ్ చేయడం విఫలమైంది: %s</string>
+
+    <!-- Labels / Headers -->
+    <string name="heading_complaint">ఫిర్యాదు</string>
+    <string name="heading_maintenance">నిర్వహణ</string>
+    <string name="heading_orders">ఆర్డర్ మేనేజ్‌మెంట్</string>
+    <string name="heading_assets">కొత్త ఆస్తులు</string>
+    <string name="heading_booking_notice">బుకింగ్ నోటీసు</string>
+    <string name="heading_event_meeting">ఈవెంట్ / మీటింగ్</string>
+    <string name="title_my_complaints">నా ఫిర్యాదులు</string>
+    <string name="title_notice_detail">నోటీసు వివరాలు</string>
+    <string name="title_booking_notice_header">బుకింగ్ నోటీసు: %s</string>
+    <string name="title_my_bookings">నా బుకింగ్‌లు</string>
+    <string name="label_dob">పుట్టిన తేదీ (ఐచ్ఛికం)</string>
+    <string name="label_marriage_date">వివాహ తేదీ (ఐచ్ఛికం)</string>
+    <string name="label_complaint_category">వర్గం</string>
+    <string name="label_complaint_subject">విషయం</string>
+    <string name="label_complaint_desc">వివరణాత్మక వివరణ</string>
+    <string name="label_complaint_ref">ఫిర్యాదు రెఫరెన్స్ నంబర్</string>
+    <string name="label_total_amount">మొత్తం: ₹ %s</string>
+    <string name="label_ordered_by">ఆర్డర్ చేసినవారు: %s</string>
+    <string name="label_ref">రెఫరెన్స్: %s</string>
+    <string name="label_venue">వేదిక: %s</string>
+    <string name="label_total_donation">మొత్తం విరాళం: ₹ %1$s (%2$d దాతలు)</string>
+    <string name="label_meeting_date_at">మీటింగ్ తేదీ: %1$s సమయం %2$s</string>
+    <string name="label_event_date_at">ఈవెంట్ తేదీ: %1$s సమయం %2$s</string>
+    <string name="label_expires_in">ముగిసే సమయం: %s</string>
+    <string name="label_solved_by">పరిష్కరించిన వారు %1$s, తేదీ %2$s</string>
+    <string name="label_accepted_by">ఆమోదించిన వారు %1$s, తేదీ %2$s</string>
+    <string name="label_svs_society">ఎస్వీఎస్ సొసైటీ</string>
+    <string name="label_reported">నివేదించబడింది: %s</string>
+    <string name="label_category_subject">వర్గం: %1$s / విషయం: %2$s</string>
+    <string name="label_status_wip">స్థితి: పని జరుగుతోంది</string>
+    <string name="label_solved_by_pos">పరిష్కరించిన వారు: %1$s/%2$s, తేదీ %3$s</string>
+    <string name="label_posted_on">పోస్ట్ చేసిన తేదీ: %s</string>
+    <string name="label_agendas_list">ఎజెండాలు:\n</string>
+    <string name="label_menu_items_list">మెనూ ఐటమ్స్:\n</string>
+    <string name="label_total_collection_donors">మొత్తం వసూలు: ₹ %1$s\n\nదాతలు:\n</string>
+    <string name="label_vendor_info_short">విక్రేత: %1$s (%2$s)</string>
+    <string name="label_contact_info">సంప్రదించండి: +91 %s</string>
+    <string name="label_items_list">ఐటమ్స్:\n</string>
+    <string name="label_total_order_amount">మొత్తం ఆర్డర్ విలువ: ₹ %s</string>
+    <string name="label_order_verified">ఆర్డర్ ధృవీకరించబడింది</string>
+    <string name="label_order_no_info">ఆర్డర్ నంబర్: %s</string>
+    <string name="label_accepted_on_by">ఆమోదించిన తేదీ: %1$s (%2$s ద్వారా)</string>
+    <string name="label_resolved_on">పరిష్కరించిన తేదీ: %s</string>
+    <string name="label_material_estimation">మెటీరియల్ అంచనా: ₹ %s</string>
+    <string name="label_contract_amount_labour">కాంట్రాక్ట్ మొత్తం (లేబర్): ₹ %s</string>
+    <string name="label_no_items_listed">ఐటమ్స్ ఏవీ లేవు.</string>
+    <string name="label_unknown_item">తెలియని ఐటమ్</string>
+    <string name="label_processing_translation">అనువాదం జరుగుతోంది...</string>
+    <string name="label_posting_comment">కామెంట్ పోస్ట్ అవుతోంది...</string>
+    <string name="label_booking">బుకింగ్</string>
+    <string name="label_attended_complaint">ఫిర్యాదు పరిష్కరించబడింది</string>
+    <string name="label_flat_only">ఫ్లాట్: %s</string>
+    <string name="label_due_maintenance">బకాయి నిర్వహణ</string>
+    <string name="label_function_charge">ఫంక్షన్ ఛార్జ్</string>
+    <string name="label_event_donation">ఈవెంట్</string>
+    <string name="label_customize">అనుకూలీకరించండి</string>
+    <string name="label_statement_from_to">%1$s నుండి %2$s వరకు స్టేట్మెంట్</string>
+    <string name="label_special_maintenance">ప్రత్యేక నిర్వహణ</string>
+    <string name="label_flat_no_header">ఫ్లాట్ నెం</string>
+    <string name="label_name_header">పేరు</string>
+    <string name="label_month_header">నెల</string>
+    <string name="label_amount_header">మొత్తం</string>
+    <string name="label_purpose_header">ఉద్దేశ్యం</string>
+    <string name="label_total_summary">మొత్తం :</string>
+    <string name="label_booking_date">బుకింగ్ తేదీ</string>
+    <string name="label_booking_occasion">బుకింగ్ సందర్భం</string>
+    <string name="label_terms_agree">నేను నిబంధనలు మరియు షరతులకు అంగీకరిస్తున్నాను</string>
+    <string name="label_date_info">తేదీ: %s</string>
+    <string name="label_resolved_on_date">పరిష్కరించబడిన తేదీ: %s</string>
+    <string name="label_flat_no_short">ఫ్లాట్: %1$s | %2$s</string>
+    <string name="label_flat_no_short_role">ఫ్లాట్: %1$s | %2$s (%3$s)</string>
+
+    <!-- Categories -->
+    <string name="cat_maintenance">నిర్వహణ</string>
+    <string name="cat_meeting">సమావేశం</string>
+    <string name="cat_event">కార్యక్రమం</string>
+    <string name="cat_donation">విరాళం</string>
+    <string name="cat_plumbing">ప్లంబింగ్</string>
+    <string name="cat_electrical">ఎలక్ట్రికల్</string>
+    <string name="cat_security">భద్రత</string>
+    <string name="cat_cleanliness">పరిశుభ్రత</string>
+    <string name="cat_general">సాధారణం</string>
+    <string name="cat_hardware">హార్డ్‌వేర్</string>
+    <string name="cat_cement">సిమెంట్</string>
+    <string name="cat_wood">కలప</string>
+    <string name="cat_paint">పెయింట్</string>
+    <string name="cat_tiles">టైల్స్</string>
+    <string name="cat_contract">ఒప్పందం</string>
+    <string name="cat_purchase">కొనుగోలు ఆర్డర్</string>
+    <string name="cat_repair">కొనుగోలు మరియు మరమ్మత్తు</string>
+    <string name="cat_building_construction">భవన నిర్మాణం</string>
+    <string name="cat_welding">వెల్డింగ్ పనులు</string>
+    <string name="cat_plastering">ప్లాస్టరింగ్ పనులు</string>
+    <string name="cat_flooring">ఫ్లోరింగ్ పనులు</string>
+
+    <string-array name="complaint_categories">
+        <item>ప్లంబింగ్</item>
+        <item>ఎలక్ట్రికల్</item>
+        <item>భద్రత</item>
+        <item>పరిశుభ్రత</item>
+        <item>సాధారణం</item>
+    </string-array>
+
+    <!-- Positions / Roles -->
+    <string name="pos_president">అధ్యక్షుడు</string>
+    <string name="pos_secretary">కార్యదర్శి</string>
+    <string name="pos_treasurer">కోశాధికారి</string>
+    <string name="pos_vice_president">ఉపాధ్యక్షుడు</string>
+    <string name="pos_joint_secretary">జాయింట్ సెక్రటరీ</string>
+    <string name="pos_committee_member">కమిటీ సభ్యుడు</string>
+    <string name="pos_admin">అడ్మిన్</string>
+    <string name="pos_general_secretary">జనరల్ సెక్రటరీ</string>
+    <string name="pos_event_member">ఈవెంట్ సభ్యుడు</string>
+    <string name="pos_member">సభ్యుడు</string>
+    <string name="type_owner">యజమాని</string>
+    <string name="type_tenant">అద్దెదారు</string>
+    <string name="type_family">కుటుంబ సభ్యుడు</string>
+    <string name="role_super_admin">సూపర్ అడ్మిన్</string>
+    <string name="role_admin">అడ్మిన్</string>
+    <string name="role_event_admin">ఈవెంట్ అడ్మిన్</string>
+    <string name="role_resident">నివాసి</string>
+
+    <!-- Tabs -->
+    <string name="tab_account">ఖాతా</string>
+    <string name="tab_outstanding">బాకీలు</string>
+    <string name="tab_receipt">రసీదు</string>
+    <string name="tab_expense">ఖర్చు</string>
+    <string name="tab_receivable">రావాల్సినవి</string>
+    <string name="tab_payable">చెల్లించవలసినవి</string>
+
+    <!-- Rules -->
+    <string name="rule_1">సొసైటీ అందుబాటులో ఉన్న స్టేజ్ మరియు కుర్చీలను అందిస్తుంది.</string>
+    <string name="rule_2">సెల్యులార్ ఉదయం 6 నుండి రాత్రి 9 వరకు అందుబాటులో ఉంటుంది.</string>
+    <string name="rule_3">చెత్త సేకరణ మరియు సెల్యులార్ శుభ్రపరిచే ఖర్చులను సొసైటీ చెల్లిస్తుంది.</string>
+    <string name="rule_4">ఏదైనా నష్టం లేదా మరమ్మత్తులు బుకింగ్ చేసిన వారే భరించాలి.</string>
+
+    <!-- Other -->
+    <string name="fixed_venue">సెల్యులార్</string>
+    <string name="status_pending">పెండింగ్</string>
+    <string name="status_approved">ఆమోదించబడింది</string>
+    <string name="status_rejected">తిరస్కరించబడింది</string>
+    <string name="toast_customize">అనుకూలీకరించు క్లిక్ చేయబడింది</string>
+    <string name="toast_account_selected">ఖాతా ఎంచుకోబడింది</string>
+    <string name="toast_outstanding_selected">బాకీలు ఎంచుకోబడింది</string>
+    <string name="toast_receipt_selected">రసీదు ఎంచుకోబడింది</string>
+    <string name="toast_expense_selected">ఖర్చు ఎంచుకోబడింది</string>
+    <string name="toast_gallery_selected">గ్యాలరీ ఎంపిక చేయబడింది</string>
+    <string name="toast_cashbook_selected">క్యాష్‌బుక్ ఎంపిక చేయబడింది</string>
+    <string name="toast_receivable_selected">రావాల్సినవి ఎంచుకోబడింది</string>
+    <string name="toast_payable_selected">చెల్లించవలసినవి ఎంచుకోబడింది</string>
+    <string name="resident_management_title">నివాసితుల నిర్వహణ</string>
+    <string name="search_resident_hint">ఫ్లాట్ లేదా పేరు ద్వారా వెతకండి</string>
+    <string name="resident_item_flat_type">ఫ్లాట్ నెం: %1$s | %2$s</string>
+    <string name="label_service_unit">సర్వీస్</string>
+    <string name="label_missing_flat">ఫ్లాట్ నంబర్ లేదు</string>
+    <string name="title_reject_resident">నివాసిని తిరస్కరించండి</string>
+    <string name="msg_reject_confirm">మీరు ఖచ్చితంగా ఈ రిజిస్ట్రేషన్‌ను తిరస్కరించి, తొలగించాలనుకుంటున్నారా?</string>
+    <string name="msg_reject_success">రిజిస్ట్రేషన్ తిరస్కరించబడింది మరియు తొలగించబడింది</string>
+    <string name="msg_error_occurred">లోపం: %s</string>
+    <string name="search_name_flat_hint">పేరు లేదా ఫ్లాట్ ద్వారా వెతకండి...</string>
+    <string name="btn_manage">నిర్వహించండి</string>
+    <string name="label_role_position">%1$s | %2$s</string>
+    <string name="msg_not_eligible">అర్హత లేదు</string>
+    <string name="msg_occupied_required">%s ని ఏ జట్టుకు నియమించలేరు. ప్రస్తుతం భవనంలో నివసిస్తున్న వారు (Occupied) మాత్రమే అర్హులు.</string>
+    <string name="msg_no_options">ఈ యూజర్ రకం కోసం ఎటువంటి నిర్వహణ ఎంపికలు అందుబాటులో లేవు</string>
+    <string name="title_manage_role">%s కోసం పాత్రను నిర్వహించండి</string>
+    <string name="msg_denied_president">తిరస్కరించబడింది: ప్రెసిడెంట్ ముందుగా అడ్మిన్ అయి ఉండాలి.</string>
+    <string name="msg_denied_general_secretary">తిరస్కరించబడింది: జనరల్ సెక్రటరీ ముందుగా అడ్మిన్ అయి ఉండాలి.</string>
+    <string name="msg_denied_joint_secretary">తిరస్కరించబడింది: జాయింట్ సెక్రటరీ ముందుగా ఈవెంట్ అడ్మిన్ అయి ఉండాలి.</string>
+    <string name="msg_denied_max_admins">తిరస్కరించబడింది: గరిష్టంగా 2 అడ్మిన్లకు మాత్రమే అనుమతి ఉంది.</string>
+    <string name="msg_denied_max_event_admins">తిరస్కరించబడింది: గరిష్టంగా 2 ఈవెంట్ అడ్మిన్లకు మాత్రమే అనుమతి ఉంది.</string>
+    <string name="msg_denied_max_event_members">తిరస్కరించబడింది: గరిష్టంగా 6 ఈవెంట్ సభ్యులకు మాత్రమే అనుమతి ఉంది.</string>
+    <string name="msg_denied_already_filled">తిరస్కరించబడింది: %s పోస్ట్ ఇప్పటికే భర్తీ చేయబడింది.</string>
+    <string name="msg_update_success">విజయం: %s</string>
+    <string name="msg_role_removed">పాత్ర తొలగించబడింది</string>
+    <string name="msg_appointed_as">%sగా నియమించబడ్డారు</string>
+    <string name="msg_update_failed">నవీకరణ విఫలమైంది: %s</string>
+    <string name="msg_error_loading_residents">నివాసితులను లోడ్ చేయడంలో లోపం</string>
+    <string name="action_remove_role">పాత్రను తొలగించండి (నివాసిగా సెట్ చేయండి)</string>
+    <string name="action_remove_position">హోదాను తొలగించండి</string>
+    <string name="action_remove_both">పాత్ర మరియు హోదా రెండింటినీ తొలగించండి</string>
+    <string name="action_ok">సరే</string>
+    <string name="btn_accept">అంగీకరించు</string>
+    <string name="status_accepted">పని జరుగుతోంది</string>
+    <string name="label_subject_header">విషయం</string>
+    <string name="label_subject_info">విషయం: %s</string>
+    <string name="label_desc_header">వివరణ</string>
+    <string name="label_desc_info">వివరణ: %s</string>
+    <string name="label_desc_problem_header">సమస్య వివరణ</string>
+    <string name="msg_complaint_accepted_board">ఫిర్యాదు అంగీకరించబడింది మరియు నోటీసు బోర్డులో పోస్ట్ చేయబడింది</string>
+    <string name="msg_failed_accept_complaint">ఫిర్యాదును అంగీకరించడం విఫలమైంది</string>
+    <string name="hint_enter_reply">సమాధానం నమోదు చేయండి (ఐచ్ఛికం)</string>
+    <string name="title_resolve_complaint">ఫిర్యాదును పరిష్కరించండి</string>
+    <string name="msg_resolve_details">నివాసి: %1$s\nసమస్య: %2$s</string>
+    <string name="btn_resolve">పరిష్కరించబడినట్లు గుర్తించు</string>
+    <string name="btn_resolve_reply">పరిష్కరించండి మరియు సమాధానం ఇవ్వండి</string>
+    <string name="btn_take_after_photo">\'తర్వాత\' ఫోటో తీయండి</string>
+    <string name="msg_complaint_resolved_board">ఫిర్యాదు పరిష్కరించబడింది మరియు బోర్డు నవీకరించబడింది</string>
+    <string name="msg_failed_update">నవీకరించడం విఫలమైంది</string>
+    <string name="msg_failed_load">లోడ్ చేయడం విఫలమైంది</string>
+    <string name="label_wip_prefix">పని జరుగుతోంది: %s</string>
+    <string name="label_resolved_prefix">పరిష్కరించబడింది: %s</string>
+    <string name="msg_notice_broadcasted">నోటీసు విజయవంతంగా ప్రసారం చేయబడింది</string>
+    <string name="hint_notice_title">నోటీసు టైటిల్ (ఉదా. ట్యాంక్ క్లీన్ చేయబడింది)</string>
+    <string name="hint_notice_desc">చేసిన పనిని వివరించండి...</string>
+    <string name="label_add_photos_max">ఫోటోలను జోడించండి (గరిష్టంగా 5)</string>
+    <string name="btn_add_photo">ఫోటోను జోడించండి</string>
+    <string name="error_max_images">గరిష్టంగా 5 చిత్రాలకు మాత్రమే అనుమతి ఉంది</string>
+    <string name="label_meeting_venue">సమావేశ వేదిక</string>
+    <string name="label_meeting_date">సమావేశ తేదీ</string>
+    <string name="label_meeting_time">సమావేశ సమయం</string>
+    <string name="btn_add_agenda">ఎజెండాను జోడించండి</string>
+    <string name="hint_agenda_title">ఎజెండా ఐటెమ్‌ను నమోదు చేయండి...</string>
+    <string name="label_meeting_title">సమావేశ శీర్షిక</string>
+    <string name="label_meeting_agendas">సమావేశ ఎజెండాలు (కనీసం 1)</string>
+    <string name="label_event_title">ఈవెంట్ శీర్షిక</string>
+    <string name="label_event_date">ఈవెంట్ తేదీ</string>
+    <string name="label_event_time">ఈవెంట్ సమయం</string>
+    <string name="label_food_items">ఆహార వస్తువులు (కనీసం 1)</string>
+    <string name="label_donation_details">విరాళం వివరాలు</string>
+    <string name="label_contributions">విరాళాలు</string>
+    <string name="label_total_amount_is">మొత్తం విలువ ₹ %s</string>
+    <string name="btn_add_contribution">విరాళాన్ని జోడించండి</string>
+    <string name="btn_post_broadcast">ప్రసారాన్ని పోస్ట్ చేయండి</string>
+    <string name="label_reference_no">రెఫరెన్స్ నంబర్</string>
+    <string name="msg_time_future">సమయం భవిష్యత్తులో ఉండాలి</string>
+    <string name="msg_title_blank">సమావేశం శీర్షిక ఖాళీగా ఉండకూడదు</string>
+    <string name="msg_select_date_time">దయచేసి తేదీ మరియు సమయాన్ని ఎంచుకోండి</string>
+    <string name="msg_add_agenda">దయచేసి కనీసం ఒక ఎజెండాను జోడించండి</string>
+    <string name="msg_broadcast_updated">ప్రసారం నవీకరించబడింది</string>
+    <string name="msg_meeting_broadcasted">సమావేశం ప్రసారం చేయబడింది. ఇప్పుడు ఈవెంట్ వస్తువులను జోడించండి.</string>
+    <string name="msg_fill_required_meal">దయచేసి అల్పాహారం/భోజనం/రాత్రి భోజనంతో సహా అన్ని ఫీల్డ్‌లను పూరించండి</string>
+    <string name="msg_add_food_item">దయచేసి కనీసం ఒక ఆహార వస్తువును జోడించండి</string>
+    <string name="msg_event_broadcasted">ఈవెంట్ విజయవంతంగా ప్రసారం చేయబడింది. మీరు ఇప్పుడు విరాళాలను జోడించవచ్చు.</string>
+    <string name="msg_add_contribution">దయచేసి కనీసం ఒక విరాళాన్ని జోడించండి</string>
+    <string name="msg_duplicate_entry">ఫ్లాట్ %1$s కోసం నకిలీ ఎంట్రీ కనుగొనబడింది: %2$s</string>
+    <string name="msg_donation_posted">విరాళాల జాబితా హోమ్‌పేజీలో పోస్ట్ చేయబడింది</string>
+    <string name="btn_update_broadcast">ప్రసారాన్ని నవీకరించండి</string>
+    <string name="btn_post_donation_list">విరాళాల జాబితాను పోస్ట్ చేయండి</string>
+    <string name="label_item">వస్తువు</string>
+    <string name="label_cash">నగదు</string>
+    <string name="label_flat_hint">ఫ్లాట్</string>
+    <string name="label_name_hint">పేరు</string>
+    <string name="label_occasion_info">సందర్భం: %s</string>
+    <string name="label_booking_date_info">బుకింగ్ తేదీ: %s</string>
+    <string name="label_charge_info">ఛార్జీ: ₹ %s</string>
+    <string name="status_vacant">ఖాళీ</string>
+    <string name="status_occupied">నివసిస్తున్నారు</string>
+    <string name="label_flat_info">ఫ్లాట్: %1$s | %2$s</string>
+    <string name="label_regular_maintenance">సాధారణ నిర్వహణ</string>
+    <string name="hint_starting_date">ప్రారంభ తేదీ</string>
+    <string name="hint_ending_date">ముగింపు తేదీ</string>
+    <string name="btn_save">సేవ్ చేయండి</string>
+    <string name="btn_update">నవీకరించండి</string>
+    <string name="btn_ignore">విస్మరించండి</string>
+    <string name="hint_special_purpose">ప్రత్యేక నిర్వహణ యొక్క ఉద్దేశ్యం</string>
+    <string name="label_partly_payment">పాక్షిక చెల్లింపు</string>
+    <string name="label_activate">యాక్టివేట్ చేయండి</string>
+    <string name="msg_trigger_billing">ఆటోమేటెడ్ బిల్లింగ్‌ను ట్రిగ్గర్ చేస్తోంది...</string>
+    <string name="msg_delete_confirm_record">మీరు ఖచ్చితంగా ఈ రికార్డును తొలగించాలనుకుంటున్నారా?</string>
+    <string name="msg_new_special_maint_details">కొత్త ప్రత్యేక నిర్వహణ వివరాలను నమోదు చేయండి</string>
+    <string name="msg_restored_db">డేటాబేస్ నుండి పునరుద్ధరించబడింది</string>
+    <string name="msg_purpose_length">ఉద్దేశ్యం 5 అక్షరాల కంటే ఎక్కువ ఉండాలి</string>
+    <string name="msg_min_amount">మొత్తం కనీసం ₹ 500.00 ఉండాలి</string>
+    <string name="msg_config_updated">%s విజయవంతంగా నవీకరించబడింది</string>
+    <string name="msg_date_greater_now">ముగింపు తేదీ ప్రస్తుత తేదీ కంటే ఎక్కువగా ఉండాలి</string>
+    <string name="msg_date_greater_start">ముగింపు తేదీ ప్రారంభ తేదీ కంటే ఎక్కువగా ఉండాలి</string>
+    <string name="msg_special_billed">ప్రత్యేక నిర్వహణ యజమానులందరికీ బిల్ చేయబడింది</string>
+    <string name="msg_billing_failed_info">బిల్లింగ్ విఫలమైంది: %s</string>
+    <string name="msg_sync_failed_owners">సింక్ విఫలమైంది: యజమానులను పొందలేకపోయాము</string>
+    <string name="label_delete">తొలగించు</string>
+    <string name="msg_unknown_month">తెలియని నెల</string>
+    <string name="title_orders">ఆర్డర్లు</string>
+    <string name="tab_sales">అమ్మకాలు</string>
+    <string name="label_purchase_return">కొనుగోలు వాపసు</string>
+    <string name="label_sales_return">అమ్మకాల వాపసు</string>
+    <string name="label_damage">నష్టం</string>
+    <string name="label_advance_refund">ముందస్తు వాపసు</string>
+    <string name="label_advance_maintenance">ముందస్తు నిర్వహణ</string>
+    <string name="label_bills">బిల్లులు</string>
+    <string name="tab_purchase">కొనుగోలు</string>
+    <string name="tab_purchase_return">కొనుగోలు వాపసు</string>
+    <string name="tab_damage_repair">నష్టం / మరమ్మత్తు</string>
+    <string name="tab_purchase_cum_repair">కొనుగోలు మరియు మరమ్మత్తు</string>
+    <string name="tab_contract">ఒప్పందం</string>
+    <string name="label_purchase_order">కొనుగోలు ఆర్డర్</string>
+    <string name="label_date_with_value">తేదీ: %s</string>
+    <string name="label_balance">నిల్వ</string>
+    <string name="label_main_balance">ప్రధాన నిల్వ</string>
+    <string name="label_event_balance">ఈవెంట్ నిల్వ</string>
+    <string name="hint_search_vendor">విక్రేతను వెతకండి</string>
+    <string name="hint_contact_no">మొబైల్ సంఖ్య</string>
+    <string name="hint_vendor_address">విక్రేత చిరునామా</string>
+    <string name="hint_type_of_work">పని రకం</string>
+    <string name="hint_nature_of_work">పని స్వభావం</string>
+    <string name="hint_labour_category">లేబర్ వర్గం</string>
+    <string name="label_estimation">అంచనా</string>
+    <string name="label_sl_no">వరుస సంఖ్య</string>
+    <string name="label_particulars">వివరాలు</string>
+    <string name="label_unit">యూనిట్</string>
+    <string name="label_amount_rs">మొత్తం (₹)</string>
+    <string name="btn_add_item">ఐటమ్‌ను జోడించండి</string>
+    <string name="label_total_amount_with_colon">మొత్తం విలువ: </string>
+    <string name="title_add_new_vendor">కొత్త విక్రేతను జోడించండి</string>
+    <string name="hint_vendor_name">విక్రేత పేరు</string>
+    <string name="hint_vendor_type_eg">విక్రేత రకం (ఉదా. హార్డ్‌వేర్, సిమెంట్)</string>
+    <string name="labour_no_material">లేబర్ ఛార్జ్ (మెటీరియల్ అవసరం లేదు)</string>
+    <string name="labour_with_material">మెటీరియల్‌తో లేబర్ ఛార్జ్</string>
+    <string name="labour_material_by_apt">లేబర్ ఛార్జ్ మాత్రమే (అపార్ట్‌మెంట్ ద్వారా మెటీరియల్)</string>
+    <string name="title_contract_saved">ఒప్పందం సేవ్ చేయబడింది</string>
+    <string name="msg_contract_saved">కాంట్రాక్ట్ విజయవంతంగా సేవ్ చేయబడింది మరియు నోటీసు బోర్డులో పోస్ట్ చేయబడింది.</string>
+    <string name="btn_close">మూసివేయి</string>
+    <string name="btn_view_agreement">ఒప్పందాన్ని చూడండి</string>
+    <string name="btn_add">జోడించు</string>
+    <string name="error_mobile_exists">మొబైల్ నంబర్ ఇప్పటికే ఉంది</string>
+    <string name="msg_enter_valid_name_mobile">చెల్లుబాటు అయ్యే పేరు మరియు 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి</string>
+    <string name="msg_contract_finalized">ఒప్పందం ఖరారు చేయబడింది మరియు చెల్లింపులకు మార్చబడింది</string>
+    <string name="msg_vendor_added_success">విక్రేత విజయవంతంగా జోడించబడింది</string>
+    <string name="msg_order_saved_success">ఆర్డర్ విజయవంతంగా సేవ్ చేయబడింది</string>
+    <string name="label_event_in">%1$s లో: %2$s</string>
+    <string name="msg_event_started">%s ప్రారంభమైంది</string>
+    <string name="label_meeting_in">సమావేశం లో: %s</string>
+    <string name="msg_meeting_started">సమావేశం ప్రారంభమైంది</string>
+    <string name="label_sales_order">అమ్మకాల ఆర్డర్</string>
+    <string name="label_finalize">ఖరారు చేయండి</string>
+    <string name="label_gender_company">లింగము / సంస్థ</string>
+    <string name="option_male">పురుషుడు</string>
+    <string name="option_female">స్త్రీ</string>
+    <string name="option_company">సంస్థ</string>
+    <string name="option_others">ఇతర</string>
+    <string name="prefix_mr">శ్రీ</string>
+    <string name="prefix_ms">శ్రీమతి</string>
+    <string name="prefix_ms_company">మె||</string>
+    <string name="hint_sales_type">స్క్రాప్, వేలం మొదలైనవి</string>
+    <string name="hint_search_owner_rental_flat">యజమాని/అద్దెదారు/ఫ్లాట్ నెం వెతకండి</string>
+    <string name="label_new_purchase_order">కొత్త కొనుగోలు ఆర్డర్</string>
+    <string name="label_category">వర్గం</string>
+    <string name="label_vendor">విక్రేత</string>
+    <string name="label_items_estimation">వస్తువుల అంచనా</string>
+    <string name="btn_cancel">రద్దు చేయి</string>
+    <string name="btn_save_order">ఆర్డర్‌ను సేవ్ చేయి</string>
+    <string name="btn_update_order">ఆర్డర్‌ను అప్‌డేట్ చేయి</string>
+    <string name="label_order_no_prefix">ఆర్డర్ నం: %s</string>
+    <string name="label_date_prefix">తేదీ: %s</string>
+    <string name="btn_add_item_with_plus">+ వస్తువును జోడించు</string>
+    <string name="label_new_sales_order">కొత్త అమ్మకపు ఆర్డర్</string>
+    <string name="label_resident">నివాసి</string>
+    <string name="hint_search_resident_flat">నివాసి / ఫ్లాట్ నంబర్‌ను వెతకండి</string>
+    <string name="label_sales_details">అమ్మకపు వివరాలు</string>
+    <string name="hint_type_of_sale">అమ్మకం రకం (ఉదా. వార్తాపత్రికలు)</string>
+    <string name="btn_save_sales_order">అమ్మకపు ఆర్ഡర్‌ను సేవ్ చేయి</string>
+    <string name="btn_update_sales_order">అమ్మకపు ఆర్డర్‌ను అప్‌డేట్ చేయి</string>
+    <string name="label_flat_prefix">ఫ్లాట్ %s</string>
+    <string name="label_dropdown_resident">%1$s (%2$s) - %3$s</string>
+    <string name="label_dropdown_vendor">%1$s (%2$s)</string>
+    <string name="label_dropdown_vendor_with_type">%1$s (%2$s) - %3$s</string>
+    <string name="label_return_no_prefix">రిటర్న్ నం: %s</string>
+    <string name="label_damage_no_prefix">డ్యామేజ్ నం: %s</string>
+    <string name="label_amount_in_words">అక్షరాలలో మొత్తం</string>
+
+    <string name="word_zero">సున్నా</string>
+    <string name="word_minus">మైనస్</string>
+    <string name="word_hundred">వంద</string>
+    <string name="word_thousand">వేలు</string>
+    <string name="word_lakh">లక్ష</string>
+    <string name="word_crore">కోటి</string>
+    <string name="word_rupees">రూపాయలు</string>
+    <string name="word_paise">పైసలు</string>
+    <string name="word_and">మరియు</string>
+    <string name="word_only">మాత్రమే</string>
+    <string-array name="units_array">
+        <item></item>
+        <item>ఒకటి</item>
+        <item>రెండు</item>
+        <item>మూడు</item>
+        <item>నాలుగు</item>
+        <item>ఐదు</item>
+        <item>ఆరు</item>
+        <item>ఏడు</item>
+        <item>ఎనిమిది</item>
+        <item>తొమ్മിది</item>
+        <item>పది</item>
+        <item>పదకొండు</item>
+        <item>పన్నెండు</item>
+        <item>పదమూడు</item>
+        <item>పద్నాలుగు</item>
+        <item>పదిహേను</item>
+        <item>పదహారు</item>
+        <item>పదిహേడు</item>
+        <item>పద్దెనిమిది</item>
+        <item>పందొమ్మిది</item>
+    </string-array>
+    <string-array name="tens_array">
+        <item></item>
+        <item></item>
+        <item>ఇరవై</item>
+        <item>ముప్పై</item>
+        <item>నలభై</item>
+        <item>యాభై</item>
+        <item>అరవై</item>
+        <item>డెబ్బై</item>
+        <item>ఎనభై</item>
+        <item>తొంభై</item>
+    </string-array>
+    <string-array name="contract_categories">
+        <item>@string/cat_maintenance</item>
+        <item>@string/cat_event</item>
+    </string-array>
+    <string name="label_contract_duration">ఒప్పందం వ్యవధి</string>
+    <string name="btn_update_agreement">ఒప్పందాన్ని అప్‌డేట్ చేయండి</string>
+
+    <!-- Order Actions Sheet Strings -->
+    <string name="label_start_new_action">కొత్త చర్యను ప్రారంభించండి</string>
+    <string name="action_new_purchase">🛒   కొత్త కొనుగోలు</string>
+    <string name="action_new_repair">🛠️   కొత్త మరమ్మత్తు</string>
+    <string name="action_new_contract">📄   కొత్త ఒప్పందం</string>
+    <string name="action_new_sales_order">🏠   కొత్త అమ్మకపు ఆర్డర్</string>
+    <string name="action_new_purchase_return">🔄   కొత్త కొనుగోలు వాపసు</string>
+    <string name="action_new_damage_report">⚠️   కొత్త నష్టం నివేదిక</string>
+
+    <!-- PDF Generator Strings -->
+    <string name="pdf_label_reference">రెఫరెన్స్: SVS/Booking/%s</string>
+    <string name="pdf_title_notice">నోటీసు</string>
+    <string name="pdf_label_resident_name">నివాసి పేరు:</string>
+    <string name="pdf_label_flat_number">ఫ్లాట్ నంబర్:</string>
+    <string name="pdf_label_occasion">సందర్భం:</string>
+    <string name="pdf_label_booking_date">బుకింగ్ తేదీ:</string>
+    <string name="pdf_msg_booking_inform">సొసైటీ సౌకర్యం \'సెల్యులార్\' బుక్ చేయబడిందని తెలియజేయడమైనది.</string>
+    <string name="pdf_label_booking_details">బుకింగ్ వివరాలు:</string>
+    <string name="pdf_label_respected_resident">గౌరవనీయులైన నివాసి,</string>
+    <string name="pdf_msg_parking_request">నిర్ణీత ఈవెంట్‌ను సజావుగా నిర్వహించడానికి మరియు తగినంత స్థలాన్ని నిర్ధారించడానికి నివాసితులందరూ తమ నాలుగు చక్రాల మరియు ద్విచక్ర వాహనాలను %s న అపార్ట్‌మెంట్ ప్రాంగణం వెలుపల పార్క్ చేయవలసిందిగా కోరడమైనది.</string>
+    <string name="pdf_label_thanking_you">ధన్యవాదాలు,</string>
+    <string name="pdf_label_for_app">SVS రెసిడెన్సీ కోసం</string>
+    <string name="pdf_footer_note">గమనిక: ఇది కంప్యూటర్ ద్వారా రూపొందించబడిన నోటీసు మరియు దీనికి సంతకం అవసరం లేదు.</string>
+    <string name="pdf_label_contract_id">కాంట్రాక్ట్ ఐడి: %s</string>
+    <string name="pdf_label_contact_value">సంప్రదించండి: +91 %s</string>
+    <string name="pdf_label_item_row">• %1$s: %2$s - ₹ %3$s</string>
+    <string name="pdf_label_client_for">%s కోసం</string>
+    <string name="pdf_label_date">తేదీ: %s</string>
+    <string name="pdf_title_contract_agreement">సర్వీస్ కాంట్రాక్ట్ అగ్రిమెంట్</string>
+    <string name="pdf_msg_contract_intro">ఈ సర్వీస్ కాంట్రాక్ట్ ఒప్పందం SVS రెసిడెన్సీ (క్లయింట్) మరియు %s (కాంట్రాక్టర్) మధ్య కుదిరింది.</string>
+    <string name="pdf_section_contractor_details">కాంట్రాక్టర్ వివరాలు:</string>
+    <string name="pdf_label_name">పేరు:</string>
+    <string name="pdf_label_contact">సంప్రదించండి:</string>
+    <string name="pdf_label_address">చిరునామా:</string>
+    <string name="pdf_section_scope_of_work">పని పరిధి:</string>
+    <string name="pdf_label_nature_of_work">పని స్వభావం:</string>
+    <string name="pdf_label_labour_category">లేబర్ కేటగిరీ:</string>
+    <string name="pdf_label_start_date">ప్రారంభ తేదీ:</string>
+    <string name="pdf_label_end_date">ముగింపు తేదీ:</string>
+    <string name="pdf_section_financial_terms">ఆర్థిక నిబంధనలు:</string>
+    <string name="pdf_label_total_labour_amount">లేబర్ / సర్వీస్ ఛార్జీ: ₹ %s</string>
+    <string name="pdf_section_material_arranged">అపార్ట్‌మెంట్ ద్వారా ఏర్పాటు చేయబడిన మెటీరియల్:</string>
+    <string name="pdf_label_total_material_amount">మెటీరియల్ ఏర్పాటు ఖర్చు: ₹ %s</string>
+    <string name="pdf_label_total_contract_amount">మొತ್ತం కాంట్రాక్ట్ మొత్తం: ₹ %s</string>
+    <string name="pdf_label_grand_total">మొత్తం (లేబర్ + మెటీరియల్స్): ₹ %s</string>
+    <string name="pdf_label_client_signature">క్లయింట్ సంతకం</string>
+    <string name="pdf_label_contractor_signature">కాంట్రాక్టర్ సంతకం</string>
+    <string name="pdf_footer_official">ఇది SVS రెసిడెన్సీ మేనేజ్‌మెంట్ సిస్టమ్ ద్వారా రూపొందించబడిన అధికారిక పత్రం.</string>
+    <string name="pdf_fallback_contractor">కాంట్రాక్టర్</string>
+    <string name="pdf_msg_no_materials">నిర్ದಿಷ್ಟ మెటీரியల్‌లు ఏవీ లేవు.</string>
+    <string name="pdf_fallback_admin">అడ్మిన్</string>
+    <string name="pdf_fallback_management">నిర్వహణ బృందం</string>
+    <string name="pdf_label_position">పదవి:</string>
+    <string name="pdf_fallback_resident">నివాసి</string>
+    <string name="menu_phonebook">ఫోన్‌బుక్</string>
+    <string name="toast_phonebook_selected">ఫోన్‌బుక్ ఎంచుకోబడింది</string>
+    <string name="btn_add_vendor">విక్రేతను జోడించండి</string>
+    <string name="title_edit_vendor">విక్రేతను సవరించండి</string>
+    <string name="msg_vendor_deleted">విక్రేత విజయవంతంగా తొలగించబడింది</string>
+    <string name="hint_search_phonebook">పేరు, రకం లేదా మొబైల్ వెతకండి...</string>
+    <string name="btn_add_more_mobile">+ మరిన్ని మొబైల్ నంబర్లను జోడించండి</string>
+    <string name="title_delete_vendor_dialog">విక్రేతను తొలగించాలా?</string>
+    <string name="msg_confirm_delete_vendor">మీరు ఖచ్చితంగా ఫోన్‌బుక్ నుండి %sని తీసివేయాలనుకుంటున్నారా?</string>
+    <string name="title_select_number">కాల్ చేయడానికి నంబర్‌ను ఎంచుకోండి</string>
+    <string name="menu_asset">ఆస్తులు</string>
+    <string name="label_search_asset">ఆస్తులను వెతకండి...</string>
+    <string name="label_apartment_name">అపార్ట్‌మెంట్ పేరు</string>
+    <string name="label_apartment_address">అపార్ట్‌మెంట్ చిరునామా</string>
+    <string name="label_location_summary">స్థలం</string>
+    <string name="label_area_sqyard">వైశాల్యం (Sq. Yards)</string>
+    <string name="label_num_flats">ఫ్లాట్ల సంఖ్య</string>
+    <string name="label_num_floors">అంతస్తుల సంఖ్య</string>
+    <string name="label_num_lanes">లేన్ల సంఖ్య</string>
+    <string name="label_electricity_meter">విద్యుత్ మీటర్ సంఖ్యలు</string>
+    <string name="label_water_meter">నీటి మీటర్ సంఖ్యలు</string>
+    <string name="label_assets_summary">ఆస్తుల సారాంశం</string>
+    <string name="label_total_assets">మొత్తం ఆస్తులు</string>
+    <string name="msg_no_assets">ఆస్తులు ఏవీ కనుగొనబడలేదు</string>
+    <string name="title_add_asset">ఆస్తిని జోడించండి</string>
+    <string name="title_edit_asset">ఆస్తిని సవరించండి</string>
+    <string name="label_asset_name">ఆస్తి పేరు</string>
+    <string name="label_quantity">పరిమాణం</string>
+    <string name="label_condition">స్థితి</string>
+    <string name="label_condition_good">మంచిది</string>
+    <string name="label_condition_repair">మరమ్మతు</string>
+    <string name="label_condition_damage">నష్టం</string>
+    <string name="label_purchase_date">కొనుగోలు తేదీ</string>
+    <string name="hint_asset_description">వివరణ (ఐచ్ఛికం)</string>
+    <string name="msg_asset_saved">ఆస్తి విజయవంతంగా సేవ్ చేయబడింది</string>
+    <string name="msg_asset_deleted">ఆస్తి విజయవంతంగా తొలగించబడింది</string>
+    <string name="msg_summary_saved">సొసైటీ సారాంశం విజయవంతంగా సేవ్ చేయబడింది</string>
+    <string name="msg_confirm_delete_asset">మీరు ఖచ్చితంగా ఈ ఆస్తిని తొలగించాలనుకుంటున్నారా?</string>
+    <string name="label_qty_with_value">పరిమాణం: %d</string>
+    <string name="label_added_by_with_value">జోడించిన వారు: %s</string>
+    <string name="msg_morning">శుభోదయం</string>
+    <string name="msg_afternoon">శుభ మధ్యాహ్నం</string>
+    <string name="msg_evening">శుభ సాయంత్రం</string>
+    <string name="msg_welcome_back">%s కి తిరిగి స్వాగతం</string>
+    <string name="label_total_dues">మొత్తం బకాయిలు</string>
+    <string name="label_credit_balance">క్రెడిట్ నిల్వ</string>
+    <string name="label_account_clear">ఖాతా క్లియర్ అయింది</string>
+    <string name="label_charge">ఛార్జీ</string>
+    <string name="label_for_resident">కోసం: %s</string>
+    <string name="btn_view_statement">స్టేట్‌మెంట్ చూడండి</string>
+    <string name="title_unsaved_changes">సేవ్ చేయని మార్పులు</string>
+    <string name="msg_unsaved_changes">మీరు చేసిన మార్పులు సేవ్ చేయలేదు. మీరు నిష్క్రమించి వాటిని రద్దు చేయాలనుకుంటున్నారా?</string>
+    <string name="btn_leave">నిష్క్రమించు</string>
+    <string name="btn_continue">సవరించడం కొనసాగించు</string>
+    <string name="heading_pending_approvals">పెండింగ్ ఆమోదాలు</string>
+    <string name="hint_select_gender">లింగాన్ని ఎంచుకోండి</string>
+    <string name="hint_select_occupation">వృత్తిని ఎంచుకోండి</string>
+    <string name="hint_select_religion">మతాన్ని ఎంచుకోండి</string>
+
+    <!-- Appoint Security Staff -->
+    <string name="title_appoint_security_staff">సెక్యూరిటీ సిబ్బంది నియామకం</string>
+    <string name="hint_fill_to_activate">యాక్టివేట్ చేయడానికి ఫీల్డ్‌లను పూరించండి</string>
+    <string name="hint_tap_to_capture">ఫోటో తీయడానికి ట్యాప్ చేయండి</string>
+    <string name="hint_photo_captured">ఫోటో తీయబడింది</string>
+    <string name="label_staff_code">కోడ్</string>
+    <string name="label_staff_post">హోదా</string>
+    <string name="label_family_details_header">కుటుంబ సభ్యుల వివరాలు</string>
+    <string name="label_staff_salary">జీతం</string>
+    <string name="label_staff_appointment">నియామకం</string>
+    <string name="label_staff_dismiss">తొలగింపు</string>
+    <string name="label_create_password">పాస్‌వర్డ్‌ను సృష్టించండి</string>
+    <string name="helper_min_8_chars">కనీసం 8 అక్షరాలు</string>
+    <string name="btn_create_security_id">సెక్యూరిటీ ఐడిని సృష్టించండి</string>
+    <string name="btn_dismiss_staff">సిబ్బందిని తొలగించండి</string>
+    <string name="msg_admin_loading">అడ్మిన్ ప్రొఫైల్ లోడ్ అవుతోంది... దయచేసి కాసేపు వేచి ఉండండి</string>
+    <string name="msg_fill_staff_basics">దయచేసి సరైన పేరు, కోడ్ మరియు మొబైల్ నంబర్‌ను పూరించండి</string>
+    <string name="msg_email_pass_req">కొత్త సిబ్బందికి ఈమెయిల్ మరియు 8 అక్షరాల పాస్‌వర్డ్ అవసరం</string>
+    <string name="msg_pick_dismiss_date">తొలగించడానికి తేదీని ఎంచుకోండి</string>
+    <string name="msg_email_exists">ఈమెయిల్ ఐడి ఇప్పటికే నమోదు చేయబడింది</string>
+    <string name="msg_mobile_exists_error">మొబైల్ సంఖ్య ఇప్పటికే నమోదు చేయబడింది</string>
+    <string name="msg_staff_success">సిబ్బంది విజయవంతంగా నియమించబడ్డారు!</string>
+    <string name="msg_staff_dismiss_success">సిబ్బంది విజయవంతంగా తొలగించబడ్డారు</string>
+    <string name="msg_staff_update_success">సిబ్బంది ప్రొఫైల్ నవీకరించబడింది</string>
+    <string name="msg_fill_name_age">దయచేసి పేరు మరియు వయస్సును పూరించండి</string>
+    <string name="notice_staff_title">కొత్త సెక్యూరిటీ సిబ్బంది నియామకం</string>
+    <string name="notice_staff_desc">%1$s SVS రెసిడెన్సీలో %2$sగా చేరారు.</string>
+    <string name="notif_staff_title">కొత్త సిబ్బంది నియామకం</string>
+    <string name="notif_staff_desc">%1$s %2$sగా చేరారు</string>
+    <string name="msg_photo_proc_error">ఫోటో ప్రాసెసింగ్ లోపం</string>
+    <string name="tab_label_management">నిర్వహణ</string>
+    <string name="tab_label_event_team">ఈవెంట్ టీమ్</string>
+    <string name="tab_label_security">భద్రత</string>
+    <string name="header_staff_photo">సిబ్బంది ఫోటో</string>
+    <string name="label_actions">చర్యలు</string>
+
+    <!-- Security Dashboard -->
+    <string name="title_security_dashboard">సెక్యూరిటీ డాష్‌బోర్డ్</string>
+    <string name="msg_welcome_security">స్వాగతం, %s</string>
+    <string name="label_shift_info">షిఫ్ట్: %s</string>
+    <string name="menu_visitor_entry">విజిటర్ ఎంట్రీ</string>
+    <string name="menu_duty_logs">డ్యూటీ లాగ్స్</string>
+    <string name="menu_resident_alerts">నివాసితుల హెచ్చరికలు</string>
+    <string name="msg_coming_soon_format">%s: త్వరలో వస్తుంది</string>
+    <string name="dialog_logout_title">లాగ్ అవుట్</string>
+    <string name="dialog_logout_msg">మీరు ఖచ్చితంగా లాగ్ అవుట్ చేయాలనుకుంటున్నారా?</string>
+
+    <!-- Visitor Entry -->
+    <string name="label_visitor_type">సందర్శకుల రకం</string>
+    <string name="label_visitor_purpose">సందర్శన ఉద్దేశ్యం</string>
+    <string name="label_visitor_vehicle">వాహనం నెం (ఐచ్ఛికం)</string>
+    <string name="label_flat_to_visit">సందర్శించాల్సిన ఫ్లాట్</string>
+    <string name="btn_check_in">చెక్-ఇన్ సందర్శకుడు</string>
+    <string name="msg_visitor_checkin_success">సందర్శకుల చెక్-ఇన్ విజయవంతమైంది</string>
+    <string name="hint_enter_visitor_name">సందర్శకుడి పూర్తి పేరును నమోదు చేయండి</string>
+    <string name="hint_enter_purpose">ఉదా. డెలివరీ, గెస్ట్, మెయింటెనెన్స్</string>
+    <string name="label_search_name_flat">పేరు / ఫ్లాట్ నంబర్ ద్వారా వెతకండి</string>
+    <string name="heading_todays_visitor">ఈరోజు సందర్శకులు</string>
+    <string name="heading_duty_history">డ్యూటీ చరిత్ర</string>
+    <string name="label_type_of_work">పని రకం</string>
+    <string name="label_current_status">ప్రస్తుత స్థితి</string>
+    <string name="label_off_duty">ఆఫ్-డ్యూటీ</string>
+    <string name="btn_save_duty_log">డ్యూటీ లాగ్‌ను సేవ్ చేయి</string>
+    <string name="hint_search_by_work">పని రకం ద్వారా వెతకండి</string>
+    <string name="label_duty_photo_optional">డ్యూటీ ఫోటో (ఐచ్ఛికం)</string>
+    <string name="label_tap_to_capture_work">పనిని క్యాప్చర్ చేయడానికి ట్యాప్ చేయండి</string>
+    <string name="msg_select_work_type">దయచేసి పని రకాన్ని ఎంచుకోండి</string>
+    <string name="msg_duty_saved_success">డ్యూటీ లాగ్ విజయవంతంగా సేవ్ చేయబడింది</string>
+    <string name="msg_photo_captured">పని ఫోటో తీయబడింది</string>
+    <string name="label_on_call">ఆన్-కాల్</string>
+    <string name="label_resting">విశ్రాంతి</string>
+    <string name="label_at_gate">గేట్ వద్ద</string>
+    <string name="work_gate_duty">గేట్ డ్యూటీ</string>
+    <string name="work_patrolling">పెట్రోలింగ్</string>
+    <string name="work_cleaning">శుభ్రపరచడం</string>
+    <string name="work_water_motor">వాటర్ మోటార్</string>
+    <string name="work_lights">లైట్లు</string>
+    <string name="title_resident_alerts">నివాసితుల హెచ్చరికలు</string>
+    <string name="heading_broadcast_new">కొత్త హెచ్చరికను ప్రసారం చేయి</string>
+    <string name="heading_recent_broadcasts">ఇటీవలి ప్రసారాలు</string>
+    <string name="label_alert_title">హెచ్చరిక శీర్షిక (ఉదా. నీటి సరఫరా)</string>
+    <string name="label_alert_desc">వివరణ / సూచనలు</string>
+    <string name="label_priority">ప్రాధాన్యత</string>
+    <string name="label_flat_optional">ఫ్లాట్ (ఐచ్ఛికం)</string>
+    <string name="btn_send_alert">నివాసితులకు హెచ్చరిక పంపు</string>
+    <string name="msg_alert_success">హెచ్చరిక విజయవంతంగా పంపబడింది!</string>
+    <string name="msg_fill_title_desc">దయచేసి శీర్షిక మరియు వివరణను నింపండి</string>
+    <string name="label_posted_by">ద్వారా %1$s (%2$s)</string>
+    <string name="alert_water_supply">నీటి సరఫరా</string>
+    <string name="alert_power_maintenance">విద్యుత్ నిర్వహణ</string>
+    <string name="alert_society_meeting">సొసైటీ సమావేశం</string>
+    <string name="alert_security_alert">భద్రతా హెచ్చరిక</string>
+    <string name="alert_garbage_collection">చెత్త సేకరణ</string>
+    <string name="hint_search_alerts">అలెర్ట్‌లను వెతకండి...</string>
+    <string name="label_urgent">అత్యవసరం</string>
+    <string name="label_high">ఎక్కువ</string>
+    <string name="label_normal">సాధారణం</string>
+    <string name="label_garbage">చెత్త</string>
+    <string name="label_main">ప్రధాన</string>
+    <string name="cat_both">అన్నీ</string>
+    <string name="label_account_head">ఖాతా హెడ్</string>
+    <string name="label_sub_head">సబ్ హెడ్</string>
+    <string name="label_voucher_no">వోచర్ సంఖ్య</string>
+    <string name="label_add_new">కొత్తది జోడించు...</string>
+    <string name="label_clear_all">అన్నీ తొలగించు</string>
+    <string name="label_visitor_name">సందర్శకుని పేరు</string>
+    <string name="label_name">పేరు</string>
+    <string name="hint_search_accounting">పేరు/ఫ్లాట్ నంబర్/నంబర్</string>
+    <string name="label_flat_mobile">ఫ్లాట్ / మొబైల్</string>
+    <string name="label_receipt_no_prefix">రశీదు సంఖ్య: %s</string>
+    <string name="label_expense_no_prefix">ఖర్చు సంఖ్య: %s</string>
+    <string name="label_loan">రుణం</string>
+    <string name="pdf_loan_agreement_title">రుణ ఒప్పందం</string>
+    <string name="pdf_loan_body_text">ఈ రుణ ఒప్పందం %1$s తేదీన, %2$s (ఇకపై \'రుణదాత\' అని పిలవబడుతుంది) మరియు %3$s (ఇకపై \'రుణగ్రహీత\' అని పిలవబడుతుంది) మధ్య కుదుర్చుకోబడింది.</string>
+    <string name="pdf_loan_amount_text">1. రుణ మొత్తం: రుణదాత రుణగ్రహీతకు ₹ %1$s (%2$s) అసలు మొత్తాన్ని అప్పుగా ఇవ్వడానికి అంగీకరిస్తుంది, దీని రసీదు రిఫరెన్స్ నంబర్: %3$s ద్వారా ధృవీకరించబడింది.</string>
+    <string name="pdf_loan_interest_text">2. వడ్డీ: రుణగ్రహీత అసలు మొత్తంపై %1$s చొప్పున వడ్డీని చెల్లించాలి.</string>
+    <string name="pdf_loan_repayment_text">3. తిరిగి చెల్లింపు: సొసైటీ అంగీకరించిన నిబంధనల ప్రకారం వడ్డీతో కలిపి అసలు మొత్తాన్ని తిరిగి చెల్లించడానికి రుణగ్రహీత అంగీకరిస్తాడు.</string>
+    <string name="pdf_loan_purpose_text">4. ఉద్దేశ్యం: ఈ రుణం ఈ ఉద్దేశ్యం కోసం తీసుకోబడింది: %1$s.</string>
+    <string name="pdf_loan_witness_text">దీనికి సాక్ష్యంగా, పైన పేర్కొన్న తేదీన ఇరుపక్షాలు ఈ ఒప్పందాన్ని అమలు చేశాయి.</string>
+    <string name="pdf_loan_lender_signature">రుణదాత సంతకం</string>
+    <string name="pdf_loan_borrower_signature">రుణగ్రహీత సంతకం</string>
+    <string name="pdf_loan_for_apt">%1$s కోసం</string>
+    <string name="pdf_loan_interest_rate_percent">నెలకు %1$s%%</string>
+    <string name="pdf_loan_interest_rate_fixed">నెలకు ₹ %1$s (%2$s)</string>
+    <string name="label_interest">వడ్డీ</string>
+    <string name="heading_orders_payment">ఆర్డర్ చెల్లింపు</string>
+    <string name="heading_payment">చెల్లింపు</string>
+    <string name="heading_notifications">నోటిఫికేషన్లు</string>
+    <string name="label_balance_bf">ప్రారంభ నిల్వ (b/f)</string>
+    <string name="label_balance_cf">ముగింపు నిల్వ (c/f)</string>
+    <string name="label_header_date">తేదీ</string>
+    <string name="label_header_folio">ఫోలియో సంఖ్య</string>
+    <string name="label_header_name">పేరు</string>
+    <string name="label_header_amount">మొత్తం</string>
+    <string name="label_header_main_bal">ప్రధాన నిల్వ</string>
+    <string name="label_header_event_bal">ఈవెంట్ నిల్వ</string>
+    <string name="label_header_closing_bal">ముగింపు నిల్వ</string>
+    <string name="label_maint_closing_bal">నిర్వహణ ముగింపు నిల్వ :</string>
+    <string name="label_event_closing_bal">ఈవెంట్ ముగింపు నిల్వ :</string>
+    <string name="label_net_closing_bal">ముగింపు నిల్వ :</string>
+    <string name="label_filter_main">ప్రధాన</string>
+    <string name="label_filter_all">అన్నీ</string>
+    <string name="tab_photo">ఫోటో</string>
+    <string name="tab_video">వీడియో</string>
+    <string name="hint_search_gallery">పేరు, తేదీ ద్వారా శోధించండి</string>
+    <string name="hint_search_notices">నోటీసులను శోధించండి (విషయం, నివాసి, ఫ్లాట్)...</string>
+    <string name="header_system_automation_log">సిస్టమ్ ఆటోమేషన్ లాగ్</string>
+    <string name="status_never">ఎప్పుడూ లేదు</string>
+    <string name="status_maint_run">నిర్వహణ: %s</string>
+    <string name="status_int_run">రుణ వడ్డీ: %s</string>
+    <string name="status_garb_run">చెత్త బిల్లింగ్: %s</string>
+    <string name="status_sal_run">సిబ్బంది జీతం: %s</string>
+    <string name="status_wish_run">రోజువారీ శుభాకాంక్షలు: %s</string>
+    <string name="status_stmt_run">ఖాతా స్టేట్‌మెంట్: %s</string>
+    <string name="tab_owner_list">యజమాని జాబితా</string>
+    <string name="tab_occupied_list">ఆక్రమిత జాబితా</string>
+    <string name="tab_family_member">కుటుంబ సభ్యుడు</string>
+    <string name="label_total_members_count">మొత్తం సభ్యులు: %d</string>
+    <string name="label_total_vehicles_count">మొత్తం వాహనాలు: %d</string>
+    <string name="label_total_member">కుటుంబ సభ్యుల వివరాలు </string>
+    <string name="label_total_vehicle">మొత్తం వాహనాలు </string>
+    <string name="label_gents">పురుషులు </string>
+    <string name="label_ladies">మహిళలు </string>
+    <string name="label_four_wheeler">నాలుగు చక్రాల వాహనం </string>
+    <string name="label_two_wheeler">ద్విచక్ర వాహనం </string>
+    <string name="label_below_10">10 సంవత్సరాల కంటే తక్కువ</string>
+    <string name="label_11_to_18">11 నుండి 18 సంవత్సరాలు</string>
+    <string name="label_19_to_40">19 నుండి 40 సంవత్సరాలు</string>
+    <string name="label_41_to_60">41 నుండి 60 సంవత్సరాలు</string>
+    <string name="label_above_61">61 సంవత్సరాల కంటే ఎక్కువ</string>
+    <string name="label_total_veg_family">మొత్తం శాఖాహార కుటుంబాలు</string>
+    <string name="label_total_non_veg_family">మొత్తం మాంసాహార కుటుంబాలు</string>
+    <string name="label_total_both_family">మొత్తం శాఖాహార మరియు మాంసాహార కుటుంబాలు</string>
+    <string name="card_food_pref">ఆహార ప్రాధాన్యత: %s</string>
+    <string name="card_total_member">మొత్తం సభ్యులు: %d</string>
+    <string name="card_vehicle_no">వాహనం సంఖ్య: %s</string>
+    <string-array name="gender_dropdown_options">
+        <item>@string/option_male</item>
+        <item>@string/option_female</item>
+        <item>@string/option_others</item>
+    </string-array>
+    <string name="title_society_team">సొసైటీ టీమ్</string>
+    <string name="pdf_label_received_from">నుండి స్వీకరించబడింది: </string>
+    <string name="pdf_label_received_sum_of_rupees">స్వీకరించిన రూపాయల మొత్తం: </string>
+    <string name="pdf_label_on_account_of">ఖాతాలో: </string>
+    <string name="pdf_label_flat_no">ఫ్లాట్ నంబర్ </string>
+    <string name="pdf_label_mobile_no">మొబైల్ నంబర్: </string>
+    <string name="pdf_label_date_only">తేదీ: </string>
+    <string name="pdf_label_receipt_no_only">రశీదు సంఖ్య: </string>
+    <string name="pdf_label_payment_mode">చెల్లింపు విధానం</string>
+    <string name="pdf_title_digital_receipt">డిజిటల్ రసీదు</string>
+    <string name="menu_garbage_alert">చెత్త</string>
+    <string name="msg_garbage_vehicle_arrived">చెత్త సేకరణ వాహనం వచ్చింది. అందరూ తమ చెత్త బుట్టలను లిఫ్ట్ దగ్గర ఉంచాలని అభ్యర్థించడమైనది.</string>
+    <string name="title_garbage_alert">చెత్త సేకరణ హెచ్చరిక</string>
+    <string name="msg_garbage_alert_sent">చెత్త సేకరణ హెచ్చరిక నివాసితులందరికీ పంపబడింది</string>
+    <string name="menu_tap_water_alert">కుళాయి నీరు</string>
+    <string name="msg_tap_water_opened">మున్సిపాలిటీ వారు కుళాయి నీటిని విడుదల చేశారు. నీరు కావాల్సిన వారు సెల్లార్ వద్దకు రావాలని అభ్యర్థించడమైనది.</string>
+    <string name="title_tap_water_alert">నీటి సరఫరా హెచ్చరిక</string>
+    <string name="msg_tap_water_alert_sent">నీటి సరఫరా హెచ్చరిక నివాసితులందరికీ పంపబడింది</string>
+    <string name="about_app_description">SVS Residency అనేది మా కమ్యూనిటీ నివాస అనుభవాన్ని మెరుగుపరచడానికి రూపొందించబడిన ఆల్-ఇన్-వన్ సొసైటీ మేనేజ్‌మెంట్ పరిష్కారం.</string>
+    <string name="about_website_url">https://svsresidency.com/about.html</string>
+    <string name="btn_visit_website">వెబ్‌సైట్‌ను సందర్శించండి</string>
+    <string name="btn_view_privacy_policy">పూర్తి గోప్యతా విధానాన్ని చూడండి</string>
+    <string name="title_privacy_policy">గోప్యతా విధానం</string>
+    <string name="menu_terms">నిబంధనలు మరియు షరతులు</string>
+    <string name="title_terms">నిబంధనలు మరియు షరతులు</string>
+    <string name="terms_description">SVS రెసిడెన్సీకి స్వాగతం. మా యాప్‌ని ఉపయోగించడం ద్వారా, మీరు మా కమ్యూనిటీ ప్రమాణాలు, ఆర్థిక లావాదేవీల విధానాలు మరియు డేటా వినియోగ నిబంధనలకు అంగీకరిస్తున్నారు.</string>
+    <string name="btn_view_terms">పూర్తి నిబంధనలను చూడండి</string>
+    <string name="terms_url">https://svsresidency.com/terms.html</string>
+    <string name="msg_terms_notice">సైన్ అప్ చేయడం ద్వారా, మీరు మా నిబంధనలు మరియు షరతులకు అంగీకరిస్తున్నారు</string>
+    <string name="menu_privacy_policy">గోప్యతా విధానం</string>
+    <string name="privacy_policy_description">మీ గోప్యత మా ప్రాధాన్యత. SVS Residency మీ వ్యక్తిగత డేటాను రక్షించడానికి మరియు అన్ని కమ్యూనిటీ పరస్పర చర్యల కోసం సురక్షితమైన వాతావరణాన్ని నిర్ధారించడానికి కట్టుబడి ఉంది.</string>
+    <string name="privacy_policy_url">https://svsresidency.com/index.html</string>
+    <string name="menu_delete_account">ఖాతాను తొలగించండి</string>
+    <string name="msg_delete_account_confirm">మీరు ఖచ్చితంగా మీ ఖాతాను తొలగించాలనుకుంటున్నారా? ఇది సొసైటీ రికార్డుల నుండి మీ మొత్తం డేటాను శాశ్వతంగా తొలగిస్తుంది.</string>
+</resources>
