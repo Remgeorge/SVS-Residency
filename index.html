@@ -1917,7 +1917,10 @@
       if (element) element.classList.add("active");
 
       const panels = ["pnlHome", "pnlNotices", "pnlStatement", "pnlApprovals", "pnlFlats", "pnlDirectory", "pnlComplaints", "pnlBookings", "pnlAssets", "pnlAbout", "pnlProfileUpdate", "pnlGeneric"];
-      panels.forEach(id => document.getElementById(id).style.display = "none");
+      panels.forEach(id => {
+         const pnl = document.getElementById(id);
+         if(pnl) pnl.style.display = "none";
+      });
 
       if (target === "home") {
         document.getElementById("pnlHome").style.display = "block";
