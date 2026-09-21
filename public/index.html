@@ -1126,18 +1126,18 @@
 
     // Navigation Between Login and Sign-Up
     window.switchToSignUpView = function() {
-      document.getElementById("secLogin").style.display = "none";
-      document.getElementById("secSignUp").style.display = "block";
-      document.getElementById("secMainPortal").style.display = "none";
-      document.getElementById("quickNavBar").style.display = "none";
+      if(document.getElementById("secLogin")) document.getElementById("secLogin").style.display = "none";
+      if(document.getElementById("secSignUp")) document.getElementById("secSignUp").style.display = "block";
+      if(document.getElementById("secMainPortal")) document.getElementById("secMainPortal").style.display = "none";
+      if(document.getElementById("quickNavBar")) document.getElementById("quickNavBar").style.display = "none";
       loadWebMasterFlats();
     };
 
     window.switchToLoginView = function() {
-      document.getElementById("secSignUp").style.display = "none";
-      document.getElementById("secLogin").style.display = "block";
-      document.getElementById("secMainPortal").style.display = "none";
-      document.getElementById("quickNavBar").style.display = "none";
+      if(document.getElementById("secSignUp")) document.getElementById("secSignUp").style.display = "none";
+      if(document.getElementById("secLogin")) document.getElementById("secLogin").style.display = "block";
+      if(document.getElementById("secMainPortal")) document.getElementById("secMainPortal").style.display = "none";
+      if(document.getElementById("quickNavBar")) document.getElementById("quickNavBar").style.display = "none";
     };
 
     // Forgot Password Modal
@@ -1744,9 +1744,9 @@
             // Setup Profile Fields Visibility
             if (document.getElementById("pnlProfileUpdate")) {
                // Render personal info immediately into disabled boxes
-               document.getElementById("profReadOnlyName").value = currentUserData.name || currentUserName;
-               document.getElementById("profReadOnlyEmail").value = user.email || "";
-               document.getElementById("profReadOnlyGender").value = currentUserData.gender || "";
+               if(document.getElementById("profReadOnlyName")) document.getElementById("profReadOnlyName").value = currentUserData.name || currentUserName;
+               if(document.getElementById("profReadOnlyEmail")) document.getElementById("profReadOnlyEmail").value = user.email || "";
+               if(document.getElementById("profReadOnlyGender")) document.getElementById("profReadOnlyGender").value = currentUserData.gender || "";
 
                const isNonResidentOwner = currentUserData.type === "Owner" && currentUserData.occupied === "false";
                const isFamilyMember = currentUserData.type === "Family Member";
@@ -1756,8 +1756,11 @@
                   getDoc(doc(db, "flats", currentUserFlat)).then(fDoc => {
                     if (fDoc.exists()) {
                       const f = fDoc.data();
-                      document.getElementById("profFlatDetails").innerHTML = `
-                         <div><strong>Flat No:</strong> ${f.flatNumber || currentUserFlat}</div>
+                      const dict = i18n[currentLang] || i18n.en;
+                      const lblFlatNo = dict.flat || "Flat No:";
+
+                      const detailsHtml = `
+                         <div><strong>${lblFlatNo}:</strong> ${f.flatNumber || currentUserFlat}</div>
                          <div><strong>Area:</strong> ${f.areaSqft || "--"} Sqft</div>
                          <div><strong>Floor:</strong> ${f.floor || "--"}</div>
                          <div><strong>Lane:</strong> ${f.lane || "--"}</div>
@@ -1765,34 +1768,36 @@
                          <div><strong>Tax:</strong> ${f.taxNumber || "--"}</div>
                       `;
 
+                      if(document.getElementById("profFlatDetails")) document.getElementById("profFlatDetails").innerHTML = detailsHtml;
+
                       if(f.fourWheelerParking === "true" && currentUserData.occupied === "true") {
-                         document.getElementById("prof4wContainer").style.display = "flex";
+                         if(document.getElementById("prof4wContainer")) document.getElementById("prof4wContainer").style.display = "flex";
                       } else {
-                         document.getElementById("prof4wContainer").style.display = "none";
+                         if(document.getElementById("prof4wContainer")) document.getElementById("prof4wContainer").style.display = "none";
                       }
                     }
                   });
                }
 
                if (isFamilyMember || isNonResidentOwner) {
-                 document.getElementById("profVehicleSection").style.display = "none";
-                 document.getElementById("profFamilySection").style.display = "none";
+                 if(document.getElementById("profVehicleSection")) document.getElementById("profVehicleSection").style.display = "none";
+                 if(document.getElementById("profFamilySection")) document.getElementById("profFamilySection").style.display = "none";
                } else {
-                 document.getElementById("profVehicleSection").style.display = "flex";
-                 document.getElementById("profFamilySection").style.display = "block";
+                 if(document.getElementById("profVehicleSection")) document.getElementById("profVehicleSection").style.display = "flex";
+                 if(document.getElementById("profFamilySection")) document.getElementById("profFamilySection").style.display = "block";
                }
 
                // Hide personal details for family members
                if (isFamilyMember) {
-                 document.getElementById("profAgeRow").style.display = "none";
-                 document.getElementById("profPhoneRow").style.display = "none";
-                 document.getElementById("profRelOccRow").style.display = "none";
-                 document.getElementById("profFoodRow").style.display = "none";
-                 document.getElementById("profMarriageRow").style.display = "none";
+                 if(document.getElementById("profAgeRow")) document.getElementById("profAgeRow").style.display = "none";
+                 if(document.getElementById("profPhoneRow")) document.getElementById("profPhoneRow").style.display = "none";
+                 if(document.getElementById("profRelOccRow")) document.getElementById("profRelOccRow").style.display = "none";
+                 if(document.getElementById("profFoodRow")) document.getElementById("profFoodRow").style.display = "none";
+                 if(document.getElementById("profMarriageRow")) document.getElementById("profMarriageRow").style.display = "none";
 
                  // Remove required tags so form can be submitted
-                 document.getElementById("profAge").removeAttribute("required");
-                 document.getElementById("profDob").removeAttribute("required");
+                 if(document.getElementById("profAge")) document.getElementById("profAge").removeAttribute("required");
+                 if(document.getElementById("profDob")) document.getElementById("profDob").removeAttribute("required");
                  document.getElementById("profPhone").removeAttribute("required");
                  document.getElementById("profReligion").removeAttribute("required");
                  document.getElementById("profOccupation").removeAttribute("required");
@@ -1820,14 +1825,14 @@
           }
 
           if (isVerified) {
-            document.getElementById("secLogin").style.display = "none";
-            document.getElementById("secSignUp").style.display = "none";
-            document.getElementById("secMainPortal").style.display = "flex";
-            document.getElementById("userSection").style.display = "flex";
+            if(document.getElementById("secLogin")) document.getElementById("secLogin").style.display = "none";
+            if(document.getElementById("secSignUp")) document.getElementById("secSignUp").style.display = "none";
+            if(document.getElementById("secMainPortal")) document.getElementById("secMainPortal").style.display = "flex";
+            if(document.getElementById("userSection")) document.getElementById("userSection").style.display = "flex";
             initSingleDeviceSessionListener(user.uid);
 
             if (isProfileComplete) {
-              document.getElementById("quickNavBar").style.display = "flex";
+              if(document.getElementById("quickNavBar")) document.getElementById("quickNavBar").style.display = "flex";
               document.querySelectorAll(".sidebar .menu-group").forEach(g => g.style.display = "flex");
               navTo('home');
               loadHomeDuesSummary(currentUserFlat);
@@ -1839,7 +1844,7 @@
               loadBookings();
               loadAssetInfo();
             } else {
-              document.getElementById("quickNavBar").style.display = "none";
+              if(document.getElementById("quickNavBar")) document.getElementById("quickNavBar").style.display = "none";
               document.querySelectorAll(".sidebar .menu-group").forEach(g => g.style.display = "none");
               // Re-enable support group just for logout
               if(document.querySelectorAll(".sidebar .menu-group")[3]) document.querySelectorAll(".sidebar .menu-group")[3].style.display = "flex";
@@ -1847,35 +1852,39 @@
             }
           } else {
             await signOut(auth);
-            document.getElementById("secLogin").style.display = "block";
-            document.getElementById("secSignUp").style.display = "none";
-            document.getElementById("secMainPortal").style.display = "none";
-            document.getElementById("quickNavBar").style.display = "none";
-            document.getElementById("userSection").style.display = "none";
+            if(document.getElementById("secLogin")) document.getElementById("secLogin").style.display = "block";
+            if(document.getElementById("secSignUp")) document.getElementById("secSignUp").style.display = "none";
+            if(document.getElementById("secMainPortal")) document.getElementById("secMainPortal").style.display = "none";
+            if(document.getElementById("quickNavBar")) document.getElementById("quickNavBar").style.display = "none";
+            if(document.getElementById("userSection")) document.getElementById("userSection").style.display = "none";
 
             const errLbl = document.getElementById("lblLoginError");
-            errLbl.innerText = "Account Pending Approval: An admin must approve your registration before you can log in.";
-            errLbl.style.display = "block";
+            if(errLbl) {
+              errLbl.innerText = "Account Pending Approval: An admin must approve your registration before you can log in.";
+              errLbl.style.display = "block";
+            }
           }
         } catch (e) {
           console.error("Auth check error", e);
           await signOut(auth);
-          document.getElementById("secLogin").style.display = "block";
-          document.getElementById("secSignUp").style.display = "none";
-          document.getElementById("secMainPortal").style.display = "none";
-          document.getElementById("quickNavBar").style.display = "none";
-          document.getElementById("userSection").style.display = "none";
+          if(document.getElementById("secLogin")) document.getElementById("secLogin").style.display = "block";
+          if(document.getElementById("secSignUp")) document.getElementById("secSignUp").style.display = "none";
+          if(document.getElementById("secMainPortal")) document.getElementById("secMainPortal").style.display = "none";
+          if(document.getElementById("quickNavBar")) document.getElementById("quickNavBar").style.display = "none";
+          if(document.getElementById("userSection")) document.getElementById("userSection").style.display = "none";
 
           const errLbl = document.getElementById("lblLoginError");
-          errLbl.innerText = "System Error: " + e.message;
-          errLbl.style.display = "block";
+          if(errLbl) {
+            errLbl.innerText = "System Error: " + e.message;
+            errLbl.style.display = "block";
+          }
         }
       } else {
-        document.getElementById("secLogin").style.display = "block";
-        document.getElementById("secSignUp").style.display = "none";
-        document.getElementById("secMainPortal").style.display = "none";
-        document.getElementById("quickNavBar").style.display = "none";
-        document.getElementById("userSection").style.display = "none";
+        if(document.getElementById("secLogin")) document.getElementById("secLogin").style.display = "block";
+        if(document.getElementById("secSignUp")) document.getElementById("secSignUp").style.display = "none";
+        if(document.getElementById("secMainPortal")) document.getElementById("secMainPortal").style.display = "none";
+        if(document.getElementById("quickNavBar")) document.getElementById("quickNavBar").style.display = "none";
+        if(document.getElementById("userSection")) document.getElementById("userSection").style.display = "none";
       }
     });
 
@@ -1969,8 +1978,8 @@
     };
 
     window.openPolicy = function(type) {
-      if (type === "terms") window.open("https://remgeorge.github.io/SVS-Residency/terms.html", "_blank");
-      else window.open("https://remgeorge.github.io/SVS-Residency/privacy.html", "_blank");
+      if (type === "terms") window.open("https://svsresidency.com/terms.html", "_blank");
+      else window.open("https://svsresidency.com/privacy.html", "_blank");
     };
 
     // Calculate Total Outstanding Dues for Flat
